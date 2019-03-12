@@ -4,11 +4,139 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        /*HTML/Body*/
+        html, body {height: 100%;}
+        body{padding-bottom: 0;}
+        /*Nav Bar Header Div*/
+        .navbar-header{height: 73px;}
+        /*Corts title heading*/
+        .navbar-header a{
+            font-size: 45px;
+            padding-top: 25px;
+            padding-bottom: 0;
+            color: #AEC3B0;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
+        /*Top-Left Car Image*/
+        .navbar-inverse img {
+            display: inline;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            position: fixed;
+            top: 1.5%;
+            left: 2.65%;
+            height: 50px;
+            width: 80px;
+            z-index: 0;
+        }
+        /*Nav Bar Collapse Div*/
+        .navbar-collapse{width: 100%;}
+        .navbar-collapse .navbar-nav {margin-right: 4%;}
+        /*description next to title*/
+        .navbar-collapse p{
+            width: 850px;
+            display: inline;
+            font-size: 22px;
+            color: #AEC3B0;
+            position: fixed;
+            top: 4.2%;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        /*buttons on title*/
+        .navbar-collapse li{
+            border: 3px solid #598392;
+            width: 130px;
+            height: 55px;
+            border-radius: 7px;
+            margin-right: 16px;
+            margin-top: 3.1%;
+            text-align: center;
+        }
+        .navbar-collapse a{
+            border-radius: 5px;
+            font-size: 20px;
+            margin-bottom: 50px;
+            height: 100%;
+            background-color: #EFF6E0;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
+        .navbar-collapse li:hover{background-color: #124559;border: 3px solid #AEC3B0;}
+        /*Navbar container*/
+        .container {
+            height: 100%;
+            width: 89%;
+            margin-left: 11%;
+        }
+        .navbar {background-color: #01161E;}
+        /*Side Bar*/
+        .side {
+            float: left;
+            clear: both;
+            width: 150px;
+            height: 100%;
+            display: block;
+            position: fixed;
+            z-index: 1;
+            margin-top: 20px;
+            background-color: #124559;
+        }
+        /*buttons*/
+        .side li{
+            border: 3px solid #AEC3B0;
+            border-radius: 15px;
+            width: 82%;
+            height: 130px;
+            margin-top: 18px;
+            margin-left: 8.3%;
+            margin-right: 9%;
+            font-size: 20px;
+            background-color: #598392;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
+        .side a{
+            text-align: center;
+            border-radius: 12px;
+            height: 100%;
+            padding-top: 70px;
+            background-color: #598392;
+            color: #01161E;
+        }
+        /*images for buttons*/
+        .side img {
+            height: 75px;
+            width: 80px;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            z-index: 1;
+            left: 34px;
+            font-size: 10px;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .side #a{top: 125px;}
+        .side #b{top: 275px;}
+        .side #small{font-size: 14.5px; font-weight:500;}
+        .side #c{top: 422px;}
+        /*Body/Content*/
+        .body-content {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            margin-left: 11%;
+            width: 89%;
+            position: fixed;
+            margin-top: 20px;
+            background-color: #EFF6E0;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
+        <img src="car.png" alt="car">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,17 +147,20 @@
                 @Html.ActionLink("CORTS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Maintenance", "Maintenance", "Maintenance")</li>
-                    <li>@Html.ActionLink("Settings", "Settings", "Manage")</li>
-                </ul>
+                <p>Some description that is insightful, informative, and has a nice zing to it!</p>
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                     <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
                 </ul>
             </div>
         </div>
+    </div>
+    <div class="side">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home")<img id="a" src="home.png" alt="home"></li>
+            <li id="small">@Html.ActionLink("Maintenance", "Maintenance", "Maintenance")<img id="b" src="main.png" alt="maintenance"></li>
+            <li>@Html.ActionLink("Settings", "Settings", "Manage")<img id="c" src="tire.png" alt="settings"></li>
+        </ul>
     </div>
     <div class="container body-content">
         @RenderBody()
