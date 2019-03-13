@@ -10,69 +10,104 @@
     @Scripts.Render("~/bundles/modernizr")
     <style>
         /*HTML/Body*/
-        html, body {height: 100%;}
-        body{padding-bottom: 0;}
-        /*Nav Bar Header Div*/
-        .navbar-header{height: 73px;}
-        /*Corts title heading*/
-        .navbar-header a{
-            font-size: 45px;
-            padding-top: 25px;
-            padding-bottom: 0;
-            color: #AEC3B0;
-            font-family: 'Merriweather Sans', sans-serif;
+        html, body {
+            height: 100%;
         }
+        body {
+            padding-bottom: 0;
+        }
+        /*Nav Bar Header Div*/
+        .navbar-header {
+            height: 85px;}
         /*Top-Left Car Image*/
-        .navbar-inverse img {
+        #logo{
             display: inline;
             margin-bottom: 0;
-            padding-bottom: 0;
             position: fixed;
-            top: 1.5%;
-            left: 2.65%;
-            height: 50px;
-            width: 80px;
+            top: 1.2%;
+            left: 2.83%;
             z-index: 0;
+            height: 70px;
+            width: 70px;
+            border-radius: 5px;
+            background-color: #AEC3B0;
+            padding: 2px;
+            background: url(../../Images/car.svg) no-repeat;
         }
-        /*Nav Bar Collapse Div*/
-        .navbar-collapse{width: 100%;}
-        .navbar-collapse .navbar-nav {margin-right: 4%;}
+        /*title heading*/
+        .navbar-header a {
+                font-size: 50px;
+                padding-top: 31px;
+                padding-bottom: 0;
+                color: #AEC3B0;
+                font-family: 'Merriweather Sans', sans-serif;
+                font-weight: 600;
+                transition-duration: .3s
+            }
+        .navbar-header a:hover{
+            transition-duration: .3s
+        }
+        /*Vertical line*/
+        .vl {
+            border-left: 2.5px solid #124559;
+            height: 60px;
+            position: fixed;
+            z-index: 1;
+            left: 38%;
+            top: 1.9%;
+        }
         /*description next to title*/
-        .navbar-collapse p{
+        .navbar-collapse p {
             width: 850px;
             display: inline;
             font-size: 22px;
-            color: #AEC3B0;
+            color: #598392;
             position: fixed;
-            top: 4.2%;
+            top: 3.1%;
+            left: 40%;
+            font-size: 30px;
             font-family: 'Source Sans Pro', sans-serif;
         }
-        /*buttons on title*/
-        .navbar-collapse li{
-            border: 3px solid #598392;
-            width: 130px;
-            height: 55px;
-            border-radius: 7px;
-            margin-right: 16px;
-            margin-top: 3.1%;
-            text-align: center;
+        /*Nav Bar Collapse Div*/
+        .navbar-collapse {
+            width: 100%;
         }
-        .navbar-collapse a{
+        .navbar-collapse .navbar-nav {
+                margin-right: 4%;
+            }
+        /*buttons on title*/
+        .navbar-collapse li {
+                width: 130px;
+                height: 55px;
+                border-radius: 7px;
+                margin-right: 10px;
+                margin-top: 5.1%;
+                text-align: center;
+        }
+        #registerLink, #loginLink {
+            color: black;
             border-radius: 5px;
             font-size: 20px;
             margin-bottom: 50px;
             height: 100%;
             background-color: #EFF6E0;
             font-family: 'Merriweather Sans', sans-serif;
+            transition-duration: .3s;
         }
-        .navbar-collapse li:hover{background-color: #124559;border: 3px solid #AEC3B0;}
+        #registerLink:hover, #loginLink:hover{
+            background-color: #124559;
+            color: white;
+            transition-duration: .3s;
+        }
         /*Navbar container*/
         .container {
             height: 100%;
             width: 89%;
             margin-left: 11%;
         }
-        .navbar {background-color: #01161E;}
+        .navbar {
+            background-color: #01161E;
+        }
         /*Side Bar*/
         .side {
             float: left;
@@ -86,57 +121,108 @@
             background-color: #124559;
         }
         /*buttons*/
-        .side li{
-            border: 3px solid #AEC3B0;
-            border-radius: 15px;
-            width: 82%;
-            height: 130px;
-            margin-top: 18px;
-            margin-left: 8.3%;
-            margin-right: 9%;
-            font-size: 20px;
-            background-color: #598392;
-            font-family: 'Merriweather Sans', sans-serif;
+        .side li {
+                border-radius: 12px;
+                width: 67%;
+                height: 105px;
+                margin-top: 20px;
+                margin-left: 16%;
+                margin-right: 9%;
+                font-size: 20px;
+                background-color: #598392;
+                font-family: 'Merriweather Sans', sans-serif;
+                transition-duration: .3s;
+            }
+        .side li:hover{
+            transition-duration: .3s;
+            background-color: #EFF6E0;
         }
+        #top {
+            margin-top: 40px;
+        }
+        /*side bar links*/
         .side a{
-            text-align: center;
-            border-radius: 12px;
-            height: 100%;
-            padding-top: 70px;
-            background-color: #598392;
-            color: #01161E;
+                text-align: center;
+                border-radius: 12px;
+                height: 100%;
+                padding-top: 70px;
+                color: #598392;
+                background-color: transparent;
+                transition-duration: .3s;
+            }
+        .side a:hover{
+            transition-duration: .3s;
+            background-color: transparent;
+        }
+        #homeLink, #maintLink, #settingLink {
+            color: transparent;
+            margin: 5px;
+        }
+        #homeLink {
+            background: url(../../Images/home.svg) no-repeat;
+        }
+        #maintLink {
+            background: url(../../Images/maint.svg) no-repeat;
+        }
+        #settingLink {
+            background: url(../../Images/setting.svg) no-repeat;
         }
         /*images for buttons*/
         .side img {
-            height: 75px;
-            width: 80px;
-            margin: 0;
-            padding: 0;
-            position: fixed;
-            z-index: 1;
-            left: 34px;
-            font-size: 10px;
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-        .side #a{top: 125px;}
-        .side #b{top: 275px;}
-        .side #small{font-size: 14.5px; font-weight:500;}
-        .side #c{top: 422px;}
+                height: 75px;
+                width: 80px;
+                margin: 0;
+                padding: 0;
+                position: fixed;
+                z-index: 0;
+                left: 34px;
+                font-size: 10px;
+                font-family: 'Source Sans Pro', sans-serif;
+            }
+        .side #a {
+                top: 123px;
+            }
+        .side #b {
+                top: 250px;
+            }
+        .side #small {
+                font-size: 14.5px;
+                font-weight: 500;
+            }
+        .side #c {
+                top: 374px;
+            }
         /*Body/Content*/
         .body-content {
             margin-bottom: 0;
             padding-bottom: 0;
-            margin-left: 11%;
+            margin-left: 150px;
             width: 89%;
             position: fixed;
             margin-top: 20px;
             background-color: #EFF6E0;
         }
+        /*Resizing at different window width*/
+        @@media only screen and (max-width: 1200px) {
+            .navbar-collapse p {display: none;}
+            .vl{display:none;}
+        }
+        @@media only screen and (max-width: 768px){
+            .body-content{margin-left: 70px;}
+            .side{width: 75px;}
+            .side li{height: 60px; width: 60px; margin-right: 27px; margin-left: 22px; padding-top: 0.1px;}
+            #top{margin-top: 20px;}
+            .navbar-header a{ margin-left: 20px;}
+            .navbar-collapse li{margin: 0; display: inline-block; height: 43px; width: 105px;}
+        }
+        @@media only screen and (max-width: 500px){
+            .navbar-header a{ font-size: 33px; margin-left: 37px;} 
+        }
     </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <img src="car.png" alt="car">
+        <div id="logo"></div>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -144,10 +230,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("CORTS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("AutoTracking", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <p>Some description that is insightful, informative, and has a nice zing to it!</p>
+                <div class="vl"></div>
+                <p>Maintenance made easy</p>
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                     <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
@@ -157,9 +244,15 @@
     </div>
     <div class="side">
         <ul class="nav navbar-nav">
-            <li>@Html.ActionLink("Home", "Index", "Home")<img id="a" src="home.png" alt="home"></li>
-            <li id="small">@Html.ActionLink("Maintenance", "Maintenance", "Maintenance")<img id="b" src="main.png" alt="maintenance"></li>
-            <li>@Html.ActionLink("Settings", "Settings", "Manage")<img id="c" src="tire.png" alt="settings"></li>
+            <li id="top">
+                @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
+            </li>
+            <li id="small">
+                @Html.ActionLink("Maintenance", "Maintenance", "Maintenance", routeValues: null, htmlAttributes: new { id = "maintLink" })
+            </li>
+            <li>
+                @Html.ActionLink("Settings", "Settings", "Manage", routeValues: null, htmlAttributes: new { id = "settingLink" })
+            </li>
         </ul>
     </div>
     <div class="container body-content">
