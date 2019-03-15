@@ -49,12 +49,13 @@
         }
         /*Vertical line*/
         .vl {
-            border-left: 2.5px solid #124559;
+            border-left: 2px solid #124559;
             height: 60px;
             position: fixed;
             z-index: 1;
             left: 38%;
             top: 1.9%;
+            border-radius: 10px;
         }
         /*description next to title*/
         .navbar-collapse p {
@@ -196,11 +197,46 @@
         .body-content {
             margin-bottom: 0;
             padding-bottom: 0;
+            padding-left: 25px;
             margin-left: 150px;
             width: 89%;
             position: fixed;
-            margin-top: 20px;
+            margin-top: 30px;
             background-color: #EFF6E0;
+        }
+        .body-content h2{
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 35px;
+            font-weight: 400;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .body-content h4{
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 20px;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .body-content footer{
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 15px;
+        }
+        .body-content .form-group{
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        input[type=submit]{
+            font-size: 20px;
+            border-radius: 6px;
+            width: 120px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        /*Misc*/
+        hr {
+            border-top: 2px solid #124559;
+            border-radius: 10px;
         }
         /*Resizing at different window width*/
         @@media only screen and (max-width: 1200px) {
