@@ -65,7 +65,7 @@ namespace Corts.Controllers
             try
             {
                 dal.CreateUser(user);
-                return RedirectToAction("Login");
+                return View("~/Views/Maintenance/Maintenance.cshtml");
             }
             catch
             {
