@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Configuration;
 using System.Security.Authentication;
+using MongoDB.Driver.Linq;
 
 namespace Corts.DAL
 {
@@ -16,9 +17,9 @@ namespace Corts.DAL
         private bool disposed = false;
 
        
-        private string userName = "USERNAME HERE";
-        private string host = "HOST HERE";
-        private string password = "PASSWORD HERE";
+        private string userName = "some username";
+        private string host = "SOME HOST NAME";
+        private string password = "SOME PASSWORD";
 
 
         private string dbName = "CortsDB";
@@ -31,8 +32,36 @@ namespace Corts.DAL
         {
         }
 
+
+        public bool LoginUser(Users user)
+        {
+            //We still need unhashing the passwords - but first hash passwords upon registration
+            var collection = GetUsersCollection();
+            string email = user.email;
+            string password = user.password;
+
+            var builder = Builders<Users>.Filter;
+            var filt = builder.Where(x => x.email == email);
+            var list = collection.Find(filt).ToList();
+
+            if (list == null)
+            {
+                return false;
+            }
+            string passwordFromDB = list[0].password;
+
+            if (passwordFromDB == password)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void CreateUser(Users user)
         {
+            //TODO: HASH PASSWORDS UPON REGISTRATION
             var collection = GetUsersCollectionForEdit();
             try
             {

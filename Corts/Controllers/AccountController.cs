@@ -29,7 +29,23 @@ namespace Corts.Controllers
             return View();
         }
 
-        //
+        [HttpPost]
+        public ActionResult Login(LoginViewModel userInfo)
+        {
+            Users user = new Users();
+            user.email = userInfo.Email;
+            user.password = userInfo.Password;
+            if(dal.LoginUser(user))
+            {
+                //We still need to check to see if User has logged in before
+                return View("~/Views/Home/Index.cshtml");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        //Register
         [HttpPost]
         public ActionResult Register(RegisterViewModel userInfo)
         {
@@ -46,28 +62,6 @@ namespace Corts.Controllers
                 return View();
             }
         }
-        //// POST: /Account/Register
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Register(RegisterViewModel model)
-        //{
-        //    Guid id = new Guid();
-        //    string email = model.Email;
-        //    string password = model.Password;
-
-        //    Users user = new Users(id, email, password);
-        //    try
-        //    {
-        //        dal.CreateUser(model);
-        //        return RedirectToAction("Register");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-
-        //}
         #region IDisposable
         private bool disposed = false;
         new protected void Dispose()

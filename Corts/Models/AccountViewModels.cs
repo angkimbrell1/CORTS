@@ -18,6 +18,9 @@ namespace Corts.Models
 
         [BsonElement("password")]
         public string password { get; set; }
+
+        //[BsonElement("LastLoggedIn")]
+        //public DateTime lastLoggedIn{ get; set;}
     }
     public class ForgotViewModel
     {
@@ -28,6 +31,11 @@ namespace Corts.Models
 
     public class LoginViewModel
     {
+        [BsonElement("Email")]
+        public string emailR { get; set; }
+
+        [BsonElement("Password")]
+        public string passwordR { get; set; }
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
@@ -53,6 +61,9 @@ namespace Corts.Models
 
         [BsonElement("Password")]
         public string passwordR { get; set; }
+
+        //[BsonElement("LastLoggedIn")]
+        //public DateTime DateCreated { get; set; }
 
         [Required]
         [EmailAddress]
