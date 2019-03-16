@@ -37,8 +37,15 @@ namespace Corts.Controllers
             user.password = userInfo.Password;
             if(dal.LoginUser(user))
             {
-                //We still need to check to see if User has logged in before
-                return View("~/Views/Home/Index.cshtml");
+                if(dal.getCreatedDate(user))
+                {
+                    return View("~/Views/Maintenance/Maintenance.cshtml");
+                }
+                else
+                {
+                    return View("~/Views/Home/Index.cshtml");
+                }
+                
             }
             else
             {
@@ -52,6 +59,9 @@ namespace Corts.Controllers
             Users user = new Users();
             user.email = userInfo.Email;
             user.password = userInfo.Password;
+            DateTime DateToday = DateTime.Today;
+            string FirstLoggedIn = DateToday.ToString();
+            user.FirstLoggedIn = FirstLoggedIn;
             try
             {
                 dal.CreateUser(user);

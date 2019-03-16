@@ -16,10 +16,10 @@ namespace Corts.DAL
         //THIS FILE HANDLES ALL DB CALLS
         private bool disposed = false;
 
-       
-        private string userName = "some username";
-        private string host = "SOME HOST NAME";
-        private string password = "SOME PASSWORD";
+
+        private string userName = "";
+        private string host = "";
+        private string password = "";
 
 
         private string dbName = "CortsDB";
@@ -39,7 +39,7 @@ namespace Corts.DAL
             var collection = GetUsersCollection();
             string email = user.email;
             string password = user.password;
-
+            
             var builder = Builders<Users>.Filter;
             var filt = builder.Where(x => x.email == email);
             var list = collection.Find(filt).ToList();
@@ -59,8 +59,34 @@ namespace Corts.DAL
                 return false;
             }
         }
+        public bool getCreatedDate(Users user)
+        {
+            //We still need unhashing the passwords - but first hash passwords upon registration
+            var collection = GetUsersCollection();
+            string email = user.email;
+            string password = user.password;
+
+            var builder = Builders<Users>.Filter;
+            var filt = builder.Where(x => x.email == email);
+            var list = collection.Find(filt).ToList();
+            string TodaysDate = DateTime.Today.ToString();
+
+            if (list == null)
+            {
+                return false;
+            }
+            else if (list[0].FirstLoggedIn == TodaysDate)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void CreateUser(Users user)
         {
+           
             //TODO: HASH PASSWORDS UPON REGISTRATION
             var collection = GetUsersCollectionForEdit();
             try
