@@ -51,10 +51,8 @@
         .vl {
             border-left: 2px solid #124559;
             height: 60px;
-            position: fixed;
-            z-index: 1;
-            left: 38%;
-            top: 1.9%;
+            margin-left: 104%;
+            margin-top: 4%;
             border-radius: 10px;
         }
         /*description next to title*/
@@ -199,7 +197,7 @@
             padding-bottom: 0;
             padding-left: 25px;
             margin-left: 150px;
-            width: 89%;
+            width: 100%;
             position: fixed;
             margin-top: 30px;
             background-color: #EFF6E0;
@@ -267,9 +265,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("AutoTracking", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <div class="vl"></div>
             </div>
             <div class="navbar-collapse collapse">
-                <div class="vl"></div>
                 <p>Maintenance made easy</p>
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
