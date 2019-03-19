@@ -51,10 +51,8 @@
         .vl {
             border-left: 2px solid #124559;
             height: 60px;
-            position: fixed;
-            z-index: 1;
-            left: 38%;
-            top: 1.9%;
+            margin-left: 104%;
+            margin-top: 4%;
             border-radius: 10px;
         }
         /*description next to title*/
@@ -199,7 +197,7 @@
             padding-bottom: 0;
             padding-left: 25px;
             margin-left: 150px;
-            width: 89%;
+            width: 100%;
             position: fixed;
             margin-top: 30px;
             background-color: #EFF6E0;
@@ -233,7 +231,7 @@
             font-weight: 600;
             letter-spacing: 0.3px;
         }
-        /*Misc*/
+        /*Misc Styles*/
         hr {
             border-top: 2px solid #124559;
             border-radius: 10px;
@@ -254,6 +252,90 @@
         @@media only screen and (max-width: 500px){
             .navbar-header a{ font-size: 33px; margin-left: 37px;} 
         }
+        /*Settings*/
+        /*add and remove*/
+        #left{float: left;}
+        #right{float: left; margin-left: 20px;}
+        .menu h3, #prof h3 {
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Sans Pro', sans-serif;
+            margin-left: 10px;
+            font-weight: 600;
+            font-size: 30px;
+            color: #124559;
+        }
+        .menu select{
+            width: 90%;
+            height: 30px;
+            font-size: 18px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            margin-left: 10px;
+            margin-top: 2px;
+            color: #01161E;
+        }
+        .menu{
+            background-color: #598392;
+            margin-bottom: 15px;
+            width: 280px;
+            height: 80px;
+            padding-top: 3px;
+            border-radius: 7px;
+        }
+        /*profile*/
+        #prof {
+            background-color: #598392;
+            width: 580px;
+            height: 180px;
+            border-radius: 7px;
+            color: #01161E;
+            font-size: 18px;
+            margin-top: 120px;
+        }
+        .data{
+            padding-left: 10px; 
+            width: 40%; 
+            margin-top: 0; 
+            padding-top: 0;
+        }
+        .data h4{
+            display:inline; 
+            font-size: 17px; 
+            margin: 0; 
+            padding: 0;
+        }
+        .data label{
+            display:inline; 
+            margin-left: 4px;
+            text-decoration: underline;
+            font-size: 17px;
+            margin: 0;
+            padding: 0;
+        }
+        #prof button{
+            margin-left: 10px;
+            box-shadow: none;
+            border: none;
+            width: 125px;
+            height: 37px;
+            border-radius: 5px;
+            font-family: 'Merriweather Sans', sans-serif;
+            background-color: #EFF6E0;
+            color: black;
+            transition-duration: .3s;
+            font-size: 12.5px;
+            margin-bottom: 5px;
+            margin-top: 3px;
+            font-weight: bolder;
+            display: inline;
+            float: left;
+        }
+        #prof button:hover{
+            background-color: #124559;
+            color: white;
+            transition-duration: .3s;
+        }
     </style>
 </head>
 <body>
@@ -267,9 +349,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("AutoTracking", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <div class="vl"></div>
             </div>
             <div class="navbar-collapse collapse">
-                <div class="vl"></div>
                 <p>Maintenance made easy</p>
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
