@@ -11,6 +11,10 @@ namespace Corts.Models
     {
         public int ID { get; set; }
         public string Type { get; set; }
+        public Guid MaintenanceID { get; set; }
+        public int mileage { get; set; }
+        
+
     }
     public class SettingsViewModel
     { 
@@ -30,7 +34,10 @@ namespace Corts.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Display(Name = "UsersCars")]
+        public IEnumerable<SelectListItem> UsersCars { get; set; }
 
+        
     }
     public enum Car
     {

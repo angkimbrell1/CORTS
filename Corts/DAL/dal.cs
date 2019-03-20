@@ -21,6 +21,7 @@ namespace Corts.DAL
         private string host = "";
         private string password = "";
 
+        
 
         private string dbName = "CortsDB";
         private string collectionName = "Users";
@@ -31,8 +32,26 @@ namespace Corts.DAL
         public Dal()
         {
         }
+        public List<UsersCars> getCurrentUsersCars(string email)
+        {
+            var collection = GetUsersCollection();
+            string usersemail = email;
+           
 
+            var builder = Builders<Users>.Filter;
+            var filt = builder.Where(x => x.email == usersemail);
+            var list = collection.Find(filt).ToList();
 
+            if(list == null)
+            {
+                return null;
+            }
+            else
+            {
+                List<UsersCars> usersCars = list[0].Cars;
+                return usersCars;
+            }
+        }
         public bool LoginUser(Users user)
         {
             //We still need unhashing the passwords - but first hash passwords upon registration
