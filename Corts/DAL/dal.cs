@@ -8,6 +8,9 @@ using MongoDB.Bson;
 using System.Configuration;
 using System.Security.Authentication;
 using MongoDB.Driver.Linq;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using static Corts.Models.CortsClasses;
 
 namespace Corts.DAL
 {
@@ -21,7 +24,7 @@ namespace Corts.DAL
         private string host = "";
         private string password = "";
 
-        
+
 
         private string dbName = "CortsDB";
         private string collectionName = "Users";
@@ -31,6 +34,24 @@ namespace Corts.DAL
         // Default constructor.        
         public Dal()
         {
+        }
+        public List<Cars> getCurrentCarList()
+        {
+            var collection = GetCarsCollection();
+            var CollectionIDCars = "Cars";
+            var builder = Builders<Cars>.Filter;
+            var filt = builder.Where(x => x.CollectionID == CollectionIDCars);
+            var list = collection.Find(filt).ToList();
+
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<Cars> carList = list;
+                return carList;
+            }
         }
         public List<UsersCars> getCurrentUsersCars(string email)
         {
@@ -42,14 +63,21 @@ namespace Corts.DAL
             var filt = builder.Where(x => x.email == usersemail);
             var list = collection.Find(filt).ToList();
 
-            if(list == null)
+            if(list.Count == 0 || email == null)
             {
                 return null;
             }
             else
             {
-                List<UsersCars> usersCars = list[0].Cars;
-                return usersCars;
+                if(list[0] != null)
+                {
+                    List<UsersCars> usersCars = list[0].Cars;
+                    return usersCars;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         public bool LoginUser(Users user)
@@ -63,7 +91,7 @@ namespace Corts.DAL
             var filt = builder.Where(x => x.email == email);
             var list = collection.Find(filt).ToList();
 
-            if (list == null)
+            if (list.Count == 0 || email == null)
             {
                 return false;
             }
@@ -90,7 +118,7 @@ namespace Corts.DAL
             var list = collection.Find(filt).ToList();
             string TodaysDate = DateTime.Today.ToString();
 
-            if (list == null)
+            if (list.Count == 0 || email == null)
             {
                 return false;
             }
@@ -118,6 +146,24 @@ namespace Corts.DAL
             }
         }
 
+        private IMongoCollection<Cars> GetCarsCollection()
+        {
+            MongoClientSettings settings = new MongoClientSettings();
+            settings.Server = new MongoServerAddress(host, 10255);
+            settings.UseSsl = true;
+            settings.SslSettings = new SslSettings();
+            settings.SslSettings.EnabledSslProtocols = SslProtocols.Tls12;
+
+            MongoIdentity identity = new MongoInternalIdentity(dbName, userName);
+            MongoIdentityEvidence evidence = new PasswordEvidence(password);
+
+            settings.Credential = new MongoCredential("SCRAM-SHA-1", identity, evidence);
+
+            MongoClient client = new MongoClient(settings);
+            var database = client.GetDatabase(dbName);
+            var todoTaskCollection = database.GetCollection<Cars>("Cars");
+            return todoTaskCollection;
+        }
         private IMongoCollection<Users> GetUsersCollection()
         {
             MongoClientSettings settings = new MongoClientSettings();

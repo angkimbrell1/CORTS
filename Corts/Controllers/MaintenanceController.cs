@@ -8,10 +8,18 @@ namespace Corts.Controllers
 {
     public class MaintenanceController : Controller
     {
-        public ActionResult Maintenance()
+        public ActionResult Maintenance(string email)
         {
             ViewBag.Message = "Maintenance";
-            return View();
+            if (email != null)
+            {
+                ViewBag.UsersEmail = email;
+            }
+            else
+            {
+                ViewBag.UsersEmail = null;
+            }
+            return View(email);
         }
     }
 }

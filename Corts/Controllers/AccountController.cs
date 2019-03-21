@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static Corts.Models.CortsClasses;
 
 namespace Corts.Controllers
 {
@@ -39,16 +40,21 @@ namespace Corts.Controllers
             {
                 if(dal.getCreatedDate(user))
                 {
-                    return View("~/Views/Maintenance/Maintenance.cshtml");
+                    Session["email"] = userInfo.Email;
+                    var email = (string)Session["email"];
+                    return RedirectToAction("Settings", "Manage", new { email = email });
                 }
                 else
                 {
-                    return View("~/Views/Home/Index.cshtml");
+                    Session["email"] = userInfo.Email;
+                    var email = (string)Session["email"];
+                    return RedirectToAction("Index", "Home", new { email = email });
                 }
                 
             }
             else
             {
+                ViewBag.InvalidCredentials = "Invalid Credentials";
                 return View();
             }
         }
@@ -65,7 +71,9 @@ namespace Corts.Controllers
             try
             {
                 dal.CreateUser(user);
-                return View("~/Views/Maintenance/Maintenance.cshtml");
+                Session["email"] = userInfo.Email;
+                var email = (string)Session["email"];
+                return RedirectToAction("Settings", "Manage", new { email = email });
             }
             catch
             {

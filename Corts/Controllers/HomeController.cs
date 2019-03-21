@@ -12,15 +12,16 @@ namespace Corts.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string email)
         {
-            return View();
-        }
-
-        public ActionResult Maintenance()
-        {
-            ViewBag.Message = "Maintenance Page.";
-
+            if(email != null)
+            {
+                ViewBag.UsersEmail = email;
+            }
+            else
+            {
+                ViewBag.UsersEmail = null;
+            }
             return View();
         }
 

@@ -365,12 +365,19 @@
             <li id="top">
                 @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
             </li>
-            <li id="small">
-                @Html.ActionLink("Maintenance", "Maintenance", "Maintenance", routeValues: null, htmlAttributes: new { id = "maintLink" })
-            </li>
-            <li>
-                @Html.ActionLink("Settings", "Settings", "Manage", routeValues: null, htmlAttributes: new { id = "settingLink" })
-            </li>
+            @*@{ 
+                var usersEmail = Model.UsersEmail;
+            }*@
+            @*@if (ViewBag.UsersEmail != null)
+            {*@
+                <li id="small">
+                    @Html.ActionLink("Maintenance", "Maintenance", "Maintenance", routeValues:null, htmlAttributes: new { id = "maintLink" })
+                </li>
+                <li>
+                    @Html.ActionLink("Settings", "Settings", "Manage", routeValues: null, htmlAttributes: new { id = "settingLink" })
+                </li>
+            @*}*@
+
         </ul>
     </div>
     <div class="container body-content">

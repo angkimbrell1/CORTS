@@ -160,6 +160,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CortsClasses.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\MaintenanceViewModel.cs" />
     <Compile Include="Models\SettingsViewModel.cs" />
