@@ -5,25 +5,26 @@
     ViewBag.Title = "Settings";
 }
 
-<h2>Settings</h2>
-<h2>Welcome @ViewBag.user</h2>
+<h2 id="setTitle">Settings</h2>
+<h2 id="welc">Welcome @ViewBag.user</h2>
 <hr>
 <div id="vehicles">
     <div class="menu" id="left">
         @using (Html.BeginForm())
         {
+            //Add vehicle
             <section id="addVehicle">
                 @Html.AntiForgeryToken()
                 <h3>Add Vehicle</h3>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Car))), "Select Car")
+                    <div class="col-md-10" id="newCar">
+                        @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Car))), "Select Vehicle")
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="add">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add" class="btn btn-default" />
+                        <input type="submit" value="Add" id="addBtn" class="btn btn-default" />
                     </div>
                 </div>
             </section>
@@ -33,18 +34,19 @@
     <div class="menu" id="right">
         @using (Html.BeginForm())
         {
+        //Remove vehicle
         <section id="removeVehicle">
             @Html.AntiForgeryToken()
             <h3>Remove Vehicle</h3>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Car))), "Select Car")
+                <div class="col-md-10" id="removeCar">
+                    @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Car))), "Select Vehicle")
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="remove">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Remove" class="btn btn-default" />
+                    <input type="submit" value="Remove" id="remBtn" class="btn btn-default" />
                 </div>
             </div>
         </section>
@@ -92,21 +94,6 @@
         </div>
     </div>
 </div>
-@*<div id="prof">
-    <h3>Profile</h3>
-    <div class="data">
-        <h4>Username: </h4><label>default_1</label>
-    </div>
-    <div class="changes">
-        <button>Change Username</button><button>Change Password</button>
-    </div>
-    <div class="data">
-        <h4>Email: </h4><label>default1@@aol.com</label>
-    </div>
-    <div class="changes">
-        <button>Change Email</button>
-    </div>
-</div>*@
 <div id="notifications">
     <div class="row">
         <div class="col-md-8">
@@ -116,19 +103,23 @@
                     @Html.AntiForgeryToken()
                     <h3>Notifications</h3>
                     <hr />
-                    <h4>How often would you like to recieve notifications?</h4>
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Notifications))), "Notification Options")
+                    <div id="gen">
+                        <h4>General Notifications</h4>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Notifications))), "Select Frequency")
+                            </div>
                         </div>
                     </div>
-                    <h4>How often would you like to recieve mileage notifications?</h4>
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Notifications))), "Notification Options")
+                    <div id="mil">
+                        <h4>Mileage Notifications</h4>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Notifications))), "Select Frequency")
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -136,7 +127,6 @@
                             <input type="submit" value="Submit" class="btn btn-default" />
                         </div>
                     </div>
-
                 }
             </section>
         </div>
