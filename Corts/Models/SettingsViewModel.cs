@@ -10,8 +10,6 @@ namespace Corts.Models
     
     public class SettingsViewModel
     { 
-   
-        
         [Display(Name = "Car")]
         public string Car { get; set; }
 

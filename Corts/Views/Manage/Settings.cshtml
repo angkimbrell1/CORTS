@@ -6,7 +6,7 @@
 }
 
 <h2 id="setTitle">Settings</h2>
-<h2 id="welc">Welcome @ViewBag.user</h2>
+<h2 id="welc">Welcome @ViewBag.UsersEmail</h2>
 <hr>
 <div id="vehicles">
     <div class="menu" id="left">
@@ -19,7 +19,10 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-10" id="newCar">
-                        @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Car))), "Select Vehicle")
+                        <div class="col-md-10">
+                        @Html.DropDownList("CurrentCarsAvailable", (IEnumerable
+                    <SelectListItem>)ViewBag.CurrentCarList)
+                    </div>
                     </div>
                 </div>
                 <div class="form-group" id="add">
@@ -41,7 +44,14 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <div class="col-md-10" id="removeCar">
-                    @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Car))), "Select Vehicle")
+                   @if (ViewBag.UsersCars != null)
+                    {
+                        @Html.DropDownList("UsersCars", (IEnumerable
+                    <SelectListItem>)ViewBag.UsersCars)
+                    }else
+                    {
+                        <select></select>
+                    }
                 </div>
             </div>
             <div class="form-group" id="remove">
