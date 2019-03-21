@@ -131,7 +131,7 @@ namespace Corts.DAL
                 return false;
             }
         }
-        public void CreateUser(Users user)
+        public bool CreateUser(Users user)
         {
            
             //TODO: HASH PASSWORDS UPON REGISTRATION
@@ -142,8 +142,10 @@ namespace Corts.DAL
             }
             catch
             {
-                throw new System.ArgumentException("DB Update Fail", "users");
+               
+                return false;
             }
+            return true;
         }
 
         private IMongoCollection<Cars> GetCarsCollection()

@@ -68,14 +68,13 @@ namespace Corts.Controllers
             DateTime DateToday = DateTime.Today;
             string FirstLoggedIn = DateToday.ToString();
             user.FirstLoggedIn = FirstLoggedIn;
-            try
+            if(dal.CreateUser(user))
             {
+                string email = user.email;
                 dal.CreateUser(user);
-                Session["email"] = userInfo.Email;
-                var email = (string)Session["email"];
-                return RedirectToAction("Settings", "Manage", new { email = email });
+                return RedirectToAction("Settings", "Manage", new { strEmail = email });
             }
-            catch
+            else
             {
                 return View();
             }
