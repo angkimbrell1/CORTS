@@ -194,13 +194,14 @@
         /*Body/Content*/
         .body-content {
             margin-bottom: 0;
-            padding-bottom: 0;
+            padding-bottom: 200px;
             padding-left: 25px;
             margin-left: 150px;
             width: 100%;
             position: fixed;
             margin-top: 30px;
             background-color: #EFF6E0;
+            overflow: auto;
         }
         .body-content h2{
             font-family: 'Merriweather Sans', sans-serif;
@@ -250,9 +251,18 @@
             .navbar-collapse li{margin: 0; display: inline-block; height: 43px; width: 105px;}
         }
         @@media only screen and (max-width: 500px){
-            .navbar-header a{ font-size: 33px; margin-left: 37px;} 
+            .navbar-header a{ font-size: 33px; margin-left: 37px;}
         }
         /*Settings*/
+        #setTitle{
+            display: inline-block;
+        }
+        #welc{
+            font-size: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 20px;
+        }
         /*add and remove*/
         #left{float: left;}
         #right{float: left; margin-left: 20px;}
@@ -275,66 +285,56 @@
             margin-top: 2px;
             color: #01161E;
         }
-        
-        /*.menu{
-            background-color: #598392;
-            margin-bottom: 15px;
-            width: 280px;
-            height: 180px;
-            padding-top: 10px;
-            border-radius: 7px;
-            margin-bottom: 100px;
-        }*/
-        /*profile*/
-        #prof {
-            /*background-color: #598392;*/
-            border-radius: 7px;
-            color: #01161E;
-            font-size: 18px;
-            margin-top: 150px;
-        }
-        .data{
-            padding-left: 10px; 
-            width: 40%; 
-            margin-top: 0; 
-            padding-top: 0;
-        }
-        .data h4{
-            display:inline; 
-            font-size: 17px; 
-            margin: 0; 
-            padding: 0;
-        }
-        .data label{
-            display:inline; 
-            margin-left: 4px;
-            text-decoration: underline;
-            font-size: 17px;
+        #prof h3, #notifications h3{
             margin: 0;
             padding: 0;
         }
-        #prof button{
-            margin-left: 10px;
-            box-shadow: none;
-            border: none;
-            width: 125px;
-            height: 37px;
-            border-radius: 5px;
-            font-family: 'Merriweather Sans', sans-serif;
-            background-color: #EFF6E0;
-            color: black;
-            transition-duration: .3s;
-            font-size: 12.5px;
-            margin-bottom: 5px;
-            margin-top: 3px;
-            font-weight: bolder;
-            display: inline;
-            float: left;
+        #prof hr, #notifications hr{
+            margin: 0;
+            padding: 0;
+            margin-bottom: 15px;
+            margin-top: 5px;
         }
-        #prof button:hover{
-            background-color: #124559;
-            color: white;
-            transition-duration: .3s;
+        #left, #right{     
+            width: 250px;
+        }
+        #addVehicle, #removeVehicle{
+            
+            text-align: center;
+        }
+        #newCar, #removeCar {  
+            width: 100%;
+        }
+        #addBtn, #remBtn {  
+            margin-right: 40px;
+            margin-bottom: 20px;
+        }
+        #notifications #Car{
+            border-radius: 7px;
+            width: 180px;
+            height: 32px;
+        }
+        #NotificationSection hr{
+            margin-bottom: 10px;
+        }
+        #gen h4, #mil h4 {
+            width: 210px;
+            height: 32px;
+            margin: 0;
+            padding: 0;
+            float: left;
+            padding-top: 4px;
+        }
+        #gen .form-group, #mil .form-group {
+            width: 210px;
+            margin: 0;
+            padding: 0;
+            float: left;
+            margin-bottom: 15px;
+        }
+        #gen, #mil{
+            width: 600px;
+            padding: 0;
         }
     </style>
 </head>
