@@ -8,6 +8,7 @@ using MongoDB.Bson;
 using System.Configuration;
 using System.Security.Authentication;
 using MongoDB.Driver.Linq;
+using static Corts.Models.Classes;
 
 namespace Corts.DAL
 {
@@ -32,6 +33,24 @@ namespace Corts.DAL
         public Dal()
         {
         }
+        public List<Cars> getCurrentCarList()
+        {
+            var collection = GetCarsCollection();
+            var CollectionIDCars = "Cars";
+            var builder = Builders<Cars>.Filter;
+            var filt = builder.Where(x => x.CollectionID == CollectionIDCars);
+            var list = collection.Find(filt).ToList();
+
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                List<Cars> carList = list;
+                return carList;
+            }
+        }
         public List<UsersCars> getCurrentUsersCars(string email)
         {
             var collection = GetUsersCollection();
@@ -42,7 +61,7 @@ namespace Corts.DAL
             var filt = builder.Where(x => x.email == usersemail);
             var list = collection.Find(filt).ToList();
 
-            if(list == null)
+            if(list.Count == 0)
             {
                 return null;
             }
@@ -63,7 +82,7 @@ namespace Corts.DAL
             var filt = builder.Where(x => x.email == email);
             var list = collection.Find(filt).ToList();
 
-            if (list == null)
+            if (list.Count == 0)
             {
                 return false;
             }
@@ -90,7 +109,7 @@ namespace Corts.DAL
             var list = collection.Find(filt).ToList();
             string TodaysDate = DateTime.Today.ToString();
 
-            if (list == null)
+            if (list.Count == 0)
             {
                 return false;
             }
@@ -103,7 +122,7 @@ namespace Corts.DAL
                 return false;
             }
         }
-        public void CreateUser(Users user)
+        public bool CreateUser(Users user)
         {
            
             //TODO: HASH PASSWORDS UPON REGISTRATION
@@ -114,10 +133,30 @@ namespace Corts.DAL
             }
             catch
             {
-                throw new System.ArgumentException("DB Update Fail", "users");
+                return false;
             }
+            return true;
         }
 
+
+        private IMongoCollection<Cars> GetCarsCollection()
+        {
+            MongoClientSettings settings = new MongoClientSettings();
+            settings.Server = new MongoServerAddress(host, 10255);
+            settings.UseSsl = true;
+            settings.SslSettings = new SslSettings();
+            settings.SslSettings.EnabledSslProtocols = SslProtocols.Tls12;
+
+            MongoIdentity identity = new MongoInternalIdentity(dbName, userName);
+            MongoIdentityEvidence evidence = new PasswordEvidence(password);
+
+            settings.Credential = new MongoCredential("SCRAM-SHA-1", identity, evidence);
+
+            MongoClient client = new MongoClient(settings);
+            var database = client.GetDatabase(dbName);
+            var todoTaskCollection = database.GetCollection<Cars>("Cars");
+            return todoTaskCollection;
+        }
         private IMongoCollection<Users> GetUsersCollection()
         {
             MongoClientSettings settings = new MongoClientSettings();

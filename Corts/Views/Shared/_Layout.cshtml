@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - My Car Ownership Tracker</title>
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     @Styles.Render("~/Content/css")
@@ -32,7 +32,7 @@
             border-radius: 5px;
             background-color: #AEC3B0;
             padding: 2px;
-            background: url(../../Images/car.svg) no-repeat;
+            background: url(../../Images/whiteCar.png) no-repeat;
         }
         /*title heading*/
         .navbar-header a {
@@ -127,7 +127,7 @@
                 margin-top: 20px;
                 margin-left: 16%;
                 margin-right: 9%;
-                font-size: 20px;
+                font-size: inherit;
                 background-color: #598392;
                 font-family: 'Merriweather Sans', sans-serif;
                 transition-duration: .3s;
@@ -135,28 +135,38 @@
         .side li:hover{
             transition-duration: .3s;
             background-color: #EFF6E0;
+            
         }
         #top {
             margin-top: 40px;
         }
         /*side bar links*/
-        .side a{
-                text-align: center;
-                border-radius: 12px;
-                height: 100%;
-                padding-top: 70px;
-                color: #598392;
-                background-color: transparent;
-                transition-duration: .3s;
-            }
+        .side a {
+            text-align: center;
+            border-radius: 12px;
+            height: 100%;
+            background-color: transparent;
+            transition-duration: .3s;
+            color: black;
+
+        }
         .side a:hover{
             transition-duration: .3s;
             background-color: transparent;
+            color: black;
         }
         #homeLink, #maintLink, #settingLink {
-            color: transparent;
-            margin: 5px;
+            margin-top: 7px;
+            margin-left: 16px;
+            padding-left: 4px;
+            padding-right: 4px;
+            margin-right: 16px;
+            padding-top: 75px;
+            text-align: center;
+            color: black;
+            font-weight: bold;
         }
+        
         #homeLink {
             background: url(../../Images/home.svg) no-repeat;
         }
@@ -175,7 +185,6 @@
                 position: fixed;
                 z-index: 0;
                 left: 34px;
-                font-size: 10px;
                 font-family: 'Source Sans Pro', sans-serif;
             }
         .side #a {
@@ -184,23 +193,23 @@
         .side #b {
                 top: 250px;
             }
-        .side #small {
-                font-size: 14.5px;
-                font-weight: 500;
-            }
         .side #c {
                 top: 374px;
             }
+        .side #small{
+
+        }
         /*Body/Content*/
         .body-content {
             margin-bottom: 0;
-            padding-bottom: 0;
+            padding-bottom: 200px;
             padding-left: 25px;
             margin-left: 150px;
             width: 100%;
             position: fixed;
             margin-top: 30px;
             background-color: #EFF6E0;
+            overflow: auto;
         }
         .body-content h2{
             font-family: 'Merriweather Sans', sans-serif;
@@ -253,6 +262,13 @@
             .navbar-header a{ font-size: 33px; margin-left: 37px;} 
         }
         /*Settings*/
+        #setTitle {
+            display: inline-block;
+        }
+
+        #welc {
+            font-size: 25px;
+        }
         /*add and remove*/
         #left{float: left;}
         #right{float: left; margin-left: 20px;}
@@ -275,16 +291,6 @@
             margin-top: 2px;
             color: #01161E;
         }
-        
-        /*.menu{
-            background-color: #598392;
-            margin-bottom: 15px;
-            width: 280px;
-            height: 180px;
-            padding-top: 10px;
-            border-radius: 7px;
-            margin-bottom: 100px;
-        }*/
         /*profile*/
         #prof {
             /*background-color: #598392;*/
@@ -292,49 +298,68 @@
             color: #01161E;
             font-size: 18px;
             margin-top: 150px;
-        }
-        .data{
-            padding-left: 10px; 
-            width: 40%; 
-            margin-top: 0; 
-            padding-top: 0;
-        }
-        .data h4{
-            display:inline; 
-            font-size: 17px; 
-            margin: 0; 
             padding: 0;
+            width: 800px;
         }
-        .data label{
-            display:inline; 
-            margin-left: 4px;
-            text-decoration: underline;
-            font-size: 17px;
+        #prof h3, #notifications h3{
             margin: 0;
             padding: 0;
         }
-        #prof button{
-            margin-left: 10px;
-            box-shadow: none;
-            border: none;
-            width: 125px;
-            height: 37px;
-            border-radius: 5px;
-            font-family: 'Merriweather Sans', sans-serif;
-            background-color: #EFF6E0;
-            color: black;
-            transition-duration: .3s;
-            font-size: 12.5px;
-            margin-bottom: 5px;
-            margin-top: 3px;
-            font-weight: bolder;
-            display: inline;
-            float: left;
+        #prof hr, #notifications hr{
+            margin: 0;
+            padding: 0;
+            margin-bottom: 15px;
+            margin-top: 5px;
+            width: 700px;
         }
-        #prof button:hover{
-            background-color: #124559;
-            color: white;
-            transition-duration: .3s;
+        #left, #right {
+            width: 250px;
+        }
+
+        #addVehicle, #removeVehicle {
+            text-align: center;
+        }
+
+        #newCar, #removeCar {
+            width: 100%;
+        }
+
+        #addBtn, #remBtn {
+            margin-right: 40px;
+            margin-bottom: 20px;
+        }
+        #notifications #Car{
+            border-radius: 7px;
+            width: 180px;
+            height: 32px;
+        }
+        #NotificationSection hr {
+            margin-bottom: 10px;
+        }
+        #gen h4, #mil h4 {
+            width: 210px;
+            height: 32px;
+            margin: 0;
+            padding: 0;
+            float: left;
+            padding-top: 4px;
+        }
+        #gen .form-group, #mil .form-group {
+            width: 210px;
+            margin: 0;
+            padding: 0;
+            float: left;
+            margin-bottom: 15px;
+        }
+        #gen, #mil {
+            width: 600px;
+            padding: 0;
+        }
+        #setSub{
+            margin-left: 200px;
+        }
+        #loginForm .form-group, #reg {
+            width: 1000px;
         }
     </style>
 </head>
@@ -348,7 +373,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("AutoTracking", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Maintenance Mate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 <div class="vl"></div>
             </div>
             <div class="navbar-collapse collapse">
@@ -366,7 +391,7 @@
                 @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
             </li>
             <li id="small">
-                @Html.ActionLink("Maintenance", "Maintenance", "Maintenance", routeValues: null, htmlAttributes: new { id = "maintLink" })
+                @Html.ActionLink("Services", "Maintenance", "Maintenance", routeValues: null, htmlAttributes: new { id = "maintLink" })
             </li>
             <li>
                 @Html.ActionLink("Settings", "Settings", "Manage", routeValues: null, htmlAttributes: new { id = "settingLink" })
@@ -377,7 +402,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - My Car Ownership Tracker</p>
         </footer>
     </div>
 

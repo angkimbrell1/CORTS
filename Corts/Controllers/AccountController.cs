@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static Corts.Models.Classes;
 
 namespace Corts.Controllers
 {
@@ -35,20 +36,26 @@ namespace Corts.Controllers
             Users user = new Users();
             user.email = userInfo.Email;
             user.password = userInfo.Password;
-            if(dal.LoginUser(user))
+            Session["email"] = userInfo.Email;
+            //var email = (string)Session["email"];
+            if (dal.LoginUser(user))
             {
-                if(dal.getCreatedDate(user))
+                if (dal.getCreatedDate(user))
                 {
-                    return View("~/Views/Maintenance/Maintenance.cshtml");
+                    Session["email"] = userInfo.Email;
+                    var email = (string)Session["email"];
+                    return RedirectToAction("Settings", "Manage", new { email });
                 }
                 else
                 {
-                    return View("~/Views/Home/Index.cshtml");
+                    Session["email"] = userInfo.Email;
+                    var email = (string)Session["email"];
+                    return RedirectToAction("Index", "Home", new { email });
                 }
-                
             }
             else
             {
+                ViewBag.InvalidCredentials = "Invalid Credentials";
                 return View();
             }
         }
@@ -62,12 +69,15 @@ namespace Corts.Controllers
             DateTime DateToday = DateTime.Today;
             string FirstLoggedIn = DateToday.ToString();
             user.FirstLoggedIn = FirstLoggedIn;
-            try
+            //Session["email"] = userInfo.Email;
+            //var email = (string)Session["email"];
+            if (dal.CreateUser(user))
             {
-                dal.CreateUser(user);
-                return View("~/Views/Maintenance/Maintenance.cshtml");
+                Session["email"] = userInfo.Email;
+                var email = (string)Session["email"];
+                return RedirectToAction("Settings", "Manage", new { email });
             }
-            catch
+            else
             {
                 return View();
             }

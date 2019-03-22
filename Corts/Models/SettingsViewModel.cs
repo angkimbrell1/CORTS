@@ -7,15 +7,7 @@ using System.Web.Mvc;
 
 namespace Corts.Models
 {
-    public class UsersCars
-    {
-        public int ID { get; set; }
-        public string Type { get; set; }
-        public Guid MaintenanceID { get; set; }
-        public int mileage { get; set; }
-        
-
-    }
+    
     public class SettingsViewModel
     { 
    

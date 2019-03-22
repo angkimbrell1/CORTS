@@ -8,7 +8,7 @@ namespace Corts.Controllers
 {
     public class MaintenanceController : Controller
     {
-        public ActionResult Maintenance()
+        public ActionResult Maintenance(string email)
         {
             ViewBag.Message = "Maintenance";
             return View();

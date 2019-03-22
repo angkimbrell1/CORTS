@@ -9,24 +9,7 @@ using System.Web;
 
 namespace Corts.Models
 {
-    public class Users
-    {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid Id { get; set; }
-
-        [BsonElement("email")]
-        public string email { get; set; }
-
-        [BsonElement("password")]
-        public string password { get; set; }
-
-        [BsonElement("FirstLoggedIn")]
-        public string FirstLoggedIn { get; set; }
-
-        [BsonElement("Cars")]
-        public List<UsersCars> Cars { get; set; }
-
-    }
+    
     public class ForgotViewModel
     {
         [Required]
