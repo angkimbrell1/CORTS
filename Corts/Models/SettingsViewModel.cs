@@ -10,8 +10,6 @@ namespace Corts.Models
     
     public class SettingsViewModel
     { 
-   
-        
         [Display(Name = "Car")]
         public string Car { get; set; }
 
@@ -26,8 +24,8 @@ namespace Corts.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "UsersCars")]
-        public IEnumerable<SelectListItem> UsersCars { get; set; }
+        //[Display(Name = "UsersCars")]
+        //public IEnumerable<SelectListItem> UsersCars { get; set; }
 
         [Display(Name = "Months Owned")]
         public string MonthsOwned { get; set; }
