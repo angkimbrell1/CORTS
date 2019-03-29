@@ -3,3 +3,52 @@
     ViewBag.Title = "Index";
 }
 <h2>Home</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            @foreach (var car in ViewBag.Car)
+            {
+                <th>@car</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Overall Rating</th>
+            @foreach (var rating in ViewBag.OverallRating)
+            {
+                <td>@rating</td>
+            }
+        </tr>
+        <tr>
+            <th>Reliability</th>
+            @foreach (var reliability in ViewBag.reliability)
+            {
+                <td>@reliability</td>
+            }
+        </tr>
+        <tr>
+            <th>Maintenance Cost</th>
+            @foreach (var cost in ViewBag.MaintenanceCost)
+            {
+                <td>@cost</td>
+            }
+        </tr>
+        <tr>
+            <th>Highway</th>
+            @foreach (var highway in ViewBag.Highway)
+            {
+                <td>@highway</td>
+            }
+        </tr>
+        <tr>
+            <th>City</th>
+            @foreach (var city in ViewBag.City)
+            {
+                <td>@city</td>
+            }
+        </tr>
+    </tbody>
+</table>

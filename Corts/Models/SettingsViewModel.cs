@@ -29,7 +29,22 @@ namespace Corts.Models
         [Display(Name = "UsersCars")]
         public IEnumerable<SelectListItem> UsersCars { get; set; }
 
-        
+        [Display(Name = "Months Owned")]
+        public string MonthsOwned { get; set; }
+
+        [Display(Name = "Mileage")]
+        public string Mileage { get; set; }
+
+        [Display(Name = "Estimated Total Spent")]
+        public string TotalSpent { get; set; }
+
+        [Display(Name = "Inspection")]
+        public string InspectionDate { get; set; }
+
+        [Display(Name = "Car")]
+        public string CarType { get; set; }
+
+
     }
     public enum Car
     {
