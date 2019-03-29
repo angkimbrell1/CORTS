@@ -17,10 +17,10 @@ namespace Corts.Controllers
 
             ViewBag.Message = "Settings";
             ViewBag.user = email;
-            
-            ViewBag.Message = "Settings";
-            
 
+            ViewBag.Message = "Settings";
+
+            //Make a function
             //Get list of current cars in the database
             List<Cars> currentCarList = new List<Cars>();
             currentCarList = getCurrentCarList();
@@ -34,6 +34,8 @@ namespace Corts.Controllers
                 });
             }
             ViewBag.CurrentCarList = currentCarsAvailable;
+
+            //Make a function
             //Get the users current list of vehicles and return it to the view
             List<UsersCars> list = new List<UsersCars>();
             list = getUsersCars(email);
@@ -50,9 +52,14 @@ namespace Corts.Controllers
                 }
                 ViewBag.UsersCars = usersCarsList;
             }
+
             return View();
         }
-
+        [HttpPost]
+        public ActionResult Add()
+        {
+            return View("~/Views/Home/Index.cshtml");
+        }
         private List<UsersCars> getCurrentUserCars(string email)
         {
             return dal.getCurrentUsersCars(email);

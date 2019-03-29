@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<Corts.Models.HomeViewModel>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -37,48 +38,38 @@
             background: url(../../Images/whiteCar.png) no-repeat;
         }
         /*title heading*/
-        #titleInfo {
-            height: 100%;
-            width: 100%;
-            padding: 0;
-            margin: 0;
+        .navbar-header a {
+            font-size: 50px;
+            padding-top: 31px;
+            padding-bottom: 0;
+            color: #AEC3B0;
+            font-family: 'Merriweather Sans', sans-serif;
+            font-weight: 600;
+            transition-duration: .3s
         }
 
-            #titleInfo a {
-                font-size: 45px;
-                padding: 0;
-                padding-top: 31px;
-                padding-bottom: 0;
-                color: #AEC3B0;
-                font-family: 'Merriweather Sans', sans-serif;
-                font-weight: 600;
-                transition-duration: .3s;
-                height: 100%;
-                margin-left: 0;
+            .navbar-header a:hover {
+                transition-duration: .3s
             }
-
-                #titleInfo a:hover {
-                    transition-duration: .3s;
-                }
         /*Vertical line*/
         .vl {
             border-left: 2px solid #124559;
             height: 60px;
-            padding: 0;
-            margin-left: 15px;
-            margin-right: 10px;
-            margin-top: 10px;
-            margin-bottom: 0px;
-            display: inline-block;
+            margin-left: 104%;
+            margin-top: 4%;
+            border-radius: 10px;
         }
         /*description next to title*/
-        #titleInfo p {
-            width: 275px;
+        .navbar-collapse p {
+            width: 850px;
+            display: inline;
             font-size: 22px;
             color: #598392;
-            font-size: 25px;
+            position: fixed;
+            top: 3.1%;
+            left: 40%;
+            font-size: 30px;
             font-family: 'Source Sans Pro', sans-serif;
-            display: inline;
         }
         /*Nav Bar Collapse Div*/
         .navbar-collapse {
@@ -220,6 +211,9 @@
         .side #c {
             top: 374px;
         }
+
+        .side #small {
+        }
         /*Body/Content*/
         .body-content {
             margin-bottom: 0;
@@ -228,7 +222,7 @@
             margin-left: 150px;
             width: 100%;
             position: fixed;
-            margin-top: 35px;
+            margin-top: 30px;
             background-color: #EFF6E0;
             overflow: auto;
         }
@@ -439,73 +433,6 @@
         #loginForm .form-group, #reg {
             width: 1000px;
         }
-        /*.modal-backdrop {
-            z-index: 99999 !important;
-        }
-        .modal {
-            z-index: 999999999 !important;
-        }*/
-        .modal-backdrop.in {
-            z-index: 10000;
-        }
-
-        #pop {
-            margin-top: 80px;
-            padding-left: 0;
-        }
-
-        #pop_in h3 {
-            font-family: 'Merriweather Sans', sans-serif;
-            font-size: 30px;
-            font-weight: 600;
-            margin: 0;
-            padding: 0;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            text-align: center;
-            padding-right: 20px;
-        }
-
-        #pop hr {
-            margin: 0;
-            padding: 0;
-            margin-bottom: 10px;
-            margin-right: 23px;
-        }
-
-        #pop_in {
-            padding-left: 20px;
-            padding-right: 0;
-            margin-left: 0;
-            width: 350px;
-            height: 365px;
-        }
-
-            #pop_in .control-label {
-                width: 170px;
-                padding: 0;
-                margin: 0;
-                font-size: 18px;
-            }
-
-            #pop_in .col-md-10 {
-                width: 170px;
-                padding-left: 5px;
-                height: 15px;
-                margin-bottom: 15px;
-            }
-
-        #pop_but {
-            margin-bottom: 15px;
-        }
-
-        #pop input[type="submit"] {
-            width: 200px;
-            margin: 0;
-            padding: 5px;
-            font-size: 25px;
-            font-weight: 800;
-        }
     </style>
 </head>
 <body>
@@ -518,13 +445,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div id="titleInfo">
-                    @Html.ActionLink("MaintenanceMate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                    <div class="vl"></div>
-                    <p>maintenance made easy</p>
-                </div>
+                @Html.ActionLink("Maintenance Mate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <div class="vl"></div>
             </div>
             <div class="navbar-collapse collapse">
+                <p>Maintenance made easy</p>
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                     <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
@@ -538,10 +463,10 @@
                 @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
             </li>
             <li id="small">
-                @Html.ActionLink("Services", "Maintenance", "Maintenance", routeValues: null, htmlAttributes: new { id = "maintLink" })
+                @Html.ActionLink("Services", "Maintenance", "Maintenance", routeValues: new { email = ViewBag.email }, htmlAttributes: new { id = "maintLink" })
             </li>
             <li>
-                @Html.ActionLink("Settings", "Settings", "Manage", routeValues: null, htmlAttributes: new { id = "settingLink" })
+                @Html.ActionLink("Settings", "Settings", "Manage", routeValues: new { email = ViewBag.email }, htmlAttributes: new { id = "settingLink" })
             </li>
         </ul>
     </div>
