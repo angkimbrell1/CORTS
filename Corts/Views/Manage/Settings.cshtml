@@ -2,9 +2,7 @@
 @model SettingsViewModel
 
 @{
-                /**/
-
-                ViewBag.Title = "Settings";
+    ViewBag.Title = "Settings";
 }
 
 <h2 id="setTitle">Settings</h2>
@@ -12,8 +10,65 @@
 {
     <h2 id="welc">Welcome @ViewBag.user</h2>
 }
-
 <hr>
+<!--Button trigger for pop-up, remove this and reset functionality to the drop-down menu-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop" style="width:10px;height:10px"></button>
+<!--Pop up menu-->
+<div class="modal fade" id="pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="pop_in">
+            @* MAKE A POPUP FORM *@
+            @using (Html.BeginForm("Settings", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h3>Add Vehicle Info</h3>
+                <hr>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.CarType, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CarType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Mileage, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Mileage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Mileage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MonthsOwned, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.MonthsOwned, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.MonthsOwned, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TotalSpent, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.TotalSpent, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.TotalSpent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.InspectionDate, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.InspectionDate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.InspectionDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group" id="pop_but">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 <div id="vehicles">
     <div class="menu" id="left">
         @using (Html.BeginForm())
@@ -34,58 +89,9 @@
                     </div>
                 </div>
             </section>
-
         }
-        @* MAKE A POPUP FORM *@
-        @*@using (Html.BeginForm("Settings", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                    @Html.AntiForgeryToken()
-                    <h3>Add Vehicle Info</h3>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.CarType, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.CarType, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Mileage, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.Mileage, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Mileage, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.MonthsOwned, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.MonthsOwned, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.MonthsOwned, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.TotalSpent, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.TotalSpent, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.TotalSpent, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.InspectionDate, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.InspectionDate, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.InspectionDate, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Submit" onclick="location.href='@Url.Action("Add", "Manage")" class="btn btn-default" />
-                        </div>
-                    </div>
-            }*@
-
     </div>
+
     <div class="menu" id="right">
         @using (Html.BeginForm())
         {
