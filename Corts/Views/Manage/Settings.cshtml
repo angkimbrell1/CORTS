@@ -8,38 +8,21 @@
 <h2 id="setTitle">Settings</h2>
 @if (ViewBag.user != null)
 {
-<h2 id="welc">Welcome @ViewBag.user</h2>
+    <h2 id="welc">Welcome @ViewBag.user</h2>
 }
-
 <hr>
-<div id="vehicles">
-    <div class="menu" id="left">
-        @using (Html.BeginForm())
-        {
-            <section id="addVehicle">
-                @Html.AntiForgeryToken()
-                <h3>Add Vehicle</h3>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-10" id="newCar">
-                        @Html.DropDownList("CurrentCarsAvailable", (IEnumerable
-                   <SelectListItem>)ViewBag.CurrentCarList)
-                    </div>
-                </div>
-                <div class="form-group" id="add">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add" id="addBtn" class="btn btn-default" />
-                    </div>
-                </div>
-            </section>
-
-        }
-        @* MAKE A POPUP FORM *@
-        @using (Html.BeginForm("Settings", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
+<!--Button trigger for pop-up, remove this and reset functionality to the drop-down menu-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop" style="width:10px;height:10px"></button>
+<!--Pop up menu-->
+<div class="modal fade" id="pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="pop_in">
+            @* MAKE A POPUP FORM *@
+            @using (Html.BeginForm("Settings", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
                 @Html.AntiForgeryToken()
                 <h3>Add Vehicle Info</h3>
-                <hr />
+                <hr>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
@@ -76,14 +59,39 @@
                         @Html.ValidationMessageFor(m => m.InspectionDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
+                <hr>
+                <div class="form-group" id="pop_but">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Submit" class="btn btn-default" />
                     </div>
                 </div>
-        }
-
+            }
+        </div>
     </div>
+</div>
+<div id="vehicles">
+    <div class="menu" id="left">
+        @using (Html.BeginForm())
+        {
+            <section id="addVehicle">
+                @Html.AntiForgeryToken()
+                <h3>Add Vehicle</h3>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-10" id="newCar">
+                        @Html.DropDownList("CurrentCarsAvailable", (IEnumerable
+                   <SelectListItem>)ViewBag.CurrentCarList)
+                    </div>
+                </div>
+                <div class="form-group" id="add">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Add" id="addBtn" class="btn btn-default" />
+                    </div>
+                </div>
+            </section>
+        }
+    </div>
+
     <div class="menu" id="right">
         @using (Html.BeginForm())
         {
@@ -111,7 +119,7 @@
                 </div>
             </section>
         }
-        
+
     </div>
 </div>
 <div id="prof">
