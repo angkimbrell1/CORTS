@@ -115,6 +115,26 @@ namespace Corts.DAL
             return true;
            
         }
+        public bool RemoveCar(string removeID, string usersEmail)
+        {
+            var collection = GetUsersCollectionForEdit();
+            var builder = Builders<Users>.Filter;
+            var filt = builder.Where(x => x.email == usersEmail);
+            var list = collection.Find(filt).ToList();
+
+            try
+            {
+                var update = Builders<Users>.Update.PullFilter(x => x.Cars, Cars => Cars.CarID == removeID);
+                collection.UpdateOne(filt, update);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+
+
+        }
         //Get selected car from add form and return CarType
         public string GetSelectedCar(string CarSelected)
         {
