@@ -9,7 +9,6 @@ using System.Configuration;
 using System.Security.Authentication;
 using MongoDB.Driver.Linq;
 using static Corts.Models.Classes;
-using MongoDB.Driver.Builders;
 
 namespace Corts.DAL
 {
