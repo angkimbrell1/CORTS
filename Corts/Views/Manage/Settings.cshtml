@@ -10,9 +10,8 @@
 {
     <h2 id="welc">Welcome @ViewBag.user</h2>
 }
+<h4>Add or remove vehicles and change your account preferences</h4>
 <hr>
-<!--Button trigger for pop-up, remove this and reset functionality to the drop-down menu-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop" style="width:10px;height:10px"></button>
 <div id="vehicles">
     <div class="menu" id="left">
         @using (Html.BeginForm())
@@ -29,7 +28,7 @@
                 </div>
                 <div class="form-group" id="add">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add" id="addBtn" class="btn btn-default" />
+                        <input type="button" value="Add" id="addBtn" data-toggle="modal" data-target="#pop" class="btn btn-default" />
                     </div>
                 </div>
             </section>
@@ -42,7 +41,7 @@
                 @* MAKE A POPUP FORM *@
                 @using (Html.BeginForm("Add", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    <div class="form-group" style="visibility: hidden">
+                    <div id="hid"class="form-group" style="visibility: hidden">
                         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
@@ -55,7 +54,7 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10" id="newCar">
+                        <div class="col-md-10">
                             @Html.DropDownListFor(m=> m.CarType,(IEnumerable
                        <SelectListItem>)ViewBag.CurrentCarList)
                         </div>
