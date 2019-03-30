@@ -10,9 +10,8 @@
 {
     <h2 id="welc">Welcome @ViewBag.user</h2>
 }
+<h4>Add or remove vehicles and manage your account settings</h4>
 <hr>
-<!--Button trigger for pop-up, remove this and reset functionality to the drop-down menu-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop" style="width:10px;height:10px"></button>
 <!--Pop up menu-->
 <div class="modal fade" id="pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -62,7 +61,7 @@
                 <hr>
                 <div class="form-group" id="pop_but">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Submit" class="btn btn-default" />
+                        <input type="submit" value="Submit" class="btn btn-default"/>
                     </div>
                 </div>
             }
@@ -85,7 +84,7 @@
                 </div>
                 <div class="form-group" id="add">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add" id="addBtn" class="btn btn-default" />
+                        <input type="button" value="Add" id="addBtn" class="btn btn-default" data-toggle="modal" data-target="#pop"/>
                     </div>
                 </div>
             </section>

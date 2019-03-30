@@ -22,7 +22,7 @@ namespace Corts.DAL
         private string host = "";
         private string password = "";
 
-        
+
 
         private string dbName = "CortsDB";
         private string collectionName = "Users";
