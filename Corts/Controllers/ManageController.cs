@@ -48,7 +48,7 @@ namespace Corts.Controllers
                     usersCarsList.Add(new SelectListItem
                     {
                         Text = list[i].Type,
-                        Value = list[i].ID.ToString()
+                        Value = list[i].CarID
                     });
                 }
                 ViewBag.UsersCars = usersCarsList;
@@ -65,6 +65,7 @@ namespace Corts.Controllers
             string CarSelected = GetSelectedCarType(addForm.CarType);
 
             UsersCars newCar = new UsersCars();
+            newCar.CarID = Guid.NewGuid().ToString();
             newCar.Type = CarSelected;
             newCar.mileage = Int32.Parse(addForm.Mileage);
             newCar.monthsOwned = Int32.Parse(addForm.MonthsOwned);
@@ -81,6 +82,16 @@ namespace Corts.Controllers
             {
                 throw new Exception("Error");
             }
+        }
+        [HttpPost]
+        public ActionResult Remove(SettingsViewModel remove)
+        {
+            string usersEmail = remove.Email;
+            Session["email"] = usersEmail;
+            var email = (string)Session["email"];
+            string carToBeRemoved = remove.CarType;
+            dal.RemoveCar(carToBeRemoved, usersEmail);
+            return RedirectToAction("Settings", "Manage", new { email });
         }
 
         private string GetSelectedCarType(string CarSelected)

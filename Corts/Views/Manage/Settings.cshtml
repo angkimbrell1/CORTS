@@ -98,35 +98,38 @@
         </div>
     </div>
     <div class="menu" id="right">
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Remove", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
-            <section id="removeVehicle">
-                @Html.AntiForgeryToken()
-                <h3>Remove Vehicle</h3>
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-10" id="removeCar">
-                        @if (ViewBag.UsersCars != null)
-                        {
-                            @Html.DropDownList("UsersCars", (IEnumerable
-                        <SelectListItem>)ViewBag.UsersCars)
-                        }
-                        else
-                        {
-                            <select></select>
-                        }
+            <div class="form-group" style="visibility: hidden">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+                <section id="removeVehicle">
+                    @Html.AntiForgeryToken()
+                    <h3>Remove Vehicle</h3>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-10" id="removeCar">
+                            @if (ViewBag.UsersCars != null)
+                            {
+                                @Html.DropDownListFor(m=> m.CarType,(IEnumerable
+                          <SelectListItem>)ViewBag.UsersCars)
+                            }
+                            else
+                            {
+                                <select></select>
+                            }
+                        </div>
                     </div>
-                </div>
-                <div class="form-group" id="remove">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Remove" id="remBtn" class="btn btn-default" />
+                    <div class="form-group" id="remove">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Remove" id="remBtn" class="btn btn-default" />
+                        </div>
                     </div>
-                </div>
-            </section>
-        }
+                </section>
+                }
 
-    </div>
-</div>
+            </div>
+        </div>
 <div id="prof">
     <div class="row">
         <div class="col-md-8">

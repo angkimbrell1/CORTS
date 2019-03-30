@@ -19,6 +19,7 @@ namespace Corts.Models
             public string InspectionDue { get; set; }
             public int monthsOwned { get; set; }
             public int totalSpent { get; set; }
+            public string CarID { get; set; }
             public List<PersonalMaintenance> PersonalMaintenance { get; set; }
         }
         public class PersonalMaintenance
