@@ -13,13 +13,14 @@ namespace Corts.Controllers
             ViewBag.Message = "Maintenance";
             if (email != null)
             {
-                ViewBag.UsersEmail = email;
+                ViewBag.Email = email;
             }
             else
             {
                 ViewBag.UsersEmail = null;
             }
-            return View(email);
+            ViewBag.Email = email;
+            return View();
         }
     }
 }
