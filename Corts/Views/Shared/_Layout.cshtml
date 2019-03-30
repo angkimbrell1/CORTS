@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - My Car Ownership Tracker</title>
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Hammersmith+One|Paytone+One|Russo+One" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
@@ -45,22 +46,25 @@
             margin: 0;
         }
 
-            #titleInfo a {
-                font-size: 45px;
-                padding: 0;
-                padding-top: 31px;
-                padding-bottom: 0;
-                color: #AEC3B0;
-                font-family: 'Merriweather Sans', sans-serif;
-                font-weight: 600;
-                transition-duration: .3s;
-                height: 100%;
-                margin-left: 0;
-            }
+        #titleInfo a {
+            font-size: 55px;
+            padding: 0;
+            padding-top: 31px;
+            padding-bottom: 0;
+            color: #AEC3B0;
+            /*font-family: 'Merriweather Sans', sans-serif;*/
+            font-family: 'Paytone One', sans-serif;
+            /*font-family: 'Hammersmith One', sans-serif;*/
+            font-weight: 900;
+            transition-duration: .3s;
+            height: 100%;
+            margin-left: 0;
+        }
 
-                #titleInfo a:hover {
-                    transition-duration: .3s;
-                }
+        #titleInfo a:hover {
+            transition-duration: .3s;
+            color: #EFF6E0;
+        }
         /*Vertical line*/
         .vl {
             border-left: 2px solid #124559;
@@ -138,23 +142,23 @@
             background-color: #124559;
         }
             /*buttons*/
-            .side li {
-                border-radius: 12px;
-                width: 67%;
-                height: 105px;
-                margin-top: 20px;
-                margin-left: 16%;
-                margin-right: 9%;
-                font-size: inherit;
-                background-color: #598392;
-                font-family: 'Merriweather Sans', sans-serif;
-                transition-duration: .3s;
-            }
+        .side li {
+            border-radius: 12px;
+            width: 67%;
+            height: 105px;
+            margin-top: 20px;
+            margin-left: 16%;
+            margin-right: 9%;
+            font-size: inherit;
+            background-color: #598392;
+            font-family: 'Merriweather Sans', sans-serif;
+            transition-duration: .3s;
+        }
 
-                .side li:hover {
-                    transition-duration: .3s;
-                    background-color: #EFF6E0;
-                }
+        .side li:hover {
+            transition-duration: .3s;
+            background-color: #EFF6E0;
+        }
 
         #top {
             margin-top: 40px;
@@ -169,11 +173,11 @@
             color: black;
         }
 
-            .side a:hover {
-                transition-duration: .3s;
-                background-color: transparent;
-                color: black;
-            }
+        .side a:hover {
+            transition-duration: .3s;
+            background-color: transparent;
+            color: black;
+        }
 
         #homeLink, #maintLink, #settingLink {
             margin-top: 7px;
@@ -235,9 +239,10 @@
         }
 
             .body-content h2 {
-                font-family: 'Merriweather Sans', sans-serif;
-                font-size: 35px;
-                font-weight: 400;
+                /*font-family: 'Merriweather Sans', sans-serif;*/
+                /*font-family: 'Paytone One', sans-serif;*/
+                font-family: 'Hammersmith One', sans-serif;
+                font-size: 40px;
                 margin-bottom: 0;
                 padding-bottom: 0;
             }
@@ -283,6 +288,12 @@
             }
         }
 
+        @@media only screen and (max-width: 970px){
+            #titleInfo a {
+                font-size: 35px;
+            }
+        }
+
         @@media only screen and (max-width: 768px) {
             .body-content {
                 margin-left: 70px;
@@ -292,13 +303,19 @@
                 width: 75px;
             }
 
-                .side li {
-                    height: 60px;
-                    width: 60px;
-                    margin-right: 27px;
-                    margin-left: 22px;
-                    padding-top: 0.1px;
-                }
+            .side li {
+                height: 60px;
+                width: 60px;
+                margin-right: 27px;
+                margin-left: 22px;
+                padding-top: 0.1px;
+                font-size: 10px;
+            }
+            #homeLink, #maintLink, #settingLink{
+                padding: 0;
+                padding-top: 31px;
+                margin-left: 14.5px;
+            }
 
             #top {
                 margin-top: 20px;
@@ -320,6 +337,10 @@
             .navbar-header a {
                 font-size: 33px;
                 margin-left: 37px;
+            }
+            #titleInfo a {
+                font-size: 25px;
+                margin-left: 35px;
             }
         }
         /*Settings*/
@@ -399,6 +420,12 @@
         #addBtn, #remBtn {
             margin-right: 40px;
             margin-bottom: 20px;
+            width: 120px;
+            height: 45px;
+            font-size: 22.5px;
+            font-weight: 700;
+            border-radius: 5px;
+            padding: 0;
         }
 
         #notifications #Car {
@@ -440,12 +467,7 @@
         #loginForm .form-group, #reg {
             width: 1000px;
         }
-        /*.modal-backdrop {
-            z-index: 99999 !important;
-        }
-        .modal {
-            z-index: 999999999 !important;
-        }*/
+
         .modal-backdrop {
             z-index: -999999999 !important;
         }
@@ -472,6 +494,7 @@
             padding: 0;
             margin-bottom: 10px;
             margin-right: 23px;
+            width: 305px;
         }
 
         #pop_in {
@@ -507,6 +530,92 @@
             font-size: 25px;
             font-weight: 800;
         }
+        /*HOME PAGE*/
+        hr {
+            width: 1000px;
+            margin-left: 0;
+            margin-top: 5px;
+        }
+
+        .homeImg {
+            display: inline-block;
+            width: 300px;
+            height: 200px;
+            border: 1px solid #598392;
+            margin: 0;
+            padding: 0;
+            margin-right: 45px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+        }
+
+        #chevy {
+            background: url(../../Images/chevySmall.png) no-repeat;
+        }
+
+            #chevy p, #ford p, #subar p {
+                color: white;
+                background-color: #124559;
+                font-size: 20px;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                padding-top: 55px;
+                text-align: center;
+                font-size: 30px;
+                font-family: 'Source Sans Pro', sans-serif;
+                opacity: 0;
+                border-radius: 18px;
+                width: inherit;
+                height: inherit;
+                transition-duration: .3s;
+            }
+
+                #chevy p:hover, #ford p:hover, #subar p:hover {
+                    opacity: 0.65;
+                    transition-duration: .3s;
+                }
+
+        #ford {
+            background: url(../../Images/fordSmall.png) no-repeat;
+        }
+
+        #subar {
+            background: url(../../Images/subarSmall.png) no-repeat;
+        }
+
+        #info {
+            width: 1000px;
+            border-right: 1px solid #AEC3B0;
+            border-bottom: 1px solid #AEC3B0;
+        }
+
+            #info th {
+                font-family: 'Merriweather Sans', sans-serif;
+                background-color: #01161E;
+                color: #AEC3B0;
+                font-size: 20px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                text-align: center;
+            }
+
+        #infoBod th {
+            background-color: #124559;
+            color: #EFF6E0;
+            font-size: 18px;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        #infoBod td {
+            color: #01161E;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 16px;
+            text-align: center;
+            font-weight: 700;
+            border-right: 1px solid #AEC3B0;
+        }
     </style>
 </head>
 <body>
@@ -521,8 +630,8 @@
                 </button>
                 <div id="titleInfo">
                     @Html.ActionLink("MaintenanceMate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                    <div class="vl"></div>
-                    <p>maintenance made easy</p>
+                    <!--<div class="vl"></div>
+                        <p>maintenance made easy</p>-->
                 </div>
             </div>
             <div class="navbar-collapse collapse">
