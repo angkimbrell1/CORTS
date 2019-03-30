@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<Corts.Models.HomeViewModel>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -644,13 +645,13 @@
     <div class="side">
         <ul class="nav navbar-nav">
             <li id="top">
-                @Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "homeLink" })
+                @Html.ActionLink("Home", "Index", "Home", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "homeLink" })
             </li>
             <li id="small">
-                @Html.ActionLink("Services", "Maintenance", "Maintenance", routeValues: null, htmlAttributes: new { id = "maintLink" })
+                @Html.ActionLink("Services", "Maintenance", "Maintenance", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "maintLink" })
             </li>
             <li>
-                @Html.ActionLink("Settings", "Settings", "Manage", routeValues: null, htmlAttributes: new { id = "settingLink" })
+                @Html.ActionLink("Settings", "Settings", "Manage", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "settingLink" })
             </li>
         </ul>
     </div>

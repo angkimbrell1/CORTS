@@ -12,9 +12,9 @@ namespace Corts.Models
     {
         public class UsersCars
         {
-            public int ID { get; set; }
+            [BsonId(IdGenerator = typeof(CombGuidGenerator))]
+            public Guid ID { get; set; }
             public string Type { get; set; }
-            public Guid MaintenanceID { get; set; }
             public int mileage { get; set; }
             public string InspectionDue { get; set; }
             public int monthsOwned { get; set; }
@@ -23,8 +23,6 @@ namespace Corts.Models
         }
         public class PersonalMaintenance
         {
-            public int ID { get; set; }
-            public int mileage { get; set; }
             public List<PersonalMaintenanceObject> OilChange { get; set; }
             public List<PersonalMaintenanceObject> WindShieldFluid { get; set; }
             public List<PersonalMaintenanceObject> PowerSteering { get; set; }

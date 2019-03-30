@@ -17,6 +17,7 @@ namespace Corts.Controllers
 
             ViewBag.Message = "Settings";
             ViewBag.user = email;
+            ViewBag.Email = email;
 
             ViewBag.Message = "Settings";
 
@@ -56,15 +57,42 @@ namespace Corts.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Add()
+        public ActionResult Add(SettingsViewModel addForm)
         {
-            return View("~/Views/Home/Index.cshtml");
+            string usersEmail = addForm.Email;
+
+            //Get the type of car selected by the CarID
+            string CarSelected = GetSelectedCarType(addForm.CarType);
+
+            UsersCars newCar = new UsersCars();
+            newCar.Type = CarSelected;
+            newCar.mileage = Int32.Parse(addForm.Mileage);
+            newCar.monthsOwned = Int32.Parse(addForm.MonthsOwned);
+            newCar.totalSpent = Int32.Parse(addForm.TotalSpent);
+            newCar.InspectionDue = addForm.InspectionDate;
+
+            if (dal.AddCar(usersEmail, newCar))
+            {
+                Session["email"] = usersEmail;
+                var email = (string)Session["email"];
+                return RedirectToAction("Settings", "Manage", new { email });
+            }
+            else
+            {
+                throw new Exception("Error");
+            }
         }
+
+        private string GetSelectedCarType(string CarSelected)
+        {
+            return dal.GetSelectedCar(CarSelected);
+        }
+
         private List<UsersCars> getCurrentUserCars(string email)
         {
             return dal.getCurrentUsersCars(email);
         }
-        public List<UsersCars> getUsersCars(string email)
+        private List<UsersCars> getUsersCars(string email)
         {
             return dal.getCurrentUsersCars(email);
         }

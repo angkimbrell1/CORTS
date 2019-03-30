@@ -23,7 +23,7 @@ namespace Corts.DAL
         private string host = "";
         private string password = "";
 
-        
+
 
         private string dbName = "CortsDB";
         private string collectionName = "Users";
@@ -34,6 +34,8 @@ namespace Corts.DAL
         public Dal()
         {
         }
+
+        //Get current list of available cars in database
         public List<Cars> getCurrentCarList()
         {
             var collection = GetCarsCollection();
@@ -52,6 +54,8 @@ namespace Corts.DAL
                 return carList;
             }
         }
+
+        //Get list of current cars user has for settings and maintenance page
         public List<UsersCars> getCurrentUsersCars(string email)
         {
             var collection = GetUsersCollection();
@@ -72,6 +76,65 @@ namespace Corts.DAL
                 return usersCars;
             }
         }
+        
+
+        //Add a car -> Completes Add Form on SettingsPage
+        public bool AddCar(string usersEmail, UsersCars newCar)
+        {
+            var collection = GetUsersCollectionForEdit();
+            var builder = Builders<Users>.Filter;
+            var filt = builder.Where(x => x.email == usersEmail);
+            var list = collection.Find(filt).ToList();
+            if(list[0].Cars == null)
+            {
+                try
+                {
+                    var update = Builders<Users>.Update.Unset(e => e.Cars);
+                    collection.UpdateOne(filt, update, new UpdateOptions { IsUpsert = true });
+                    var updateCar = Builders<Users>.Update.Push(e => e.Cars, newCar);
+                    collection.UpdateOne(filt, updateCar);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                try
+                {
+                    var update = Builders<Users>.Update.Push(e => e.Cars, newCar);
+                    collection.UpdateOne(filt, update);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+           
+            return true;
+           
+        }
+        //Get selected car from add form and return CarType
+        public string GetSelectedCar(string CarSelected)
+        {
+            var collection = GetCarsCollection();
+            var builder = Builders<Cars>.Filter;
+            var filt = builder.Where(x => x.id == CarSelected);
+            var list = collection.Find(filt).ToList();
+            string CarType = null;
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                CarType = list[0].type;
+            }
+            return CarType;
+        }
+
+        //Login user
         public bool LoginUser(Users user)
         {
             var collection = GetUsersCollection();
@@ -131,6 +194,7 @@ namespace Corts.DAL
                 return false;
             }
         }
+        //Check User Registration Date
         public bool getCreatedDate(Users user)
         {
             var collection = GetUsersCollection();
@@ -191,6 +255,7 @@ namespace Corts.DAL
                 return false;
             }
         }
+        //Register User
         public bool CreateUser(Users user)
         {
             //New byte array to hold the salt
@@ -227,6 +292,8 @@ namespace Corts.DAL
             return true;
         }
 
+
+        //Database Collection Retrievers
 
         private IMongoCollection<Cars> GetCarsCollection()
         {
