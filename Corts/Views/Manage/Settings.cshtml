@@ -100,15 +100,15 @@
     <div class="menu" id="right">
         @using (Html.BeginForm("Remove", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
-            <div class="form-group" style="visibility: hidden">
+            <div class="form-group" style="visibility: hidden;display: none;">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             </div>
                 <section id="removeVehicle">
                     @Html.AntiForgeryToken()
                     <h3>Remove Vehicle</h3>
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <div class="col-md-10" id="removeCar">
+                    <div class="form-group" style="margin-bottom: 0; padding-bottom: 0">
+                        <div class="col-md-10" id="removeCar" style="margin-bottom: 0; padding-bottom: 0">
                             @if (ViewBag.UsersCars != null)
                             {
                                 @Html.DropDownListFor(m=> m.CarType,(IEnumerable
@@ -120,7 +120,7 @@
                             }
                         </div>
                     </div>
-                    <div class="form-group" id="remove">
+                    <div class="form-group" id="remove" style="margin-top: 0; padding-top: 0">
                         <div class="col-md-offset-2 col-md-10">
                             <input type="submit" value="Remove" id="remBtn" class="btn btn-default" />
                         </div>
