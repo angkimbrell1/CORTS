@@ -20,9 +20,20 @@ namespace Corts.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [Display(Name = "Current Email")]
+        [EmailAddress]
+        public string CurrEmail { get; set; }
+        [Display(Name = "New Email")]
+        [EmailAddress]
+        public string NewEmail { get; set; }
+
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+        [Display(Name = "Current Password")]
+        public string CurrPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "New Password")]
+        public string NewPassword { get; set; }
 
         //[Display(Name = "UsersCars")]
         //public IEnumerable<SelectListItem> UsersCars { get; set; }

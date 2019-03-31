@@ -29,35 +29,35 @@
             <th>Overall Rating</th>
             @foreach (var rating in ViewBag.OverallRating)
             {
-                <td>@rating</td>
+                <td>@rating/5</td>
             }
         </tr>
         <tr>
             <th>Reliability</th>
             @foreach (var reliability in ViewBag.reliability)
             {
-                <td>@reliability</td>
+                <td>@reliability/5</td>
             }
         </tr>
         <tr>
             <th>Maintenance Cost</th>
             @foreach (var cost in ViewBag.MaintenanceCost)
             {
-                <td>@cost</td>
+                <td>$@cost</td>
             }
         </tr>
         <tr>
             <th>Highway</th>
             @foreach (var highway in ViewBag.Highway)
             {
-                <td>@highway</td>
+                <td>@highway mph</td>
             }
         </tr>
         <tr>
             <th>City</th>
             @foreach (var city in ViewBag.City)
             {
-                <td>@city</td>
+                <td>@city mph</td>
             }
         </tr>
     </tbody>

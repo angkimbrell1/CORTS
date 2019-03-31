@@ -59,11 +59,13 @@ namespace Corts.Controllers
         [HttpPost]
         public ActionResult Add(SettingsViewModel addForm)
         {
+            //Grab users email to add to correct collection document
             string usersEmail = addForm.Email;
 
             //Get the type of car selected by the CarID
             string CarSelected = GetSelectedCarType(addForm.CarType);
 
+            //Create new UsersCar object to add into database -> Gets information from the Form
             UsersCars newCar = new UsersCars();
             newCar.CarID = Guid.NewGuid().ToString();
             newCar.Type = CarSelected;
@@ -72,25 +74,34 @@ namespace Corts.Controllers
             newCar.totalSpent = Int32.Parse(addForm.TotalSpent);
             newCar.InspectionDue = addForm.InspectionDate;
 
+            //If dal.AddCar is succesful -> redirects to users setting page
             if (dal.AddCar(usersEmail, newCar))
             {
                 Session["email"] = usersEmail;
                 var email = (string)Session["email"];
                 return RedirectToAction("Settings", "Manage", new { email });
-            }
+            } //Not successful throw error
             else
             {
                 throw new Exception("Error");
             }
         }
+        //Removes a car
         [HttpPost]
         public ActionResult Remove(SettingsViewModel remove)
         {
+            //Grab email to redirect to page with users email still intact
             string usersEmail = remove.Email;
             Session["email"] = usersEmail;
             var email = (string)Session["email"];
+
+            //Grab the car selected to be removed
             string carToBeRemoved = remove.CarType;
+
+            //Calls db function in dal.cs file
             dal.RemoveCar(carToBeRemoved, usersEmail);
+
+            //Return to users setting page
             return RedirectToAction("Settings", "Manage", new { email });
         }
 

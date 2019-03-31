@@ -81,16 +81,25 @@ namespace Corts.DAL
         //Add a car -> Completes Add Form on SettingsPage
         public bool AddCar(string usersEmail, UsersCars newCar)
         {
+            //Grab the UsersCollectionForEdit -> Allows us to modify instead of just read
             var collection = GetUsersCollectionForEdit();
+            //Create a filter object
             var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
             var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
             var list = collection.Find(filt).ToList();
+
+            //If user has no cars -> We must first delete the "null" list in the DB and then add a new car
             if(list[0].Cars == null)
             {
                 try
                 {
+                    //Delete "null" object in DB for Cars
                     var update = Builders<Users>.Update.Unset(e => e.Cars);
                     collection.UpdateOne(filt, update, new UpdateOptions { IsUpsert = true });
+
+                    //Add new car
                     var updateCar = Builders<Users>.Update.Push(e => e.Cars, newCar);
                     collection.UpdateOne(filt, updateCar);
                 }
@@ -99,10 +108,12 @@ namespace Corts.DAL
                     return false;
                 }
             }
+            //User already has a car in the database and we can simply just update document to add another
             else
             {
                 try
                 {
+                    //Adds car
                     var update = Builders<Users>.Update.Push(e => e.Cars, newCar);
                     collection.UpdateOne(filt, update);
                 }
@@ -124,6 +135,7 @@ namespace Corts.DAL
 
             try
             {
+                //Removes car with specific carID
                 var update = Builders<Users>.Update.PullFilter(x => x.Cars, Cars => Cars.CarID == removeID);
                 collection.UpdateOne(filt, update);
             }
