@@ -10,8 +10,6 @@ namespace Corts.Models
     
     public class SettingsViewModel
     { 
-   
-        
         [Display(Name = "Car")]
         public string Car { get; set; }
 
@@ -22,12 +20,23 @@ namespace Corts.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+        [Display(Name = "Current Email")]
+        [EmailAddress]
+        public string CurrEmail { get; set; }
+        [Display(Name = "New Email")]
+        [EmailAddress]
+        public string NewEmail { get; set; }
 
-        [Display(Name = "UsersCars")]
-        public IEnumerable<SelectListItem> UsersCars { get; set; }
+        [DataType(DataType.Password)]
+        [Display(Name = "Current Password")]
+        public string CurrPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "New Password")]
+        public string NewPassword { get; set; }
+
+        //[Display(Name = "UsersCars")]
+        //public IEnumerable<SelectListItem> UsersCars { get; set; }
 
         [Display(Name = "Months Owned")]
         public string MonthsOwned { get; set; }

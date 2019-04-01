@@ -16,6 +16,8 @@ namespace Corts.Controllers
         private Dal dal = new Dal();
         public ActionResult Index(string email)
         {
+            //Get car list function 
+            // getCarList();
             //Get list of current cars in the database
             List<Cars> currentCarList = new List<Cars>();
             List<string> typeOfCar = new List<string>();
@@ -25,7 +27,7 @@ namespace Corts.Controllers
             List<int> highway = new List<int>();
             List<int> city = new List<int>();
             currentCarList = getCurrentCarList();
-            foreach(var car in currentCarList)
+            foreach (var car in currentCarList)
             {
                 typeOfCar.Add(car.type);
                 overallRating.Add(car.OverallRating);
@@ -41,6 +43,8 @@ namespace Corts.Controllers
             ViewBag.City = city;
             ViewBag.Reliability = reliability;
             ViewBag.OverallRating = overallRating;
+
+            ViewBag.Email = email;
             return View();
         }
 

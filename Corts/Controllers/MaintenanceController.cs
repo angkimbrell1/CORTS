@@ -11,6 +11,15 @@ namespace Corts.Controllers
         public ActionResult Maintenance(string email)
         {
             ViewBag.Message = "Maintenance";
+            if (email != null)
+            {
+                ViewBag.Email = email;
+            }
+            else
+            {
+                ViewBag.UsersEmail = null;
+            }
+            ViewBag.Email = email;
             return View();
         }
     }

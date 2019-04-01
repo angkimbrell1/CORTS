@@ -8,22 +8,23 @@ using System.Web;
 
 namespace Corts.Models
 {
-    public class Classes
+    public class CortsClasses
     {
         public class UsersCars
         {
-            [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-            public Guid ID { get; set; }
+            public int ID { get; set; }
             public string Type { get; set; }
+            public Guid MaintenanceID { get; set; }
             public int mileage { get; set; }
             public string InspectionDue { get; set; }
             public int monthsOwned { get; set; }
             public int totalSpent { get; set; }
-            public string CarID { get; set; }
             public List<PersonalMaintenance> PersonalMaintenance { get; set; }
         }
         public class PersonalMaintenance
         {
+            public int ID { get; set; }
+            public int mileage { get; set; }
             public List<PersonalMaintenanceObject> OilChange { get; set; }
             public List<PersonalMaintenanceObject> WindShieldFluid { get; set; }
             public List<PersonalMaintenanceObject> PowerSteering { get; set; }
