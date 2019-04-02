@@ -23,10 +23,12 @@ namespace Corts.DAL
         private string host = "";
         private string password = "";
 
-        
+
 
         private string dbName = "CortsDB";
         private string collectionName = "Users";
+
+       
 
 
 
@@ -60,13 +62,13 @@ namespace Corts.DAL
         {
             var collection = GetUsersCollection();
             string usersemail = email;
-           
+
 
             var builder = Builders<Users>.Filter;
             var filt = builder.Where(x => x.email == usersemail);
             var list = collection.Find(filt).ToList();
 
-            if(list.Count == 0)
+            if (list.Count == 0)
             {
                 return null;
             }
@@ -76,7 +78,7 @@ namespace Corts.DAL
                 return usersCars;
             }
         }
-        
+
 
         //Add a car -> Completes Add Form on SettingsPage
         public bool AddCar(string usersEmail, UsersCars newCar)
@@ -91,7 +93,7 @@ namespace Corts.DAL
             var list = collection.Find(filt).ToList();
 
             //If user has no cars -> We must first delete the "null" list in the DB and then add a new car
-            if(list[0].Cars == null)
+            if (list[0].Cars == null)
             {
                 try
                 {
@@ -122,9 +124,9 @@ namespace Corts.DAL
                     return false;
                 }
             }
-           
+
             return true;
-           
+
         }
         public bool RemoveCar(string removeID, string usersEmail)
         {
@@ -147,6 +149,138 @@ namespace Corts.DAL
 
 
         }
+
+
+        //Check password before account updates
+        public bool CheckPassword(string usersEmail, string passwordInserted)
+        {
+            var collection = GetUsersCollection();
+            string email = usersEmail;
+            string password = passwordInserted;
+
+            var builder = Builders<Users>.Filter;
+            var filt = builder.Where(x => x.email == email);
+            var list = collection.Find(filt).ToList();
+
+            if (list.Count == 0)
+            {
+                return false;
+            }
+
+            //Get savedPasswordHash from the data base
+            string passwordFromDB = list[0].password;
+
+            //Convert the password from the DB to an array of bytes
+            byte[] hashBytes = Convert.FromBase64String(passwordFromDB);
+
+            //Get the salt from the hashbytes
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+
+            //Use the same variable to hash the password that the user entered
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+
+            //Convert the hashed password from the user to an array of bytes
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            //Set a flag 'ok' to validate the password that the user entered
+            //with the password in the database
+            int ok = 1;
+
+            //Loop that checks the validity of the password by comparing each byte
+            //of the db password with the user password. The hashBytes starts at 16
+            //because the salt value is stored in the first 16 bytes and we aren't
+            //comparing that with anything.
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                {
+                    ok = 0;
+                }
+            }
+
+            //log the user in
+            if (ok == 1)
+            {
+                return true;
+            }
+
+            //Deny the user
+            else
+            {
+                return false;
+            }
+        }
+
+        //Update Users Email
+        public bool UpdateEmail(string usersEmail, string newEmail)
+        {
+            //Grab the UsersCollectionForEdit -> Allows us to modify instead of just read
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+
+            try
+            {
+                //Update users email
+                var updateEmail = Builders<Users>.Update.Set(e => e.email, newEmail);
+                collection.UpdateOne(filt, updateEmail);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public string GetUsername(string email)
+        {
+            var collection = GetUsersCollection();
+            string usersemail = email;
+
+
+            var builder = Builders<Users>.Filter;
+            var filt = builder.Where(x => x.email == usersemail);
+            var list = collection.Find(filt).ToList();
+
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                string username = list[0].Username;
+                return username;
+            }
+        }
+        public bool UpdateUsername(string usersEmail, string username)
+        {
+            //Grab the UsersCollectionForEdit -> Allows us to modify instead of just read
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+
+            try
+            {
+                //Update users email
+                var updateUsername = Builders<Users>.Update.Set(e => e.Username, username);
+                collection.UpdateOne(filt, updateUsername);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
         //Get selected car from add form and return CarType
         public string GetSelectedCar(string CarSelected)
         {
@@ -402,6 +536,8 @@ namespace Corts.DAL
 
             this.disposed = true;
         }
+
+        
         #endregion
     }
 }

@@ -14,7 +14,14 @@ namespace Corts.Controllers
         private Dal dal = new Dal();
         public ActionResult Settings(string email)
         {
+            string username = dal.GetUsername(email);
 
+            if(username != null)
+            {
+                ViewBag.Username = username;
+            }
+
+            
             ViewBag.Message = "Settings";
             ViewBag.user = email;
             ViewBag.Email = email;
@@ -47,7 +54,7 @@ namespace Corts.Controllers
                 {
                     usersCarsList.Add(new SelectListItem
                     {
-                        Text = list[i].Type,
+                        Text = list[i].CarNickname,
                         Value = list[i].CarID
                     });
                 }
@@ -105,6 +112,86 @@ namespace Corts.Controllers
             return RedirectToAction("Settings", "Manage", new { email });
         }
 
+        //Update the profile information
+        [HttpPost]
+        public ActionResult UpdateInfo(SettingsViewModel UpdateInfo)
+        {
+
+            //Get the users current email
+            string usersEmail = UpdateInfo.CurrEmail;
+
+            //Check and make sure the password is correct -> If not return error
+
+            if (dal.CheckPassword(usersEmail, UpdateInfo.CurrPassword) == false)
+            {
+                Session["email"] = usersEmail;
+                var email = (string)Session["email"];
+                TempData["Invalid"] = "Invalid Credentials";
+                return RedirectToAction("Settings", "Manage", new { email });
+            }
+
+
+            //We need to check if all things are null: 
+            //if((UpdateInfo.Username != null) && (UpdateInfo.NewEmail != null) && (UpdateInfo.NewPassword != null)) first
+            //else if((UpdateInfo.Username != null) && (UpdateInfo.NewPassword != null)) second
+            //else if((UpdateInfo.NewEmail !=null) && (UpdateInfo.NewPassword != null)) third
+            if ((UpdateInfo.Username != null) && (UpdateInfo.NewEmail != null))
+            {
+                if(dal.UpdateUsername(usersEmail, UpdateInfo.Username) && dal.UpdateEmail(usersEmail, UpdateInfo.NewEmail))
+                {
+                    //Get new email variable to send as a session to new view
+                    string newEmail = UpdateInfo.NewEmail;
+                    Session["email"] = newEmail;
+                    var email = (string)Session["email"];
+
+                    // Return to users setting page
+                    return RedirectToAction("Settings", "Manage", new { email });
+                }
+                else
+                {
+                    throw new Exception("Something broke!");
+                }
+            }
+            else if(UpdateInfo.NewEmail != null)
+            {
+                if(dal.UpdateEmail(usersEmail, UpdateInfo.NewEmail))
+                {
+                    //Get new email variable to send as a session to the new view
+                    string newEmail = UpdateInfo.NewEmail;
+                    Session["email"] = newEmail;
+                    var email = (string)Session["email"];
+
+                    // Return to users setting page
+                    return RedirectToAction("Settings", "Manage", new { email });
+                }
+                else
+                {
+                    throw new Exception("Something broke!");
+                }
+            }
+            else if(UpdateInfo.Username != null)
+            {
+                if(dal.UpdateUsername(usersEmail, UpdateInfo.Username))
+                {
+                    Session["email"] = usersEmail;
+                    var email = (string)Session["email"];
+
+                    // Return to users setting page
+                    return RedirectToAction("Settings", "Manage", new { email });
+                }
+                else
+                {
+                    throw new Exception("Something Broke!");
+                }
+            }
+            else
+            {
+                Session["email"] = usersEmail;
+                var email = (string)Session["email"];
+                return RedirectToAction("Settings", "Manage", new { email });
+            }
+            
+        }
         private string GetSelectedCarType(string CarSelected)
         {
             return dal.GetSelectedCar(CarSelected);

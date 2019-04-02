@@ -20,6 +20,7 @@ namespace Corts.Models
             public int monthsOwned { get; set; }
             public int totalSpent { get; set; }
             public string CarID { get; set; }
+            public string CarNickname { get; set; }
             public List<PersonalMaintenance> PersonalMaintenance { get; set; }
         }
         public class PersonalMaintenance
@@ -47,6 +48,9 @@ namespace Corts.Models
         {
             [BsonId(IdGenerator = typeof(CombGuidGenerator))]
             public Guid Id { get; set; }
+
+            [BsonElement("Username")]
+            public string Username { get; set; }
 
             [BsonElement("email")]
             public string email { get; set; }
