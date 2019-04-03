@@ -80,6 +80,7 @@ namespace Corts.Controllers
             newCar.monthsOwned = Int32.Parse(addForm.MonthsOwned);
             newCar.totalSpent = Int32.Parse(addForm.TotalSpent);
             newCar.InspectionDue = addForm.InspectionDate;
+            newCar.CarNickname = addForm.CarNickname;
 
             //If dal.AddCar is succesful -> redirects to users setting page
             if (dal.AddCar(usersEmail, newCar))
