@@ -78,8 +78,18 @@ namespace Corts.DAL
                 return usersCars;
             }
         }
-
-
+        //Get users emails for email reminders
+        public List<string> GetUsersEmails()
+        {
+            var collection = GetUsersCollection();
+            var coll = collection.AsQueryable();
+            List<string> Emails = new List<string>();
+            foreach (var item in coll)
+            {
+                Emails.Add(item.email);
+            }
+            return Emails;
+        }
         //Add a car -> Completes Add Form on SettingsPage
         public bool AddCar(string usersEmail, UsersCars newCar)
         {
