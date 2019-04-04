@@ -13,6 +13,8 @@ namespace Corts.Models
         [Display(Name = "Car")]
         public string Car { get; set; }
 
+        //Profile Information
+        //This holds all the information for the profile form
         [Display(Name = "Username")]
         public string Username { get; set; }
 
@@ -37,18 +39,12 @@ namespace Corts.Models
         [Display(Name = "Current Password")]
         public string CurrPassword { get; set; }
 
-
         //New Password
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 
-        //[Display(Name = "UsersCars")]
-        //public IEnumerable<SelectListItem> UsersCars { get; set; }
-
-
         //Car information
-
         [Required]
         [Display(Name = "Car Nickname")]
         public string CarNickname { get; set; }

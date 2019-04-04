@@ -78,7 +78,7 @@ namespace Corts.DAL
                 return usersCars;
             }
         }
-        //Get users emails for email reminders
+        //Get list of users emails for email reminders
         public List<string> GetUsersEmails()
         {
             var collection = GetUsersCollection();
@@ -138,11 +138,16 @@ namespace Corts.DAL
             return true;
 
         }
+        //Remove a car
         public bool RemoveCar(string removeID, string usersEmail)
         {
+            //Grab collection
             var collection = GetUsersCollectionForEdit();
+            //Create builder of type User
             var builder = Builders<Users>.Filter;
+            //Filter to user specific document
             var filt = builder.Where(x => x.email == usersEmail);
+            //Grab document and convert to list
             var list = collection.Find(filt).ToList();
 
             try
@@ -164,19 +169,27 @@ namespace Corts.DAL
         //Check password before account updates
         public bool CheckPassword(string usersEmail, string passwordInserted)
         {
+            //Grab user collection
             var collection = GetUsersCollection();
+            //Get user by email
             string email = usersEmail;
+            //Get password that was inserted into EditProfile form
             string password = passwordInserted;
 
+            //Create builder of type User
             var builder = Builders<Users>.Filter;
+            //Filter to user specific 
             var filt = builder.Where(x => x.email == email);
+            //Grab document and all of its fixins
             var list = collection.Find(filt).ToList();
 
+            //If user is not found -> return false
             if (list.Count == 0)
             {
                 return false;
             }
 
+            //Unhash password and check to make sure it matches the password that was inserted
             //Get savedPasswordHash from the data base
             string passwordFromDB = list[0].password;
 
@@ -257,6 +270,7 @@ namespace Corts.DAL
             var filt = builder.Where(x => x.email == usersemail);
             var list = collection.Find(filt).ToList();
 
+            //Can't find user -> return null
             if (list.Count == 0)
             {
                 return null;
@@ -294,17 +308,25 @@ namespace Corts.DAL
         //Get selected car from add form and return CarType
         public string GetSelectedCar(string CarSelected)
         {
+            //Grab the cars collection
             var collection = GetCarsCollection();
+            //Create builder of type Cars
             var builder = Builders<Cars>.Filter;
+            //Grab the ID of the car that was selected 
             var filt = builder.Where(x => x.id == CarSelected);
+            //Grab what was found and set its fixins to a list
             var list = collection.Find(filt).ToList();
+
+            //Create variable called CarType
             string CarType = null;
+            //Can't find the car listed? Return null.
             if (list.Count == 0)
             {
                 return null;
             }
             else
             {
+                //Set CarType = CarType from DB
                 CarType = list[0].type;
             }
             return CarType;
@@ -313,19 +335,29 @@ namespace Corts.DAL
         //Login user
         public bool LoginUser(Users user)
         {
+            //Grab users collection
             var collection = GetUsersCollection();
+
+            //Grab email that was inserted into form
             string email = user.email;
+            //Grab password that was inserted into form
             string password = user.password;
 
+            //Create builder of type Users
             var builder = Builders<Users>.Filter;
+            //Filter to User where email = email that was inserted
             var filt = builder.Where(x => x.email == email);
+            //Send what was found to a list
             var list = collection.Find(filt).ToList();
 
+            //If user was not found -> return false: DENY ENTRY
             if (list.Count == 0)
             {
                 return false;
             }
 
+
+            //Unhash password and allow user to login if password is correct, if not correct return false
             //Get savedPasswordHash from the data base
             string passwordFromDB = list[0].password;
 
@@ -370,7 +402,7 @@ namespace Corts.DAL
                 return false;
             }
         }
-        //Check User Registration Date
+        //Check User Registration Date -> This is in case they registered that day, in which case it will send them to the settings page. 
         public bool getCreatedDate(Users user)
         {
             var collection = GetUsersCollection();
@@ -431,6 +463,8 @@ namespace Corts.DAL
                 return false;
             }
         }
+
+
         //Register User
         public bool CreateUser(Users user)
         {
@@ -456,9 +490,11 @@ namespace Corts.DAL
 
             user.password = savedPasswordHash;
 
+            //Get the collection for edit -> allows us to edit the users collection
             var collection = GetUsersCollectionForEdit();
             try
             {
+                //Insert new collection -> user
                 collection.InsertOne(user);
             }
             catch
@@ -470,7 +506,6 @@ namespace Corts.DAL
 
 
         //Database Collection Retrievers
-
         private IMongoCollection<Cars> GetCarsCollection()
         {
             MongoClientSettings settings = new MongoClientSettings();
@@ -486,8 +521,8 @@ namespace Corts.DAL
 
             MongoClient client = new MongoClient(settings);
             var database = client.GetDatabase(dbName);
-            var todoTaskCollection = database.GetCollection<Cars>("Cars");
-            return todoTaskCollection;
+            var carsCollection = database.GetCollection<Cars>("Cars");
+            return carsCollection;
         }
         private IMongoCollection<Users> GetUsersCollection()
         {
@@ -504,8 +539,8 @@ namespace Corts.DAL
 
             MongoClient client = new MongoClient(settings);
             var database = client.GetDatabase(dbName);
-            var todoTaskCollection = database.GetCollection<Users>(collectionName);
-            return todoTaskCollection;
+            var usersCollection = database.GetCollection<Users>(collectionName);
+            return usersCollection;
         }
 
         private IMongoCollection<Users> GetUsersCollectionForEdit()
@@ -523,8 +558,8 @@ namespace Corts.DAL
 
             MongoClient client = new MongoClient(settings);
             var database = client.GetDatabase(dbName);
-            var todoTaskCollection = database.GetCollection<Users>(collectionName);
-            return todoTaskCollection;
+            var usersCollection = database.GetCollection<Users>(collectionName);
+            return usersCollection;
         }
 
         # region IDisposable
