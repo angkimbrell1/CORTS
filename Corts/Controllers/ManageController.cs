@@ -105,6 +105,8 @@ namespace Corts.Controllers
             //Get the type of car selected by the CarID
             string CarSelected = GetSelectedCarType(addForm.CarType);
 
+
+            
             //Create new UsersCar object to add into database -> Gets information from the Form
             UsersCars newCar = new UsersCars();
             newCar.CarID = Guid.NewGuid().ToString();
@@ -114,6 +116,7 @@ namespace Corts.Controllers
             newCar.totalSpent = Int32.Parse(addForm.TotalSpent);
             newCar.InspectionDue = addForm.InspectionDate;
             newCar.CarNickname = addForm.CarNickname;
+            newCar.PersonalMaintenance = new List<PersonalMaintenance>();
 
             //If dal.AddCar is succesful -> redirects to users setting page
             if (dal.AddCar(usersEmail, newCar))

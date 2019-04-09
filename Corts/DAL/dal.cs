@@ -19,10 +19,7 @@ namespace Corts.DAL
         private bool disposed = false;
 
 
-        private string userName = "";
-        private string host = "";
-        private string password = "";
-
+       
 
 
         private string dbName = "CortsDB";
@@ -35,6 +32,89 @@ namespace Corts.DAL
         // Default constructor.        
         public Dal()
         {
+        }
+
+
+        //Gets the cars selected nickname for display at the top of the table in the maintenance page
+        public string GetCarNickname(string car, string email)
+        {
+            List<UsersCars> usersCars = getCurrentUsersCars(email);
+            string CarNickname = null;
+            if(usersCars != null)
+            {
+                for (int i = 0; i < usersCars.Count; i++)
+                {
+                    if(usersCars[i].CarID == car)
+                    {
+                        CarNickname = usersCars[i].CarNickname;
+                        return CarNickname;
+                    }
+                    else
+                    {
+                        CarNickname = "Car Not Found";
+                    }
+                }
+            }
+            return CarNickname;
+            
+        }
+        //Get cars mileage
+        public int GetCarMileage(string car, string email)
+        {
+            List<UsersCars> usersCars = getCurrentUsersCars(email);
+            int CarMileage = 0;
+            if (usersCars != null)
+            {
+                for (int i = 0; i < usersCars.Count; i++)
+                {
+                    if (usersCars[i].CarID == car)
+                    {
+                        CarMileage = usersCars[i].mileage;
+                        return CarMileage;
+                    }
+                    else
+                    {
+                        CarMileage = 0;
+                    }
+                }
+            }
+            return CarMileage;
+        }
+
+        //Get Months Owned
+        public int GetMonthsOwned(string car, string email)
+        {
+            List<UsersCars> usersCars = getCurrentUsersCars(email);
+            int MonthsOwned = 0;
+            if (usersCars != null)
+            {
+                for (int i = 0; i < usersCars.Count; i++)
+                {
+                    if (usersCars[i].CarID == car)
+                    {
+                        MonthsOwned = usersCars[i].monthsOwned;
+                        return MonthsOwned;
+                    }
+                    else
+                    {
+                        MonthsOwned = 0;
+                    }
+                }
+            }
+            return MonthsOwned;
+        }
+        //Get List of all Maintenance Items Names in DB for the Update Maintenance Form
+        public List<MaintenanceObject> GetMaintenanceItems()
+        {
+            var collection = GetMaintenanceScheduleCollection();
+            var coll = collection.AsQueryable();
+            List<MaintenanceObject> MaintenanceItems = new List<MaintenanceObject>();
+            foreach (var item in coll)
+            {
+                MaintenanceItems.Add(item);
+            }
+            return MaintenanceItems;
+
         }
 
         //Get current list of available cars in database
@@ -78,6 +158,271 @@ namespace Corts.DAL
                 return usersCars;
             }
         }
+
+        #region UsersPersonalMaintenaceRetrival (NOT UPDATE)
+        //This is the car personal maintenance information -> Same function for each, just pulls a different maintenance item and its corresponding maintenance
+        //Get list of users personal maintenance items
+        public List<PersonalMaintenance> GetUsersPersonalMaintenance(string email, string CarID)
+        {
+
+            List<UsersCars> usersCars = getCurrentUsersCars(email);
+            List<PersonalMaintenance> personalMaintenance = new List<PersonalMaintenance>();
+
+            for (int i = 0; i < usersCars.Count; i++)
+            {
+                if (usersCars[i].CarID == CarID)
+                {
+                    personalMaintenance = usersCars[i].PersonalMaintenance.ToList();
+                    return personalMaintenance;
+                }
+                else
+                {
+                    personalMaintenance = null;
+                }
+
+            }
+            return personalMaintenance;
+        }
+
+        public List<PersonalMaintenanceObject> GetAirFilterInformation(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> aFilter = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                aFilter = CarPM[i].AirFilter.ToList();
+            }
+            return aFilter;
+        }
+        public List<PersonalMaintenanceObject> GetOilChangeInformation(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].OilChange != null)
+                {
+                    oilChange = CarPM[i].OilChange.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetCoolantInformation(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].Coolant != null)
+                {
+                    oilChange = CarPM[i].Coolant.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetTransFluidInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].TransFluid != null)
+                {
+                    oilChange = CarPM[i].TransFluid.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetFuelFilterInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].FuelFilter != null)
+                {
+                    oilChange = CarPM[i].FuelFilter.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetBatteryInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].Battery != null)
+                {
+                    oilChange = CarPM[i].Battery.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetHVACInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].HVAC != null)
+                {
+                    oilChange = CarPM[i].HVAC.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetBrakesInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].Brakes != null)
+                {
+                    oilChange = CarPM[i].Brakes.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetRadiatorHosesInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].RadiatorHoses != null)
+                {
+                    oilChange = CarPM[i].RadiatorHoses.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetSuspensionInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].Suspension != null)
+                {
+                    oilChange = CarPM[i].Suspension.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetSparkPlugs(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].SparkPlugs != null)
+                {
+                    oilChange = CarPM[i].SparkPlugs.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetIgnitionSystemInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].IgnitionSystem != null)
+                {
+                    oilChange = CarPM[i].IgnitionSystem.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetEngineDBInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].EngineDriveBelts != null)
+                {
+                    oilChange = CarPM[i].EngineDriveBelts.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetTiresInfo(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> oilChange = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].Tires != null)
+                {
+                    oilChange = CarPM[i].Tires.ToList();
+                }
+                else
+                {
+                    oilChange = null;
+                }
+            }
+            return oilChange;
+        }
+        public List<PersonalMaintenanceObject> GetPowerSteering(List<PersonalMaintenance> CarPM)
+        {
+            List<PersonalMaintenanceObject> pSteering = new List<PersonalMaintenanceObject>();
+            for (int i = 0; i < CarPM.Count; i++)
+            {
+                if (CarPM[i].PowerSteering != null)
+                {
+                    pSteering = CarPM[i].PowerSteering.ToList();
+                }
+                else
+                {
+                    pSteering = null;
+                }
+            }
+            return pSteering;
+        }
+        //End of users personal maintenance retrieval
+#endregion
+
+       
+
+        #region EmailReminders
         //Get list of users emails for email reminders
         public List<string> GetUsersEmails()
         {
@@ -90,6 +435,9 @@ namespace Corts.DAL
             }
             return Emails;
         }
+        #endregion
+
+        #region SettingsPageFunctions
         //Add a car -> Completes Add Form on SettingsPage
         public bool AddCar(string usersEmail, UsersCars newCar)
         {
@@ -304,7 +652,6 @@ namespace Corts.DAL
             }
             return true;
         }
-
         //Get selected car from add form and return CarType
         public string GetSelectedCar(string CarSelected)
         {
@@ -331,7 +678,12 @@ namespace Corts.DAL
             }
             return CarType;
         }
+        #endregion
 
+
+
+
+        #region LoginandRegister Functionality
         //Login user
         public bool LoginUser(Users user)
         {
@@ -503,9 +855,28 @@ namespace Corts.DAL
             }
             return true;
         }
+        #endregion
 
-
+        #region DB Collection Retrievers
         //Database Collection Retrievers
+        private IMongoCollection<MaintenanceObject> GetMaintenanceScheduleCollection()
+        {
+            MongoClientSettings settings = new MongoClientSettings();
+            settings.Server = new MongoServerAddress(host, 10255);
+            settings.UseSsl = true;
+            settings.SslSettings = new SslSettings();
+            settings.SslSettings.EnabledSslProtocols = SslProtocols.Tls12;
+
+            MongoIdentity identity = new MongoInternalIdentity(dbName, userName);
+            MongoIdentityEvidence evidence = new PasswordEvidence(password);
+
+            settings.Credential = new MongoCredential("SCRAM-SHA-1", identity, evidence);
+
+            MongoClient client = new MongoClient(settings);
+            var database = client.GetDatabase(dbName);
+            var maintenanceCollection = database.GetCollection<MaintenanceObject>("MaintenanceSchedule");
+            return maintenanceCollection;
+        }
         private IMongoCollection<Cars> GetCarsCollection()
         {
             MongoClientSettings settings = new MongoClientSettings();
@@ -561,8 +932,10 @@ namespace Corts.DAL
             var usersCollection = database.GetCollection<Users>(collectionName);
             return usersCollection;
         }
+        #endregion
 
-        # region IDisposable
+
+        #region IDisposable
 
         public void Dispose()
         {

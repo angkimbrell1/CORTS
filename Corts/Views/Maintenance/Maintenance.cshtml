@@ -1,110 +1,338 @@
-﻿@model IEnumerable<Corts.Models.MaintenanceViewModel>
-@{
-    ViewBag.Title = "Maintenance";
-}
+﻿@using Corts.Models
 
+@model MaintenanceViewModel
+
+@*//For Jquery Multiselect
+//Dont forget to load the script and Css before
+//Order: CSSs, Jquery min, Jquery Ui min, Multiselect min*@
+<script type="text/javascript">
+   $(function () {
+      $(".multiselect").multiselect();
+   });
+</script>
+<style>
+    .OverDue {
+        color: red;
+    }
+</style>
 <h2>Maintenance</h2>
 <h4>Your vehicle's condition and cost estimates</h4>
 <hr>
-<div class="mainStats">
-    <h4>Car Health</h4>
-    <hr>
-    <h5>75%</h5>
+@using (Html.BeginForm("GetCar", "Maintenance", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div id="hid" class="form-group" style="visibility: hidden">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @if (ViewBag.UsersCars != null)
+            {
+                @Html.DropDownListFor(m => m.CarType, (IEnumerable
+       <SelectListItem>)ViewBag.UsersCars)
+            }
+            else
+            {
+                <select></select>
+            }
+        </div>
+    </div>
+    <div class="form-group">
+        <div>
+            <input type="submit" value="View Maintenance Details" div class="btn btn-default btn-block" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div>
+            <input type="button" value="Update Maintenance Information" data-toggle="modal" data-target="#pop" class="btn btn-default btn-block" />
+        </div>
+    </div>
+}
+<!--Pop up menu-->
+<div class="modal fade" id="pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="pop_in">
+            @* MAKE A POPUP FORM *@
+            @using (Html.BeginForm("Update", "Maintenance", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div id="hid" class="form-group" style="visibility: hidden">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @Html.AntiForgeryToken()
+                <h3>Add Vehicle Info</h3>
+                <hr>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
+                    @if (ViewBag.UsersCars != null)
+                    {
+                        @Html.DropDownListFor(m => m.CarType, (IEnumerable
+               <SelectListItem>)ViewBag.UsersCars)
+                    }
+                    else
+                    {
+                        <select></select>
+                    }
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Mileage, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Mileage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Mileage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <h5>Please Select Maintenance Items Done</h5>
+                        @Html.DropDownList("Maintenance Items",
+                      new MultiSelectList(ViewBag.MaintenanceItems,
+                      "Id", "Name",
+                      ViewBag.MaintenanceItems),
+                      new {
+                         multiple = "multiple",
+                         @class="multiselect"
+                      })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Inspection, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.Inspection, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Inspection, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group" id="pop_but">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
-<div class="mainStats">
-    <h4>Maintenance Needed</h4>
-    <hr>
-    <h5>7 Services</h5>
-</div>
-<div class="mainStats">
-    <h4>Months Owned</h4>
-    <hr>
-    <h5>35</h5>
-</div>
-<table class="table table-striped" id="vehTab">
-    <thead>
-        <tr>
-            <th colspan="4" id="titleRow"><h3>Vehicle A Breakdown</h3></th>
-        </tr>
-        <tr>
-            <th scope="col">Vehicle Services</th>
-            <th scope="col">Condition</th>
-            <th scope="col">Paid So Far</th>
-            <th scope="col">Future Cost Estimate</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Oil Change</td>
-            <td>Good</td>
-            <td>$12,00.79</td>
-            <td>$15,123.76</td>
-        </tr>
-        <tr>
-            <td>Replace Oil Filter</td>
-            <td>Okay</td>
-            <td>$98,123.01</td>
-            <td>$66,122.66</td>
-        </tr>
-        <tr>
-            <td>Replace Air Filter</td>
-            <td>Bad</td>
-            <td>$56,123.45</td>
-            <td>$17,461.57</td>
-        </tr>
-        <tr>
-            <td>Replace Fuel Filter</td>
-            <td>Good</td>
-            <td>$12,00.79</td>
-            <td>$15,123.76</td>
-        </tr>
-        <tr>
-            <td>Replace Spark Plugs</td>
-            <td>Okay</td>
-            <td>$98,123.01</td>
-            <td>$66,122.66</td>
-        </tr>
-        <tr>
-            <td>Check/Refill Brake Fluid</td>
-            <td>Bad</td>
-            <td>$56,123.45</td>
-            <td>$17,461.57</td>
-        </tr>
-        <tr>
-            <td>Check/Replace Brake Pads</td>
-            <td>Good</td>
-            <td>$12,00.79</td>
-            <td>$15,123.76</td>
-        </tr>
-        <tr>
-            <td>Check/Refill Power Steering Fluid</td>
-            <td>Okay</td>
-            <td>$98,123.01</td>
-            <td>$66,122.66</td>
-        </tr>
-        <tr>
-            <td>Grease Components</td>
-            <td>Bad</td>
-            <td>$56,123.45</td>
-            <td>$17,461.57</td>
-        </tr>
-        <tr>
-            <td>Inspect/Replace Timing Belt</td>
-            <td>Good</td>
-            <td>$12,00.79</td>
-            <td>$15,123.76</td>
-        </tr>
-        <tr>
-            <td>Check/Replace Tires</td>
-            <td>Okay</td>
-            <td>$98,123.01</td>
-            <td>$66,122.66</td>
-        </tr>
-        <tr>
-            <td>Check/Replace Lights/Wipers</td>
-            <td>Bad</td>
-            <td>$56,123.45</td>
-            <td>$17,461.57</td>
-        </tr>
-    </tbody>
-</table>
+@if (ViewBag.Car != null)
+{
+
+    <div class="mainStats">
+        <h4>Car Health</h4>
+        <hr>
+        <h5>75%</h5>
+    </div>
+    <div class="mainStats">
+        <h4>Current Mileage</h4>
+        <hr>
+        <h5>@ViewBag.CarsMileage Miles</h5>
+    </div>
+    <div class="mainStats">
+        <h4>Months Owned</h4>
+        <hr>
+        <h5>@ViewBag.MonthsOwned</h5>
+    </div>
+    <table class="table table-striped" id="vehTab">
+        <thead>
+            <tr>
+                <th colspan="4" id="titleRow"><h3>@ViewBag.CarNickName Breakdown</h3></th>
+            </tr>
+            <tr>
+                <th scope="col">Vehicle Services</th>
+                <th scope="col">Total Paid $</th>
+                <th scope="col">Last Checked Mileage</th>
+                <th scope="col">Next Needed Mileage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="AirFilter">
+                @if (ViewBag.AirFilter != null)
+                {
+                    foreach (var airFilter in ViewBag.AirFilter)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.AirFilter[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@airFilter</td>
+                    }
+                }
+            </tr>
+            <tr id="OilChange">
+                @if (ViewBag.OilChange != null)
+                {
+                    foreach (var oilChange in ViewBag.OilChange)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.OilChange[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@oilChange</td>
+                    }
+                }
+            </tr>
+            <tr id="PowerSteering">
+                @if (ViewBag.PowerSteering != null)
+                {
+                    foreach (var pSteer in ViewBag.PowerSteering)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.PowerSteering[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@pSteer</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Coolant != null)
+                {
+                    foreach (var item in ViewBag.Coolant)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.Coolant[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.TransFluid != null)
+                {
+                    foreach (var item in ViewBag.TransFluid)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.TransFluid[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.FuelFilter != null)
+                {
+                    foreach (var item in ViewBag.FuelFilter)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.FuelFilter[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.HVAC != null)
+                {
+                    foreach (var item in ViewBag.HVAC)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.HVAC[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Brakes != null)
+                {
+                    foreach (var item in ViewBag.RadiatorHoses)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.RadiatorHoses[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Suspension != null)
+                {
+                    foreach (var item in ViewBag.Suspension)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.Suspension[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.SparkPlugs != null)
+                {
+                    foreach (var item in ViewBag.SparkPlugs)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.SparkPlugs[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.IgnitionSystem != null)
+                {
+                    foreach (var item in ViewBag.IgnitionSystem)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.IgnitionSystem[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.EngineDriveBelts != null)
+                {
+                    foreach (var item in ViewBag.EngineDriveBelts)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.EngineDriveBelts[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Tires != null)
+                {
+                    foreach (var item in ViewBag.Tires)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.Tires[3]) < ViewBag.CarsMileage)
+                        {
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                }
+            </tr>
+        </tbody>
+    </table>
+}
