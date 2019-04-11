@@ -152,6 +152,7 @@
             position: fixed;
             margin-top: 35px;
             background-color: #EFF6E0;
+            width: 100%;
             overflow: auto;
         }
         /*CONTENT PAGE FIRST HEADER*/
@@ -242,6 +243,13 @@
             }
         }
         /*SETTINGS PAGE*/
+        /*SETTINGS PAGE WELCOME EMAIL TEXT*/
+        #welc{
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            padding: 0;
+        }
         /*ADD VEHICLE CONTAINER BOX*/
         #left {
             float: left;
@@ -315,39 +323,6 @@
         #profSub{
             margin-left: 155px;
         }
-        /*NOTIFICATIONS SECTION*/
-        /*NOTIFICATIONS GENERAL/MILEAGE*/
-        #gen, #mil {
-            width: 600px;
-            padding: 0;
-        }
-        /*NOTIFICATIONS DROP-DOWN MENUS*/
-        #notifications #Car {
-            border-radius: 7px;
-            width: 180px;
-            height: 32px;
-        }
-        /*NOTIFICATIONS LABELS*/
-        #gen h4, #mil h4 {
-            width: 210px;
-            height: 32px;
-            margin: 0;
-            padding: 0;
-            float: left;
-            padding-top: 4px;
-        }
-        /*NOTIFICATIONS TEXT FIELDS*/
-        #gen .form-group, #mil .form-group {
-            width: 210px;
-            margin: 0;
-            padding: 0;
-            float: left;
-            margin-bottom: 15px;
-        }
-        /*NOTIFICATIONS SUBMIT BUTTON*/
-        #setSub {
-            margin-left: 205px;
-        }
         /*LOGIN DROP-DOWN MENUS*/
         #loginForm .form-group, #reg {
             width: 1000px;
@@ -379,17 +354,18 @@
         .modal-backdrop {
             z-index: -999999999 !important;
         }
+        /*SETTINGS POP-UP MENU*/
         /*POP-UP MENU HIDDEN ATTRIBUTE*/
-        #hid{
+        #hid, #hidMain{
             display: none;
         }
         /*POP-UP MENU*/
-        #pop {
+        #pop, #popMain {
             margin-top: 80px;
             padding-left: 0;
         }
         /*POP-UP MENU HEADER*/
-        #pop_in h3 {
+        #pop_in h3, #popMain_in h3 {
             font-family: 'Merriweather Sans', sans-serif;
             font-size: 30px;
             font-weight: 600;
@@ -401,7 +377,7 @@
             padding-right: 20px;
         }
         /*POP-UP MENU HORIZONTAL LINE*/
-        #pop hr {
+        #pop hr, #popMain hr {
             margin: 0;
             padding: 0;
             margin-bottom: 10px;
@@ -409,7 +385,7 @@
             width: 340px;
         }
         /*POP-UP MENU CONTAINER BOX*/
-        #pop_in {
+        #pop_in, #popMain_in {
             padding-left: 20px;
             padding-right: 0;
             margin-left: 0;
@@ -417,31 +393,104 @@
             height: 408px;
         }
         /*POP-UP MENU LABELS*/
-        #pop_in .control-label {
+        #pop_in .control-label, #popMain_in .control-label {
             width: 170px;
             padding: 0;
             margin: 0;
             font-size: 18px;
         }
         /*POP-UP MENU TEXT FIELDS*/
-        #pop_in .col-md-10 {
+        #pop_in .col-md-10,#popMain_in .col-md-10 {
             width: 205px;
             padding-left: 5px;
             height: 15px;
             margin-bottom: 15px;
         }
         /*POP-UP MENU BUTTON CONTAINER BOX*/
-        #pop_but {
+        #pop_but, #popMain_but {
             margin-bottom: 15px;
             margin-left: 5px;
         }
         /*POP-UP MENU BUTTON*/
-        #pop input[type="submit"] {
+        #pop input[type="submit"], #popMain input[type="submit"] {
             width: 200px;
             margin: 0;
             padding: 5px;
             font-size: 25px;
             font-weight: 800;
+        }
+        /*MAINTENANCE POP-UP MENU*/
+        /*POP-UP MENU CONTAINER BOX*/
+        #popMain_in {
+            height: 400px;
+        }
+        /*POP-UP MENU SECTIONS*/
+        /*POP-UP SELECT WHICH VEHICLE*/
+        #mainCar{
+            width: 340px;
+            margin: 0;
+            padding: 0;
+            margin-left: 1px;
+        }
+        #mainCar .control-label{
+            margin: 0;
+            padding: 0;
+            margin-right: 65px;
+            width: 30px;
+        }
+        .mainCarDrop {
+            width: 200px;
+            height: 30px;
+        }
+        /*POP-UP MILEAGE*/
+        #mainMiles {
+            width: 340px;
+            margin: 0;
+            padding: 0;
+            margin-left: 1px;
+            margin-top: 10px;
+        }
+        #mainMiles .control-label{
+            width: 63px;
+            margin: 0;
+            padding: 0;
+            margin-right: 26px;
+        }
+        #mainMiles .form-control {
+            width: 200px;
+            height: 30px;
+        }
+        /*POP-UP ITEMS*/
+        #mainItems {
+            width: 340px;
+            margin: 0;
+            padding: 0;
+        }
+        #mainCList {
+            width: 340px;
+            margin: 0;
+            padding: 0;
+        }
+        /*POP-UP INSPECT*/
+        #mainInspect {
+            width: 340px;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+        #mainInspect .control-label{
+            width: 260px;
+            height: 40px;
+            margin: 0;
+            padding: 0;
+            padding-top: 5px;
+        }
+        #mainInspect .col-md-10{
+            margin: 0;
+            padding: 0;
+            width: 25px;
+            height: 25px;
+            margin-left: 10px;
         }
         /*HOME PAGE*/
         /*HOME IMAGE BOX CONTAINTERS*/
@@ -522,36 +571,114 @@
             border-right: 1px solid #AEC3B0;
         }
         /*MAINTENANCE PAGE*/
-        /*MAINENANCE INFO BOXES*/
-        .mainStats {
-            width: 313px;
-            height: 100px;
-            background-color: #AEC3B0;
-            margin: 0;
-            padding: 0;
+        /*MAINTENANCE VEHICLE SELECTION CONTAINER BOX*/
+        #mainVehSel {
             float: left;
-            margin-right: 30px;
-            border-radius: 7px;
-            color: #124559;
-            text-align: center;
+            width: 300px;
+            height: 150px;
         }
-        /*MAINENANCE INFO BOXES HEADERS*/
-        .mainStats h4{
-            font-size: 20px;
-            font-family: 'Source Sans Pro', sans-serif;
+        /*MAINTENANCE INFO BOXES CONTAINER*/
+        #infoBoxes {
+            float: left;
+            width: 697px;
+            height: 150px;
+            padding-top: 25px;
         }
-        /*MAINENANCE INFO BOXES HORIZONTAL LINE*/
-        .mainStats hr{
+        /*MAINTENANCE SELECT VEHICLE HEADER*/
+        #selVeh {
+            font-size: 23px;
+            font-family: 'Hammersmith One', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /*MAINTENANCE CONTAINER BOX FOR HEADER AND DROP*/
+        #getCarMain {
+            width: 400px;
+            height: 40px;
+            margin: 0;
+            padding: 0;
+        }
+        /*MAINTENANCE FORM DROP DOWN*/
+        #vehDrop {
+            margin: 0;
+            padding: 0;
             width: 250px;
+            height: 40px;
+        }
+        .getCarDrop {
+            width: 250px;
+            border-radius: 5px;
+            font-size: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        /*MAINTENANCE BUTTONS CONTAINER BOX*/
+        #viewMain, #updateMain {
+            width: 230px;
+            margin: 0;
+            padding: 0;
+            padding-left: 20px;
+            margin-bottom: 5px;
+        }
+        /*MAINTENANCE BUTTONS*/
+        #viewBut, #updateBut {
+            width: 230px;
+            font-size: 15px;
+            height: 30px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        /*MAINENANCE INFO BAR*/
+        #mainStats {
+            background-color: #124559;
+            margin: 0;
+            padding: 0;
+            border-radius: 50px;
+            color: #AEC3B0;
+            text-align: center;
+            height: 106px;
+            border: 2px solid #01161E;
+        }
+        /*MAINTENANCE BOXES IN INFO BAR*/
+        .infoCol {
+            width: 150px;
+            height: 106px;
+            float: left;
+            padding-top: 15px;
+        }
+        /*MAINTENANCE INFO BAR VERTICAL LINES*/
+        .mainVert {
+            width: 2px;
+            height: 84px;
+            float: left;
+            margin-top: 8px;
+            background-color: #01161E;
+            border-radius: 50px;
+            margin-right: 13px;
+        }
+        #mid1, #mid2{
+            margin-left: 13px;
+        }
+        /*MAINTENANCE INFO BOX HEADERS*/
+        #mainStats h4 {
+            font-size: 20px;
+            font-family: 'Hammersmith One', sans-serif;
+            font-weight: 100;
             padding: 0;
             margin: 0;
-            margin-top: 7px;
-            margin-left: 28px;
         }
         /*MAINENANCE INFO BOXES INFO*/
-        .mainStats h5{
-            font-size: 28px;
+        #mainStats h5 {
+            font-size: 34px;
             font-family: 'Source Sans Pro', sans-serif;
+            color: #EFF6E0;
+            padding: 0;
+            margin: 0;
+            padding: 4px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
         }
         /*MAINTENANCE TABLE*/
         #vehTab {
@@ -560,7 +687,7 @@
             height: 400px;
             margin: 0;
             padding: 0;
-            margin-top: 140px;
+            margin-top: 185px;
             margin-bottom: 20px;
             border-radius: 15px;
             text-align: center;
@@ -593,6 +720,12 @@
         /*MAINTENANCE TABLE DATA*/
         #vehTab td{
             font-size: 20px;
+        }
+        /*MAINTENANCE BOTTOM SPACER*/
+        #spacer{
+            width: 1px;
+            height: 1px;
+            margin-top: 170px;
         }
     </style>
 </head>

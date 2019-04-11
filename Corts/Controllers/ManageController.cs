@@ -116,6 +116,7 @@ namespace Corts.Controllers
             newCar.totalSpent = Int32.Parse(addForm.TotalSpent);
             newCar.InspectionDue = addForm.InspectionDate;
             newCar.CarNickname = addForm.CarNickname;
+            //Create a statement that initializes a personal maintenance object
             newCar.PersonalMaintenance = new List<PersonalMaintenance>();
 
             //If dal.AddCar is succesful -> redirects to users setting page

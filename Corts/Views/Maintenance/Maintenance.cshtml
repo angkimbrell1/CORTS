@@ -18,22 +18,23 @@
 <h2>Maintenance</h2>
 <h4>Your vehicle's condition and cost estimates</h4>
 <hr>
+<div id="mainVehSel">
 @using (Html.BeginForm("GetCar", "Maintenance", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div id="hid" class="form-group" style="visibility: hidden">
+    <div id="hidMain" class="form-group" style="visibility: hidden">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-10">
+    <div class="form-group" id="getCarMain">
+        <h5 id="selVeh">Select a vehicle</h5>
+        <div class="col-md-10" id="vehDrop">
             @if (ViewBag.UsersCars != null)
             {
-                @Html.DropDownListFor(m => m.CarType, (IEnumerable
-       <SelectListItem>)ViewBag.UsersCars)
+                @Html.DropDownListFor(m => m.CarType, (IEnumerable<SelectListItem>)ViewBag.UsersCars, new { @class = "getCarDrop" })
             }
             else
             {
@@ -41,25 +42,24 @@
             }
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="viewMain">
         <div>
-            <input type="submit" value="View Maintenance Details" div class="btn btn-default btn-block" />
+            <input type="submit" value="View Maintenance Details" div class="btn btn-default btn-block" id="viewBut"/>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="updateMain">
         <div>
-            <input type="button" value="Update Maintenance Information" data-toggle="modal" data-target="#pop" class="btn btn-default btn-block" />
+            <input type="button" value="Update Maintenance Information" data-toggle="modal" data-target="#popMain" class="btn btn-default btn-block" id="updateBut"/>
         </div>
     </div>
 }
-<!--Pop up menu-->
-<div class="modal fade" id="pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+</div>
+<div class="modal fade" id="popMain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" id="pop_in">
-            @* MAKE A POPUP FORM *@
+        <div class="modal-content" id="popMain_in">
             @using (Html.BeginForm("Update", "Maintenance", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                <div id="hid" class="form-group" style="visibility: hidden">
+                <div id="hidMain" class="form-group" style="visibility: hidden">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
@@ -67,32 +67,31 @@
                     </div>
                 </div>
                 @Html.AntiForgeryToken()
-                <h3>Add Vehicle Info</h3>
+                <h3>Update Vehicle Info</h3>
                 <hr>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
+                <div class="form-group" id="mainCar">
                     @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
                     @if (ViewBag.UsersCars != null)
                     {
                         @Html.DropDownListFor(m => m.CarType, (IEnumerable
-               <SelectListItem>)ViewBag.UsersCars)
+               <SelectListItem>)ViewBag.UsersCars, new { @class = "mainCarDrop" })
                     }
                     else
                     {
                         <select></select>
                     }
                 </div>
-
-                <div class="form-group">
+                <div class="form-group" id="mainMiles">
                     @Html.LabelFor(m => m.Mileage, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.Mileage, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Mileage, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div>
-                    <div class="form-group">
-                        <h5>Please Select Maintenance Items Done</h5>
+                <div id="mainItems">
+                    <div class="form-group" id="mainCList">
+                        <h5>Maintenance Items Checklist</h5>
                         @Html.DropDownList("Maintenance Items",
                       new MultiSelectList(ViewBag.MaintenanceItems,
                       "Id", "Name",
@@ -103,7 +102,7 @@
                       })
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="mainInspect">
                     @Html.LabelFor(m => m.Inspection, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.CheckBoxFor(m => m.Inspection, new { @class = "form-control" })
@@ -111,7 +110,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="form-group" id="pop_but">
+                <div class="form-group" id="popMain_but">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Submit" class="btn btn-default" />
                     </div>
@@ -122,21 +121,28 @@
 </div>
 @if (ViewBag.Car != null)
 {
-
-    <div class="mainStats">
-        <h4>Car Health</h4>
-        <hr>
-        <h5>75%</h5>
-    </div>
-    <div class="mainStats">
-        <h4>Current Mileage</h4>
-        <hr>
-        <h5>@ViewBag.CarsMileage Miles</h5>
-    </div>
-    <div class="mainStats">
-        <h4>Months Owned</h4>
-        <hr>
-        <h5>@ViewBag.MonthsOwned</h5>
+    <div id="infoBoxes">
+        <div id="mainStats">
+            <div class="infoCol">
+                <h4>Car Health</h4>
+                <h5>75%</h5>
+            </div>
+            <div class="mainVert"></div>
+            <div class="infoCol">
+                <h4>Current Mileage</h4>
+                <h5>@ViewBag.CarsMileage Miles</h5>
+            </div>
+            <div class="mainVert" id="mid1"></div>
+            <div class="infoCol">
+                <h4>Next Inspection</h4>
+                <h5>04/20/19</h5>
+            </div>
+            <div class="mainVert" id="mid2"></div>
+            <div class="infoCol">
+                <h4>Months Owned</h4>
+                <h5>@ViewBag.MonthsOwned</h5>
+            </div>
+        </div>
     </div>
     <table class="table table-striped" id="vehTab">
         <thead>
@@ -145,7 +151,6 @@
             </tr>
             <tr>
                 <th scope="col">Vehicle Services</th>
-                <th scope="col">Total Paid $</th>
                 <th scope="col">Last Checked Mileage</th>
                 <th scope="col">Next Needed Mileage</th>
             </tr>
@@ -336,3 +341,4 @@
         </tbody>
     </table>
 }
+<div id="spacer"></div>
