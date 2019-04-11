@@ -10,9 +10,6 @@ using System.Security.Authentication;
 using System.Security.Cryptography;
 using MongoDB.Driver.Linq;
 using static Corts.Models.Classes;
-using System.Web.Script.Serialization;
-using MongoDB.Bson.IO;
-using Newtonsoft;
 
 namespace Corts.DAL
 {
@@ -22,7 +19,7 @@ namespace Corts.DAL
         private bool disposed = false;
 
 
-        
+
 
 
         private string dbName = "CortsDB";
@@ -36,6 +33,7 @@ namespace Corts.DAL
         public Dal()
         {
         }
+
 
         //Gets the cars selected nickname for display at the top of the table in the maintenance page
         public string GetCarNickname(string car, string email)
@@ -82,6 +80,7 @@ namespace Corts.DAL
             }
             return CarMileage;
         }
+
         //Get Months Owned
         public int GetMonthsOwned(string car, string email)
         {
@@ -117,6 +116,7 @@ namespace Corts.DAL
             return MaintenanceItems;
 
         }
+
         //Get current list of available cars in database
         public List<Cars> getCurrentCarList()
         {
@@ -136,6 +136,7 @@ namespace Corts.DAL
                 return carList;
             }
         }
+
         //Get list of current cars user has for settings and maintenance page
         public List<UsersCars> getCurrentUsersCars(string email)
         {
@@ -417,10 +418,9 @@ namespace Corts.DAL
             return pSteering;
         }
         //End of users personal maintenance retrieval
-        #endregion
+#endregion
 
-        #region Update Maintenance Information
-        #endregion
+       
 
         #region EmailReminders
         //Get list of users emails for email reminders
@@ -438,96 +438,6 @@ namespace Corts.DAL
         #endregion
 
         #region SettingsPageFunctions
-
-        public List<MaintenanceObject> GetPersonalMaintenanceObjectByName(string name)
-        {
-            var collection = GetMaintenanceScheduleCollection();
-            var maintenanceObjectName = name;
-            var builder = Builders<MaintenanceObject>.Filter;
-            var filt = builder.Where(x => x.Name == maintenanceObjectName);
-            var list = collection.Find(filt).ToList();
-
-            if (list.Count == 0)
-            {
-                return null;
-            }
-            else
-            {
-                return list;
-            }
-
-        }
-        public List<PersonalMaintenance> InitializePersonalMaintenance(int mileage, int totalSpent)
-        {
-            List<PersonalMaintenance> pmList = new List<PersonalMaintenance>() {
-                new PersonalMaintenance() {
-                    AirFilter = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Air Filter", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Air Filter"))}
-                    },
-                    Battery = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Battery", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Battery"))}
-                    },
-                    Brakes = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Brakes", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Brakes"))}
-                    },
-                    Coolant = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Coolant", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Coolant"))}
-                    },
-                    EngineDriveBelts = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Engine Drive Belts", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Engine Drive Belts"))}
-                    },
-                    FuelFilter = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Fuel Filter", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Fuel Filter"))}
-                    },
-                    HVAC = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "HVAC", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("HVAC"))}
-                    },
-                    IgnitionSystem = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Ignition System", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Ignition System"))}
-                    },
-                    OilChange = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Oil Change", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Oil Change"))}
-                    },
-                    PowerSteering = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Power Steering", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Power Steering"))}
-                    },
-                    RadiatorHoses = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Radiator Hoses", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Radiator Hoses"))}
-                    },
-                    SparkPlugs = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Spark Plugs", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Spark Plugs"))}
-                    },
-                    Suspension = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Suspension", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Suspension"))}
-                    },
-                    Tires = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Tires", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Tires"))}
-                    },
-                    TransFluid = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
-                    {
-                         Name = "Transmission Fluid", LastChecked = 0, Cost = totalSpent, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Transmission Fluid"))}
-                    }
-            }
-
-            };
-
-            return pmList;
-
-        }
         //Add a car -> Completes Add Form on SettingsPage
         public bool AddCar(string usersEmail, UsersCars newCar)
         {
@@ -602,6 +512,8 @@ namespace Corts.DAL
 
 
         }
+
+
         //Check password before account updates
         public bool CheckPassword(string usersEmail, string passwordInserted)
         {
@@ -670,6 +582,7 @@ namespace Corts.DAL
                 return false;
             }
         }
+
         //Update Users Email
         public bool UpdateEmail(string usersEmail, string newEmail)
         {
@@ -694,6 +607,7 @@ namespace Corts.DAL
             }
             return true;
         }
+
         public string GetUsername(string email)
         {
             var collection = GetUsersCollection();
@@ -766,7 +680,10 @@ namespace Corts.DAL
         }
         #endregion
 
-        #region Login and Register Functionality
+
+
+
+        #region LoginandRegister Functionality
         //Login user
         public bool LoginUser(Users user)
         {
@@ -937,27 +854,6 @@ namespace Corts.DAL
                 return false;
             }
             return true;
-        }
-        #endregion
-
-        #region MaintenanceInformation
-        public int GetMileageNeeded(List<MaintenanceObject> mainObject)
-        {
-            var collection = GetMaintenanceScheduleCollection();
-            var maintenanceObjectID = mainObject[0].Id;
-            var builder = Builders<MaintenanceObject>.Filter;
-            var filt = builder.Where(x => x.Id == maintenanceObjectID);
-            var list = collection.Find(filt).ToList();
-
-            if (list.Count == 0)
-            {
-                return 0;
-            }
-            else
-            {
-                int mileage = list[0].Mileage;
-                return mileage;
-            }
         }
         #endregion
 
