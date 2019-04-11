@@ -53,13 +53,6 @@ namespace Corts.Models
             public List<PersonalMaintenanceObject> Tires { get; set; }
 
         }
-        public class MaintenanceTable
-        {
-            public string MaintenanceName { get; set; }
-            public string Condition { get; set; }
-            public int NextNeeded { get; set; }
-            public double TotalSpent { get; set; }
-        }
         public class Users
         {
             [BsonId(IdGenerator = typeof(CombGuidGenerator))]

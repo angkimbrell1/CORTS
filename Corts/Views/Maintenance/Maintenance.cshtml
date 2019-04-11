@@ -93,7 +93,7 @@
                     <div class="form-group" id="mainCList">
                         <h5>Maintenance Items Checklist</h5>
                         @Html.DropDownList("Maintenance Items",
-                      new MultiSelectList(ViewBag.MaintenanceItems,
+                      new MultiSelectList("MaintenanceItems",
                       "Id", "Name",
                       ViewBag.MaintenanceItems),
                       new {

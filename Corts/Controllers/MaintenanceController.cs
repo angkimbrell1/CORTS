@@ -14,6 +14,7 @@ namespace Corts.Controllers
         private Dal dal = new Dal();
         public ActionResult Maintenance(string email, string car)
         {
+            ViewBag.Email = email; 
             //Get the users car list
             ViewBag.UsersCars = GetUsersCarsList(email);
 
@@ -473,7 +474,11 @@ namespace Corts.Controllers
             }
 
         }
-
+        [HttpPost]
+        public ActionResult Update(MaintenanceViewModel UpdateInfo, int[] MaintenanceItems)
+        {
+            return View("~/Maintenance/Maintenance.cshtml");
+        }
         //Gets users cars from the database -> called in GetUsersCarsList()
         private List<UsersCars> getUsersCars(string email)
         {
