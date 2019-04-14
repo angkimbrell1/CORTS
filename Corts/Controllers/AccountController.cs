@@ -59,13 +59,28 @@ namespace Corts.Controllers
                 return View();
             }
         }
+
         //Register
         [HttpPost]
         public ActionResult Register(RegisterViewModel userInfo)
         {
+            List<string> Emails = dal.GetUsersEmails();
+
+            int sizeOfList = Emails.Count();
+
+            for (int i = 0; i < sizeOfList; i++)
+            {
+                if (userInfo.Email == Emails.ElementAt(i))
+                {
+                    ViewBag.InvalidCredentials = "Email is Already Taken";
+                    return View();
+                }
+            }
+
             Users user = new Users();
             user.email = userInfo.Email;
             user.password = userInfo.Password;
+
             DateTime DateToday = DateTime.Today;
             string FirstLoggedIn = DateToday.ToString();
             user.FirstLoggedIn = FirstLoggedIn;

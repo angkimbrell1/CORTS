@@ -1446,6 +1446,7 @@ namespace Corts.DAL
             }
             return true;
         }
+
         public string GetUsername(string email)
         {
             var collection = GetUsersCollection();
@@ -1543,7 +1544,6 @@ namespace Corts.DAL
                 return false;
             }
 
-
             //Unhash password and allow user to login if password is correct, if not correct return false
             //Get savedPasswordHash from the data base
             string passwordFromDB = list[0].password;
@@ -1589,6 +1589,7 @@ namespace Corts.DAL
                 return false;
             }
         }
+
         //Check User Registration Date -> This is in case they registered that day, in which case it will send them to the settings page. 
         public bool getCreatedDate(Users user)
         {
@@ -1655,6 +1656,25 @@ namespace Corts.DAL
         //Register User
         public bool CreateUser(Users user)
         {
+
+            var collection1 = GetUsersCollection();
+            var coll = collection1.AsQueryable();
+            List<string> Emails = new List<string>();
+            foreach (var item in coll)
+            {
+                Emails.Add(item.email);
+            }
+
+            int size = Emails.Count;
+
+            for (int i = 0; i < size; i++)
+            {
+                if (user.email == Emails.ElementAt(i))
+                {
+                    return false;
+                }
+            }
+
             //New byte array to hold the salt
             byte[] salt;
 
