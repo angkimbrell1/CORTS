@@ -17,9 +17,9 @@ namespace Corts.Controllers
             //Get the users car list
             ViewBag.UsersCars = GetUsersCarsList(email);
 
-
+            ViewBag.Email = email;
             //Get a list of all the maintenance items for the form
-            ViewBag.MaintenanceItems = GetMaintenanceItems();
+            //ViewBag.MaintenanceItems = GetMaintenanceItems();
 
 
             if (email != null && car!=null)
@@ -35,8 +35,14 @@ namespace Corts.Controllers
 
                 //Get Months owned to display at the top of the table
                 ViewBag.MonthsOwned = GetMonthsOwned(car, email);
+
+                //Get their inspection date
+                ViewBag.InspectionDate = GetCarsInspectionDate(car, email);
+
                 //Get their personal maintenance information
                 ViewBag.UsersMaintenance = GetUsersCarsMaintenanceInformation(email, car);
+
+                
 
 
                 //Personal Maintenance Objects for car selected
@@ -82,6 +88,11 @@ namespace Corts.Controllers
             return dal.GetCarNickname(car, email);
         }
 
+        public string GetCarsInspectionDate(string car, string email)
+        {
+            return dal.GetCarsInspectionDate(car, email);
+        }
+
         #region GetPersonalMaintenance
         public List<string> GetPowerSteeringInfo(string email, string CarID)
         {
@@ -94,7 +105,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -117,7 +127,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -139,7 +148,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -162,7 +170,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -184,7 +191,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -206,7 +212,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -228,7 +233,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -250,7 +254,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -272,7 +275,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -294,7 +296,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -316,7 +317,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -338,7 +338,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -360,7 +359,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -382,7 +380,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -404,7 +401,6 @@ namespace Corts.Controllers
                 foreach (var item in pmObject)
                 {
                     test.Add(item.Name);
-                    test.Add(item.Cost.ToString());
                     test.Add(item.LastChecked.ToString());
                     test.Add(item.NxtNeeded.ToString());
                 }
@@ -426,7 +422,6 @@ namespace Corts.Controllers
             return dal.GetUsersPersonalMaintenance(email, carID);
         }
         #endregion
-        //Gets Car Selected
 
         //This function pulls the cars selected information
         [HttpPost]
@@ -442,7 +437,101 @@ namespace Corts.Controllers
             return RedirectToAction("Maintenance", "Maintenance", new { email, car });
         }
       
+        [HttpPost]
+        public ActionResult Update(MaintenanceViewModel update)
+        {
+            string usersEmail = update.Email;
+            try
+            {
+                dal.UpdateMileage(Int32.Parse(update.Mileage), update.CarType, update.Email);
 
+                //Check to see if inspection is checked
+                if(update.Inspection == true)
+                {
+                    dal.UpdateInspection(update.CarType, update.Email);
+                }
+
+                if(update.Spent != null)
+                {
+                    dal.UpdateTotalCost(update.CarType, update.Email, (Int32.Parse(update.Spent)));
+                }
+                string CarSelected = update.CarType;
+                //string usersEmail = update.Email;
+                Session["email"] = usersEmail;
+                var email = (string)Session["email"];
+
+                Session["car"] = CarSelected;
+                var car = (string)Session["car"];
+                //Check to see if maintenance items are selected
+                //if (CheckAndUpdateMaintenanceItems(update))
+                //{
+                   
+                //    return RedirectToAction("Maintenance", "Maintenance", new { email, car });
+                //}
+                return RedirectToAction("Maintenance", "Maintenance", new { email, car });
+
+            }
+            catch
+            {
+                return View("~/Maintenance/Maintenance.cshtml");
+            }
+            
+        }
+        //public bool CheckAndUpdateMaintenanceItems(MaintenanceViewModel update)
+        //{
+        //    int currentMileage = dal.GetCarMileage(update.CarType, update.Email);
+        //    if (update.AirFilterBox == true)
+        //    {
+        //        int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Air Filter"));
+        //        int nextNeeded = currentMileage + mileageNeededAt;
+        //        try
+        //        {
+        //            List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+        //            {
+        //                new PersonalMaintenanceObject()
+        //                {
+        //                    Name = "Air Filter",
+        //                    LastChecked = Int32.Parse(update.Mileage),
+        //                    NxtNeeded = currentMileage + mileageNeededAt
+        //                }
+        //            };
+        //            //dal.UpdateAirFilterInformation(update.Email, update.CarType, pmList);
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    throw new Exception("Something went wrong");
+        //}        //public bool CheckAndUpdateMaintenanceItems(MaintenanceViewModel update)
+        //{
+        //    int currentMileage = dal.GetCarMileage(update.CarType, update.Email);
+        //    if (update.AirFilterBox == true)
+        //    {
+        //        int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Air Filter"));
+        //        int nextNeeded = currentMileage + mileageNeededAt;
+        //        try
+        //        {
+        //            List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+        //            {
+        //                new PersonalMaintenanceObject()
+        //                {
+        //                    Name = "Air Filter",
+        //                    LastChecked = Int32.Parse(update.Mileage),
+        //                    NxtNeeded = currentMileage + mileageNeededAt
+        //                }
+        //            };
+        //            //dal.UpdateAirFilterInformation(update.Email, update.CarType, pmList);
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    throw new Exception("Something went wrong");
+        //}
         //Creates a select list of current users cars from the DB and gives it to them in a dropdown
         private List<SelectListItem> GetUsersCarsList(string email)
         {

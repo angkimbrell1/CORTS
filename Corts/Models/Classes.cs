@@ -86,7 +86,6 @@ namespace Corts.Models
     public class PersonalMaintenanceObject
     {
         public string Name { get; set; }
-        public int Cost { get; set; }
         public int LastChecked { get; set; }
         public int NxtNeeded { get; set; }
     }

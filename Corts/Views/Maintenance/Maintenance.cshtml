@@ -2,19 +2,7 @@
 
 @model MaintenanceViewModel
 
-@*//For Jquery Multiselect
-//Dont forget to load the script and Css before
-//Order: CSSs, Jquery min, Jquery Ui min, Multiselect min*@
-<script type="text/javascript">
-   $(function () {
-      $(".multiselect").multiselect();
-   });
-</script>
-<style>
-    .OverDue {
-        color: red;
-    }
-</style>
+
 <h2>Maintenance</h2>
 <h4>Your vehicle's condition and cost estimates</h4>
 <hr>
@@ -89,17 +77,41 @@
                         @Html.ValidationMessageFor(m => m.Mileage, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group" id="mainSpent">
+                    @Html.LabelFor(m => m.Spent, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Spent, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Spent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 <div id="mainItems">
                     <div class="form-group" id="mainCList">
-                        <h5>Maintenance Items Checklist</h5>
-                        @Html.DropDownList("Maintenance Items",
-                      new MultiSelectList(ViewBag.MaintenanceItems,
-                      "Id", "Name",
-                      ViewBag.MaintenanceItems),
-                      new {
-                         multiple = "multiple",
-                         @class="multiselect"
-                      })
+                        @Html.LabelFor(m => m.AirFilterBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.AirFilterBox, false)
+                        @Html.LabelFor(m => m.BrakesBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.BrakesBox, false)
+                        @Html.LabelFor(m => m.BatteryBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.BatteryBox, false)
+                        @Html.LabelFor(m => m.CoolantBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.CoolantBox, false)
+                        @Html.LabelFor(m => m.HVACBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.HVACBox, false)
+                        @Html.LabelFor(m => m.PowerSteeringBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.PowerSteeringBox, false)
+                        @Html.LabelFor(m => m.TransFluidBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.TransFluidBox, false)
+                        @Html.LabelFor(m => m.FuelFilterBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.FuelFilterBox, false)
+                        @Html.LabelFor(m => m.RadiatorHosesBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.RadiatorHosesBox, false)
+                        @Html.LabelFor(m => m.SuspensionBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.SuspensionBox, false)
+                        @Html.LabelFor(m => m.SparkPlugsBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.SparkPlugsBox, false)
+                        @Html.LabelFor(m => m.EngineDriveBeltsBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.EngineDriveBeltsBox, false)
+                        @Html.LabelFor(m => m.TiresBox, new { @class = "form-check-label" })
+                        @Html.CheckBoxFor(m => m.TiresBox, false)
                     </div>
                 </div>
                 <div class="form-group" id="mainInspect">
@@ -107,6 +119,13 @@
                     <div class="col-md-10">
                         @Html.CheckBoxFor(m => m.Inspection, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Inspection, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="hidMain" class="form-group" style="visibility: hidden">
+                    @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.CarType, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CarType, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <hr>
@@ -130,12 +149,12 @@
             <div class="mainVert"></div>
             <div class="infoCol">
                 <h4>Current Mileage</h4>
-                <h5>@ViewBag.CarsMileage Miles</h5>
+                <h5>@ViewBag.CarsMileage</h5>
             </div>
             <div class="mainVert" id="mid1"></div>
             <div class="infoCol">
                 <h4>Next Inspection</h4>
-                <h5>04/20/19</h5>
+                <h5>@ViewBag.InspectionDate</h5>
             </div>
             <div class="mainVert" id="mid2"></div>
             <div class="infoCol">
@@ -162,7 +181,7 @@
                     foreach (var airFilter in ViewBag.AirFilter)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.AirFilter[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.AirFilter[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -176,7 +195,7 @@
                     foreach (var oilChange in ViewBag.OilChange)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.OilChange[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.OilChange[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -190,7 +209,7 @@
                     foreach (var pSteer in ViewBag.PowerSteering)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.PowerSteering[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.PowerSteering[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -204,7 +223,7 @@
                     foreach (var item in ViewBag.Coolant)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.Coolant[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.Coolant[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -218,7 +237,7 @@
                     foreach (var item in ViewBag.TransFluid)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.TransFluid[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.TransFluid[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -232,7 +251,7 @@
                     foreach (var item in ViewBag.FuelFilter)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.FuelFilter[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.FuelFilter[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -246,7 +265,7 @@
                     foreach (var item in ViewBag.HVAC)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.HVAC[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.HVAC[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -260,7 +279,7 @@
                     foreach (var item in ViewBag.RadiatorHoses)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.RadiatorHoses[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.RadiatorHoses[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -274,7 +293,7 @@
                     foreach (var item in ViewBag.Suspension)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.Suspension[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.Suspension[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -288,7 +307,7 @@
                     foreach (var item in ViewBag.SparkPlugs)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.SparkPlugs[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.SparkPlugs[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -302,7 +321,7 @@
                     foreach (var item in ViewBag.IgnitionSystem)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.IgnitionSystem[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.IgnitionSystem[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -316,7 +335,7 @@
                     foreach (var item in ViewBag.EngineDriveBelts)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.EngineDriveBelts[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.EngineDriveBelts[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }
@@ -330,7 +349,7 @@
                     foreach (var item in ViewBag.Tires)
                     {
                         var className = "NotDue";
-                        if (Int32.Parse(ViewBag.Tires[3]) < ViewBag.CarsMileage)
+                        if (Int32.Parse(ViewBag.Tires[2]) < ViewBag.CarsMileage)
                         {
                             className = "OverDue";
                         }

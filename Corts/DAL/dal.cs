@@ -18,7 +18,9 @@ namespace Corts.DAL
         //THIS FILE HANDLES ALL DB CALLS
         private bool disposed = false;
 
-
+        string userName = "";
+        string host = "";
+        string password = "";
 
 
 
@@ -34,17 +36,16 @@ namespace Corts.DAL
         {
         }
 
-
         //Gets the cars selected nickname for display at the top of the table in the maintenance page
         public string GetCarNickname(string car, string email)
         {
             List<UsersCars> usersCars = getCurrentUsersCars(email);
             string CarNickname = null;
-            if(usersCars != null)
+            if (usersCars != null)
             {
                 for (int i = 0; i < usersCars.Count; i++)
                 {
-                    if(usersCars[i].CarID == car)
+                    if (usersCars[i].CarID == car)
                     {
                         CarNickname = usersCars[i].CarNickname;
                         return CarNickname;
@@ -56,7 +57,7 @@ namespace Corts.DAL
                 }
             }
             return CarNickname;
-            
+
         }
         //Get cars mileage
         public int GetCarMileage(string car, string email)
@@ -80,7 +81,6 @@ namespace Corts.DAL
             }
             return CarMileage;
         }
-
         //Get Months Owned
         public int GetMonthsOwned(string car, string email)
         {
@@ -103,6 +103,24 @@ namespace Corts.DAL
             }
             return MonthsOwned;
         }
+        public string GetCarsInspectionDate(string carID, string usersEmail)
+        {
+            List<UsersCars> usersCars = getCurrentUsersCars(usersEmail);
+            string InspectionDate = null;
+            if (usersCars != null)
+            {
+                for (int i = 0; i < usersCars.Count; i++)
+                {
+                    if (usersCars[i].CarID == carID)
+                    {
+                        InspectionDate = usersCars[i].InspectionDue.ToString();
+                        return InspectionDate;
+                    }
+                }
+            }
+            throw new Exception("Car not found");
+
+        }
         //Get List of all Maintenance Items Names in DB for the Update Maintenance Form
         public List<MaintenanceObject> GetMaintenanceItems()
         {
@@ -116,7 +134,6 @@ namespace Corts.DAL
             return MaintenanceItems;
 
         }
-
         //Get current list of available cars in database
         public List<Cars> getCurrentCarList()
         {
@@ -136,7 +153,6 @@ namespace Corts.DAL
                 return carList;
             }
         }
-
         //Get list of current cars user has for settings and maintenance page
         public List<UsersCars> getCurrentUsersCars(string email)
         {
@@ -418,9 +434,225 @@ namespace Corts.DAL
             return pSteering;
         }
         //End of users personal maintenance retrieval
-#endregion
+        #endregion
+        #region UpdatePersonalMaintenance
+        //public bool UpdateAirFilterInformation(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        //{
+        //    var collection = GetUsersCollectionForEdit();
+        //    //Create a filter object
+        //    var builder = Builders<Users>.Filter;
+        //    //Filter to the correct user (found by usersEmail)
+        //    var filt = builder.Where(x => x.email == usersEmail);
+        //    //Convert user selected to list object
+        //    var list = collection.Find(filt).ToList();
 
-       
+        //    for (int i = 0; i < list[0].Cars.Count; i++)
+        //    {
+        //        if (list[0].Cars[i].CarID == carID)
+        //        {
+        //            try
+        //            {
+        //                var filter = Builders<Users>.Filter;
+        //                var userEmailandCarID = filter.And(
+        //                  filter.Eq(x => x.email, usersEmail),
+        //                  filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+        //                var car = collection.Find(userEmailandCarID).ToList();
+        //                for(int j = 0; j < car.Count; j++)
+        //                {
+        //                    if(car[i].Cars[i].CarID == carID)
+        //                    {
+        //                        //Delete "null" object in DB for Cars
+        //                        var update2 = Builders<Users>.Update.Unset(e => e.Cars[i].PersonalMaintenance[i].AirFilter);
+        //                        collection.UpdateOne(userEmailandCarID, update2, new UpdateOptions { IsUpsert = true });
+
+        //                        //Add new car
+        //                        var updateAirFilterInformation = Builders<Users>.Update.Set(userEmailandCarID, update2);
+        //                        collection.UpdateOne(userEmailandCarID, updateAirFilterInformation);
+        //                    }
+        //                }
+        //                int LastChecked = pmObject[0].LastChecked;
+        //                int NextNeeded = pmObject[0].NxtNeeded;
+        //                string Name = pmObject[0].Name;
+
+        //                // update with positional operator
+        //                var update = Builders<Users>.Update;
+        //                var airFilterSetterLC = update.Set("Cars.$.PersonalMaintenance.$.AirFilter.$.LastChecked", LastChecked);
+        //                var airFilterSetterNN = update.Set("Cars.$.PersonalMaintenance.$.AirFilter.$.NxtNeeded", NextNeeded);
+        //                collection.UpdateOne(userEmailandCarID, airFilterSetterLC);
+        //                collection.UpdateOne(userEmailandCarID, airFilterSetterNN);
+        //                return true;
+
+        //            }
+        //            catch
+        //            {
+        //                return false;
+        //            }
+
+
+        //        }
+        //    }
+        //    throw new Exception("Something went wrong");
+        //}
+        #endregion
+        #region Update Maintenance Information
+        public bool UpdateMileage(int mileage, string carID, string usersEmail)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+
+            for(int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if(list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+                        
+                        var car = collection.Find(userEmailandCarID).ToList();
+                        
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var mileageSetter = update.Set("Cars.$.mileage", mileage);
+                        collection.UpdateOne(userEmailandCarID, mileageSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+
+
+                }
+            }
+            return true;
+
+        }
+        public bool UpdateInspection(string carID, string usersEmail)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        //Create date and add a year
+                        DateTime theDate = DateTime.Today;
+                        DateTime yearInspectionDue = theDate.AddYears(1);
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+                        // find car with email and car id
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var inspectionSetter = update.Set("Cars.$.InspectionDue", yearInspectionDue.ToString());
+                        collection.UpdateOne(userEmailandCarID, inspectionSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+
+
+                }
+            }
+            return true;
+
+        }
+        public bool UpdateTotalCost(string carID, string usersEmail, int cost)
+        {
+
+            //Get current total cost
+            int currentCost = GetUsersCurrentTotalForCar(usersEmail, carID);
+
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        //Create the updated variable
+                        int UpdatedCost = currentCost + cost;
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+                        // find car with email and car id
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var inspectionSetter = update.Set("Cars.$.totalSpent", UpdatedCost);
+                        collection.UpdateOne(userEmailandCarID, inspectionSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+
+        }
+        public int GetUsersCurrentTotalForCar(string usersEmail, string CarID)
+        {
+            int currentCost = 0;
+            var collection = GetUsersCollection();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == CarID)
+                {
+                    currentCost = list[0].Cars[i].totalSpent;
+                    return currentCost;
+                }
+                else
+                {
+                    return currentCost;
+                }
+
+            }
+            throw new Exception("Car not found");
+        }
+        #endregion
 
         #region EmailReminders
         //Get list of users emails for email reminders
@@ -438,6 +670,96 @@ namespace Corts.DAL
         #endregion
 
         #region SettingsPageFunctions
+
+        public List<MaintenanceObject> GetPersonalMaintenanceObjectByName(string name)
+        {
+            var collection = GetMaintenanceScheduleCollection();
+            var maintenanceObjectName = name;
+            var builder = Builders<MaintenanceObject>.Filter;
+            var filt = builder.Where(x => x.Name == maintenanceObjectName);
+            var list = collection.Find(filt).ToList();
+
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return list;
+            }
+
+        }
+        public List<PersonalMaintenance> InitializePersonalMaintenance(int mileage, int totalSpent)
+        {
+            List<PersonalMaintenance> pmList = new List<PersonalMaintenance>() {
+                new PersonalMaintenance() {
+                    AirFilter = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Air Filter", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Air Filter"))}
+                    },
+                    Battery = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Battery", LastChecked = 0,NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Battery"))}
+                    },
+                    Brakes = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Brakes", LastChecked = 0,NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Brakes"))}
+                    },
+                    Coolant = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Coolant", LastChecked = 0,NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Coolant"))}
+                    },
+                    EngineDriveBelts = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Engine Drive Belts", LastChecked = 0,NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Engine Drive Belts"))}
+                    },
+                    FuelFilter = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Fuel Filter", LastChecked = 0,NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Fuel Filter"))}
+                    },
+                    HVAC = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "HVAC", LastChecked = 0,NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("HVAC"))}
+                    },
+                    IgnitionSystem = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Ignition System", LastChecked = 0,NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Ignition System"))}
+                    },
+                    OilChange = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Oil Change", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Oil Change"))}
+                    },
+                    PowerSteering = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Power Steering", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Power Steering"))}
+                    },
+                    RadiatorHoses = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Radiator Hoses", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Radiator Hoses"))}
+                    },
+                    SparkPlugs = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Spark Plugs", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Spark Plugs"))}
+                    },
+                    Suspension = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Suspension", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Suspension"))}
+                    },
+                    Tires = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Tires", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Tires"))}
+                    },
+                    TransFluid = new List<PersonalMaintenanceObject>() { new PersonalMaintenanceObject ()
+                    {
+                         Name = "Transmission Fluid", LastChecked = 0, NxtNeeded = GetMileageNeeded(GetPersonalMaintenanceObjectByName("Transmission Fluid"))}
+                    }
+            }
+
+            };
+
+            return pmList;
+
+        }
         //Add a car -> Completes Add Form on SettingsPage
         public bool AddCar(string usersEmail, UsersCars newCar)
         {
@@ -512,8 +834,6 @@ namespace Corts.DAL
 
 
         }
-
-
         //Check password before account updates
         public bool CheckPassword(string usersEmail, string passwordInserted)
         {
@@ -582,7 +902,6 @@ namespace Corts.DAL
                 return false;
             }
         }
-
         //Update Users Email
         public bool UpdateEmail(string usersEmail, string newEmail)
         {
@@ -607,7 +926,6 @@ namespace Corts.DAL
             }
             return true;
         }
-
         public string GetUsername(string email)
         {
             var collection = GetUsersCollection();
@@ -680,10 +998,7 @@ namespace Corts.DAL
         }
         #endregion
 
-
-
-
-        #region LoginandRegister Functionality
+        #region Login and Register Functionality
         //Login user
         public bool LoginUser(Users user)
         {
@@ -854,6 +1169,27 @@ namespace Corts.DAL
                 return false;
             }
             return true;
+        }
+        #endregion
+
+        #region MaintenanceInformation
+        public int GetMileageNeeded(List<MaintenanceObject> mainObject)
+        {
+            var collection = GetMaintenanceScheduleCollection();
+            var maintenanceObjectID = mainObject[0].Id;
+            var builder = Builders<MaintenanceObject>.Filter;
+            var filt = builder.Where(x => x.Id == maintenanceObjectID);
+            var list = collection.Find(filt).ToList();
+
+            if (list.Count == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                int mileage = list[0].Mileage;
+                return mileage;
+            }
         }
         #endregion
 
