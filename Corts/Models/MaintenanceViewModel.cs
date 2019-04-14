@@ -33,6 +33,10 @@ namespace Corts.Models
         //Bool elements for checkboxes
         [Display(Name = "Air Filter")]
         public bool AirFilterBox { get; set; }
+        [Display(Name = "Oil Change")]
+        public bool OilChangeBox { get; set; }
+        [Display(Name = "Ignition System")]
+        public bool IgnitionSystemBox { get; set; }
         [Display(Name = "Brakes")]
         public bool BrakesBox { get; set; }
         [Display(Name = "Battery")]

@@ -435,66 +435,584 @@ namespace Corts.DAL
         }
         //End of users personal maintenance retrieval
         #endregion
+
         #region UpdatePersonalMaintenance
-        //public bool UpdateAirFilterInformation(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
-        //{
-        //    var collection = GetUsersCollectionForEdit();
-        //    //Create a filter object
-        //    var builder = Builders<Users>.Filter;
-        //    //Filter to the correct user (found by usersEmail)
-        //    var filt = builder.Where(x => x.email == usersEmail);
-        //    //Convert user selected to list object
-        //    var list = collection.Find(filt).ToList();
+        public bool UpdateAirFilterInformation(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
 
-        //    for (int i = 0; i < list[0].Cars.Count; i++)
-        //    {
-        //        if (list[0].Cars[i].CarID == carID)
-        //        {
-        //            try
-        //            {
-        //                var filter = Builders<Users>.Filter;
-        //                var userEmailandCarID = filter.And(
-        //                  filter.Eq(x => x.email, usersEmail),
-        //                  filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+                        var car = collection.Find(userEmailandCarID).ToList();
 
-        //                var car = collection.Find(userEmailandCarID).ToList();
-        //                for(int j = 0; j < car.Count; j++)
-        //                {
-        //                    if(car[i].Cars[i].CarID == carID)
-        //                    {
-        //                        //Delete "null" object in DB for Cars
-        //                        var update2 = Builders<Users>.Update.Unset(e => e.Cars[i].PersonalMaintenance[i].AirFilter);
-        //                        collection.UpdateOne(userEmailandCarID, update2, new UpdateOptions { IsUpsert = true });
+                        //Unset current air filter doc
+                        var update1 = Builders<Users>.Update.Unset(e => e.Cars[i].PersonalMaintenance[i].AirFilter);
+                        collection.UpdateOne(userEmailandCarID, update1, new UpdateOptions { IsUpsert = true });
 
-        //                        //Add new car
-        //                        var updateAirFilterInformation = Builders<Users>.Update.Set(userEmailandCarID, update2);
-        //                        collection.UpdateOne(userEmailandCarID, updateAirFilterInformation);
-        //                    }
-        //                }
-        //                int LastChecked = pmObject[0].LastChecked;
-        //                int NextNeeded = pmObject[0].NxtNeeded;
-        //                string Name = pmObject[0].Name;
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].AirFilter, pmObject);
+                        collection.FindOneAndUpdate(userEmailandCarID, pmSetter);
+                        return true;
 
-        //                // update with positional operator
-        //                var update = Builders<Users>.Update;
-        //                var airFilterSetterLC = update.Set("Cars.$.PersonalMaintenance.$.AirFilter.$.LastChecked", LastChecked);
-        //                var airFilterSetterNN = update.Set("Cars.$.PersonalMaintenance.$.AirFilter.$.NxtNeeded", NextNeeded);
-        //                collection.UpdateOne(userEmailandCarID, airFilterSetterLC);
-        //                collection.UpdateOne(userEmailandCarID, airFilterSetterNN);
-        //                return true;
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
 
-        //            }
-        //            catch
-        //            {
-        //                return false;
-        //            }
+                }
+            }
+            return false;
+        }
+        public bool UpdateOilChange(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
 
+                        var car = collection.Find(userEmailandCarID).ToList();
 
-        //        }
-        //    }
-        //    throw new Exception("Something went wrong");
-        //}
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].OilChange, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateIgnitionSystem(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].IgnitionSystem, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateBrakes(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].Brakes, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateBattery(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].Battery, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateCoolant(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].Coolant, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateHVAC(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].HVAC, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdatePowerSteering(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].PowerSteering, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateTransFluid(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].TransFluid, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateFuelFilter(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].FuelFilter, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateRadiatorHoses(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].RadiatorHoses, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateSuspension(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].Suspension, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateSparkPlugs(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].SparkPlugs, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateEngineDriveBelts(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].EngineDriveBelts, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
+        public bool UpdateTires(string usersEmail, string carID, List<PersonalMaintenanceObject> pmObject)
+        {
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+            for (int i = 0; i < list[0].Cars.Count; i++)
+            {
+                if (list[0].Cars[i].CarID == carID)
+                {
+                    try
+                    {
+                        var filter = Builders<Users>.Filter;
+                        var userEmailandCarID = filter.And(
+                          filter.Eq(x => x.email, usersEmail),
+                          filter.ElemMatch(x => x.Cars, c => c.CarID == carID));
+
+                        var car = collection.Find(userEmailandCarID).ToList();
+
+                        // update with positional operator
+                        var update = Builders<Users>.Update;
+                        var pmSetter = update.Set(e => e.Cars[i].PersonalMaintenance[0].Tires, pmObject);
+                        collection.UpdateOne(userEmailandCarID, pmSetter);
+                        return true;
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Something went wrong");
+                    }
+
+                }
+            }
+            return false;
+        }
         #endregion
+
         #region Update Maintenance Information
         public bool UpdateMileage(int mileage, string carID, string usersEmail)
         {
@@ -555,7 +1073,9 @@ namespace Corts.DAL
                     {
                         //Create date and add a year
                         DateTime theDate = DateTime.Today;
+                      
                         DateTime yearInspectionDue = theDate.AddYears(1);
+                        var date = yearInspectionDue.ToString("MM-yyyy");
                         var filter = Builders<Users>.Filter;
                         var userEmailandCarID = filter.And(
                           filter.Eq(x => x.email, usersEmail),
@@ -565,7 +1085,7 @@ namespace Corts.DAL
 
                         // update with positional operator
                         var update = Builders<Users>.Update;
-                        var inspectionSetter = update.Set("Cars.$.InspectionDue", yearInspectionDue.ToString());
+                        var inspectionSetter = update.Set("Cars.$.InspectionDue", date.ToString());
                         collection.UpdateOne(userEmailandCarID, inspectionSetter);
                         return true;
 

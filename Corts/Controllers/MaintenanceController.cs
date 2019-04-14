@@ -463,11 +463,11 @@ namespace Corts.Controllers
                 Session["car"] = CarSelected;
                 var car = (string)Session["car"];
                 //Check to see if maintenance items are selected
-                //if (CheckAndUpdateMaintenanceItems(update))
-                //{
-                   
-                //    return RedirectToAction("Maintenance", "Maintenance", new { email, car });
-                //}
+                if (CheckAndUpdateMaintenanceItems(update))
+                {
+
+                    return RedirectToAction("Maintenance", "Maintenance", new { email, car });
+                }
                 return RedirectToAction("Maintenance", "Maintenance", new { email, car });
 
             }
@@ -477,61 +477,346 @@ namespace Corts.Controllers
             }
             
         }
-        //public bool CheckAndUpdateMaintenanceItems(MaintenanceViewModel update)
-        //{
-        //    int currentMileage = dal.GetCarMileage(update.CarType, update.Email);
-        //    if (update.AirFilterBox == true)
-        //    {
-        //        int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Air Filter"));
-        //        int nextNeeded = currentMileage + mileageNeededAt;
-        //        try
-        //        {
-        //            List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
-        //            {
-        //                new PersonalMaintenanceObject()
-        //                {
-        //                    Name = "Air Filter",
-        //                    LastChecked = Int32.Parse(update.Mileage),
-        //                    NxtNeeded = currentMileage + mileageNeededAt
-        //                }
-        //            };
-        //            //dal.UpdateAirFilterInformation(update.Email, update.CarType, pmList);
-        //            return true;
-        //        }
-        //        catch
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    throw new Exception("Something went wrong");
-        //}        //public bool CheckAndUpdateMaintenanceItems(MaintenanceViewModel update)
-        //{
-        //    int currentMileage = dal.GetCarMileage(update.CarType, update.Email);
-        //    if (update.AirFilterBox == true)
-        //    {
-        //        int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Air Filter"));
-        //        int nextNeeded = currentMileage + mileageNeededAt;
-        //        try
-        //        {
-        //            List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
-        //            {
-        //                new PersonalMaintenanceObject()
-        //                {
-        //                    Name = "Air Filter",
-        //                    LastChecked = Int32.Parse(update.Mileage),
-        //                    NxtNeeded = currentMileage + mileageNeededAt
-        //                }
-        //            };
-        //            //dal.UpdateAirFilterInformation(update.Email, update.CarType, pmList);
-        //            return true;
-        //        }
-        //        catch
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    throw new Exception("Something went wrong");
-        //}
+        public bool CheckAndUpdateMaintenanceItems(MaintenanceViewModel update)
+        {
+            int currentMileage = dal.GetCarMileage(update.CarType, update.Email);
+            if (update.AirFilterBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Air Filter"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Air Filter",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateAirFilterInformation(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.BatteryBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Battery"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Battery",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateBattery(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.BrakesBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Brakes"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Brakes",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateBattery(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.CoolantBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Coolant"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Coolant",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateCoolant(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.EngineDriveBeltsBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Engine Drive Belts"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Engine Drive Belts",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateEngineDriveBelts(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.FuelFilterBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Fuel Filter"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Fuel Filter",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateFuelFilter(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.HVACBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("HVAC"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "HVAC",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateHVAC(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.PowerSteeringBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Power Steering"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Power Steering",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdatePowerSteering(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.RadiatorHosesBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Radiator Hoses"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Radiator Hoses",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateRadiatorHoses(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.SparkPlugsBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Spark Plugs"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Spark Plugs",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateSparkPlugs(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.SuspensionBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Suspension"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Suspension",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateSuspension(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if(update.TiresBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Tires"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Tires",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateTires(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            if (update.TransFluidBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Transmission Fluid"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Transmission Fluid",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateTransFluid(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+
+                    return false;
+                }
+            }
+            if(update.OilChangeBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Oil Change"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Oil Change",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateOilChange(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+
+                    return false;
+                }
+            }
+            if(update.IgnitionSystemBox == true)
+            {
+                int mileageNeededAt = dal.GetMileageNeeded(dal.GetPersonalMaintenanceObjectByName("Ignition System"));
+                int nextNeeded = currentMileage + mileageNeededAt;
+                try
+                {
+                    List<PersonalMaintenanceObject> pmList = new List<PersonalMaintenanceObject>()
+                    {
+                        new PersonalMaintenanceObject()
+                        {
+                            Name = "Ignition System",
+                            LastChecked = Int32.Parse(update.Mileage),
+                            NxtNeeded = nextNeeded
+                        }
+                    };
+                    dal.UpdateIgnitionSystem(update.Email, update.CarType, pmList);
+                }
+                catch
+                {
+
+                    return false;
+                }
+            }
+            return true;
+          
+        }  
+       
         //Creates a select list of current users cars from the DB and gives it to them in a dropdown
         private List<SelectListItem> GetUsersCarsList(string email)
         {
