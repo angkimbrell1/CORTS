@@ -87,35 +87,35 @@
                 <div id="mainItems">
                     <div class="form-group" id="mainCList">
                         @Html.LabelFor(m => m.AirFilterBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.AirFilterBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.AirFilterBox, false)</div>
                         @Html.LabelFor(m => m.OilChangeBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.OilChangeBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.OilChangeBox, false)</div>
                         @Html.LabelFor(m => m.BrakesBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.BrakesBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.BrakesBox, false)</div>
                         @Html.LabelFor(m => m.BatteryBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.BatteryBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.BatteryBox, false)</div>
                         @Html.LabelFor(m => m.CoolantBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.CoolantBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.CoolantBox, false)</div>
                         @Html.LabelFor(m => m.HVACBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.HVACBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.HVACBox, false)</div>
                         @Html.LabelFor(m => m.PowerSteeringBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.PowerSteeringBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.PowerSteeringBox, false)</div>
                         @Html.LabelFor(m => m.TransFluidBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.TransFluidBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.TransFluidBox, false)</div>
                         @Html.LabelFor(m => m.FuelFilterBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.FuelFilterBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.FuelFilterBox, false)</div>
                         @Html.LabelFor(m => m.RadiatorHosesBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.RadiatorHosesBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.RadiatorHosesBox, false)</div>
                         @Html.LabelFor(m => m.SuspensionBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.SuspensionBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.SuspensionBox, false)</div>
                         @Html.LabelFor(m => m.SparkPlugsBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.SparkPlugsBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.SparkPlugsBox, false)</div>
                         @Html.LabelFor(m => m.EngineDriveBeltsBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.EngineDriveBeltsBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.EngineDriveBeltsBox, false)</div>
                         @Html.LabelFor(m => m.TiresBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.TiresBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.TiresBox, false)</div>
                         @Html.LabelFor(m => m.IgnitionSystemBox, new { @class = "form-check-label" })
-                        @Html.CheckBoxFor(m => m.IgnitionSystemBox, false)
+                        <div class="check">@Html.CheckBoxFor(m => m.IgnitionSystemBox, false)</div>
                     </div>
                 </div>
                 <div class="form-group" id="mainInspect">
@@ -165,9 +165,14 @@
                 <h4>Months Owned</h4>
                 <h5>@ViewBag.MonthsOwned</h5>
             </div>
+            <div class="mainVert" id="mid3"></div>
+            <div class="infoCol">
+                <h4>Total Paid</h4>
+                <h5>@*@ViewBag.TotalPaid*@</h5>
+            </div>
         </div>
     </div>
-    <table class="table table-striped" id="vehTab">
+    <table class="table table-striped table-hover" id="vehTab">
         <thead>
             <tr>
                 <th colspan="4" id="titleRow"><h3>@ViewBag.CarNickName Breakdown</h3></th>

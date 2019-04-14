@@ -443,7 +443,9 @@
             /*MAINTENANCE POP-UP MENU*/
             /*POP-UP MENU CONTAINER BOX*/
             #popMain_in {
-                height: 400px;
+                height: 500px;
+                margin-top: 0;
+                padding-top: 0;
             }
             /*POP-UP MENU SECTIONS*/
             /*POP-UP SELECT WHICH VEHICLE*/
@@ -454,12 +456,12 @@
                 margin-left: 1px;
             }
 
-                #mainCar .control-label {
-                    margin: 0;
-                    padding: 0;
-                    margin-right: 65px;
-                    width: 30px;
-                }
+            #mainCar .control-label {
+                margin: 0;
+                padding: 0;
+                margin-right: 65px;
+                width: 30px;
+            }
 
             .mainCarDrop {
                 width: 200px;
@@ -471,55 +473,93 @@
                 margin: 0;
                 padding: 0;
                 margin-left: 1px;
-                margin-top: 10px;
+                margin-top: 5px;
             }
 
-                #mainMiles .control-label {
-                    width: 63px;
-                    margin: 0;
-                    padding: 0;
-                    margin-right: 26px;
-                }
+            #mainMiles .control-label {
+                width: 63px;
+                margin: 0;
+                padding: 0;
+                margin-right: 26px;
+            }
 
-                #mainMiles .form-control {
-                    width: 200px;
-                    height: 30px;
-                }
+            #mainMiles .form-control {
+                width: 200px;
+                height: 30px;
+            }
+            /*POP-UP SPENT*/
+            #mainSpent{
+                width: 340px;
+                margin-left: 0;
+                margin-top: 5px;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+            #mainSpent .control-label{
+                display: inline-block;
+                width: 52px;
+                margin: 0;
+                padding: 0;
+                margin-right: 38px;
+            }
+            #mainSpent .form-control{
+                display: inline-block;
+                width: 200px;
+                height: 30px;
+            }
             /*POP-UP ITEMS*/
             #mainItems {
                 width: 340px;
                 margin: 0;
                 padding: 0;
+                margin-top: 8px;
             }
-
             #mainCList {
                 width: 340px;
                 margin: 0;
                 padding: 0;
+            }
+            #mainCList .form-check-label{
+                display: block;
+                width: 145px;
+                margin: 0;
+                padding: 0;
+                display: inline-block;
+            }
+            .check {
+                width: 17px;
+                margin: 0;
+                padding: 0;
+                display: inline-block;
             }
             /*POP-UP INSPECT*/
             #mainInspect {
                 width: 340px;
                 margin: 0;
                 padding: 0;
-                margin-bottom: 10px;
+                margin-bottom: 5px;
+                margin-top: 5px;
             }
-
-                #mainInspect .control-label {
-                    width: 260px;
-                    height: 40px;
-                    margin: 0;
-                    padding: 0;
-                    padding-top: 5px;
-                }
-
-                #mainInspect .col-md-10 {
-                    margin: 0;
-                    padding: 0;
-                    width: 25px;
-                    height: 25px;
-                    margin-left: 10px;
-                }
+            #mainInspect .control-label {
+                width: 260px;
+                height: 40px;
+                margin: 0;
+                padding: 0;
+                margin-left: 20px;
+                padding-top: 5px;
+            }
+            #mainInspect .col-md-10 {
+                margin: 0;
+                padding: 0;
+                width: 25px;
+                height: 25px;
+                margin-left: 10px;
+            }
+            /*MAINTENANCE POP-UP MENU LOWER HORIZONTAL BAR*/
+            #popMain_in hr{
+                margin-top: 0;
+                padding-top: 0;
+            }
             /*HOME PAGE*/
             /*HOME IMAGE BOX CONTAINTERS*/
             .homeImg {
@@ -552,10 +592,10 @@
                 transition-duration: .3s;
             }
 
-                #chevy p:hover, #ford p:hover, #subar p:hover {
-                    opacity: 0.65;
-                    transition-duration: .3s;
-                }
+            #chevy p:hover, #ford p:hover, #subar p:hover {
+                opacity: 0.65;
+                transition-duration: .3s;
+            }
             /*HOME IMAGES BACKGROUNDS*/
             #chevy {
                 background: url(../../Images/chevySmall.png) no-repeat;
@@ -672,10 +712,11 @@
                 text-align: center;
                 height: 106px;
                 border: 2px solid #01161E;
+                padding-left: 9px;
             }
             /*MAINTENANCE BOXES IN INFO BAR*/
             .infoCol {
-                width: 150px;
+                width: 115px;
                 height: 106px;
                 float: left;
                 padding-top: 15px;
@@ -691,20 +732,23 @@
                 margin-right: 13px;
             }
 
-            #mid1, #mid2 {
+            #mid1, #mid2, #mid3 {
                 margin-left: 13px;
             }
             /*MAINTENANCE INFO BOX HEADERS*/
             #mainStats h4 {
-                font-size: 20px;
+                font-size: 18px;
                 font-family: 'Hammersmith One', sans-serif;
                 font-weight: 100;
                 padding: 0;
                 margin: 0;
+                width: 60px;
+                text-align: center;
+                margin-left: 20px;
             }
             /*MAINENANCE INFO BOXES INFO*/
             #mainStats h5 {
-                font-size: 34px;
+                font-size: 27px;
                 font-family: 'Source Sans Pro', sans-serif;
                 color: #EFF6E0;
                 padding: 0;
@@ -721,21 +765,30 @@
                 margin: 0;
                 padding: 0;
                 margin-top: 185px;
-                margin-bottom: 20px;
                 border-radius: 15px;
                 text-align: center;
                 box-shadow: 0.8px 1.8px 3.8px rgba(0, 0, 0, .5);
             }
-                /*MAINTENANCE TABLE HEADER*/
-                #vehTab h3 {
-                    font-size: 40px;
-                    padding: 0;
-                    margin: 0;
-                    font-family: 'Source Sans Pro', sans-serif;
-                    text-align: center;
-                    background-color: #01161E;
-                    color: #598392;
-                }
+            /*MAINTENANCE TABLE HEADER*/
+            #vehTab h3 {
+                font-size: 40px;
+                padding: 0;
+                margin: 0;
+                padding-top: 5px;
+                padding-bottom: 2px;
+                font-family: 'Merriweather Sans', sans-serif;
+                text-align: center;
+                background-color: #01161E;
+                color: #598392;
+            }
+            #vehTab th{
+                font-family: 'Hammersmith One', sans-serif;
+                font-weight: 300;
+            }
+            #vehTab tbody tr{
+                font-family: 'Source Sans Pro', sans-serif;
+                font-weight: 600;
+            }
             /*MAINTENANCE TABLE HEADER ROW*/
             #titleRow {
                 background-color: #01161E;
