@@ -222,6 +222,38 @@ namespace Corts.Controllers
                     throw new Exception("Something Broke!");
                 }
             }
+            else if(UpdateInfo.Username != null)
+            {
+                if(dal.UpdateUsername(usersEmail, UpdateInfo.Username))
+                {
+                    Session["email"] = usersEmail;
+                    var email = (string)Session["email"];
+
+                    // Return to users setting page
+                    return RedirectToAction("Settings", "Manage", new { email });
+                }
+                else
+                {
+                    throw new Exception("Something Broke!");
+                }
+            }
+            else if(UpdateInfo.NewEmail != null)
+            {
+                if(dal.UpdateEmail(usersEmail, UpdateInfo.NewEmail))
+                {
+                    //Get new email variable to send as a session to the new view
+                    string newEmail = UpdateInfo.NewEmail;
+                    Session["email"] = newEmail;
+                    var email = (string)Session["email"];
+
+                    // Return to users setting page
+                    return RedirectToAction("Settings", "Manage", new { email });
+                }
+                else
+                {
+                    throw new Exception("Something Broke!");
+                }
+            }
             else
             {
                 Session["email"] = usersEmail;

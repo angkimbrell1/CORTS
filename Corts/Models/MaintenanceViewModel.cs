@@ -19,8 +19,10 @@ namespace Corts.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        //Mileage
         [Required]
         [Display(Name = "Mileage")]
+        [DataType(DataType.Text)]
         public string Mileage { get; set; }
 
         [Display(Name = "Spent")]

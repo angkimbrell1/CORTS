@@ -1491,6 +1491,94 @@ namespace Corts.DAL
             }
             return true;
         }
+        //Update Users Password
+        public bool UpdatePassword(string usersEmail, string CurrPassword, string newPassword)
+        {
+            //Grab the UsersCollectionForEdit -> Allows us to modify instead of just read
+            var collection = GetUsersCollectionForEdit();
+            //Create a filter object
+            var builder = Builders<Users>.Filter;
+            //Filter to the correct user (found by usersEmail)
+            var filt = builder.Where(x => x.email == usersEmail);
+            //Convert user selected to list object
+            var list = collection.Find(filt).ToList();
+
+            //If user is not found -> return false
+            if (list.Count == 0)
+            {
+                return false;
+            }
+
+            //Get savedPasswordHash from the data base
+            string passwordFromDB = list[0].password;
+
+            //Convert the password from the DB to an array of bytes
+            byte[] hashBytes = Convert.FromBase64String(passwordFromDB);
+
+            //Get the salt from the hashbytes
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+
+            //Use the same variable to hash the password that the user entered
+            var pbkdf2 = new Rfc2898DeriveBytes(CurrPassword, salt, 10000);
+
+            //Convert the hashed password from the user to an array of bytes
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            //Set a flag 'ok' to validate the password that the user entered
+            //with the password in the database
+            int ok = 1;
+
+            //Loop that checks the validity of the password by comparing each byte
+            //of the db password with the user password. The hashBytes starts at 16
+            //because the salt value is stored in the first 16 bytes and we aren't
+            //comparing that with anything.
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                {
+                    ok = 0;
+                }
+            }
+
+            if (ok == 1)
+            {
+                //Generate a random salt
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+                //Concatenate salt and user password then hash it using Rfc...Bytes
+                var pdkdf2 = new Rfc2898DeriveBytes(newPassword, salt, 10000);
+
+                //Place the concatenated string in the byte array hash2
+                byte[] hash2 = pdkdf2.GetBytes(20);
+
+                //New byte array to store hashed password + salt
+                byte[] hashBytes2 = new byte[36];
+
+                Array.Copy(salt, 0, hashBytes2, 0, 16);
+                Array.Copy(hash2, 0, hashBytes2, 16, 20);
+
+                string savedPasswordHash = Convert.ToBase64String(hashBytes2);
+
+                newPassword = savedPasswordHash;
+
+                try
+                {
+                    //Update users Password
+                    var updatePassword = Builders<Users>.Update.Set(e => e.password, newPassword);
+                    collection.UpdateOne(filt, updatePassword);
+                }
+                catch
+                {
+                    return false;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         //Get selected car from add form and return CarType
         public string GetSelectedCar(string CarSelected)
         {
@@ -1657,19 +1745,29 @@ namespace Corts.DAL
         public bool CreateUser(Users user)
         {
 
-            var collection1 = GetUsersCollection();
-            var coll = collection1.AsQueryable();
-            List<string> Emails = new List<string>();
-            foreach (var item in coll)
-            {
-                Emails.Add(item.email);
-            }
+            //var collection1 = GetUsersCollection();
+            //var coll = collection1.AsQueryable();
+            //List<string> Emails = new List<string>();
+            //foreach (var item in coll)
+            //{
+            //    Emails.Add(item.email);
+            //}
 
-            int size = Emails.Count;
+            //int size = Emails.Count;
 
-            for (int i = 0; i < size; i++)
+            //for (int i = 0; i < size; i++)
+            //{
+            //    if (user.email == Emails.ElementAt(i))
+            //    {
+            //        return false;
+            //    }
+            //}
+
+            List<string> usersEmails = GetUsersEmails();
+
+            for(int i = 0; i < usersEmails.Count; i++)
             {
-                if (user.email == Emails.ElementAt(i))
+                if(user.email == usersEmails[i])
                 {
                     return false;
                 }
