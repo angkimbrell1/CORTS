@@ -59,12 +59,12 @@
                     @Html.AntiForgeryToken()
                     <h3>Add Vehicle Info</h3>
                     <hr>
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
+                    <div class="form-group" id="popTop">
                         @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(m=> m.CarType,(IEnumerable
                        <SelectListItem>)ViewBag.CurrentCarList)
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -95,7 +95,7 @@
                             @Html.ValidationMessageFor(m => m.TotalSpent, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="popBottom">
                         @Html.LabelFor(m => m.InspectionDate, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.InspectionDate, new { @class = "form-control", @placeholder = "mm/yyyy" })
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group" id="pop_but">
+                    <div class="form-group" id="popBottom">
                         <div class="col-md-offset-2 col-md-10">
                             <input type="submit" value="Submit" class="btn btn-default" />
                         </div>
