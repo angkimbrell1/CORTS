@@ -755,6 +755,9 @@
             #mid1, #mid2, #mid3 {
                 margin-left: 13px;
             }
+            .OverDue {
+                color: red;
+            }
             /*MAINTENANCE INFO BOX HEADERS*/
             #mainStats h4 {
                 font-size: 18px;
@@ -846,17 +849,28 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div id="titleInfo">
-                        @Html.ActionLink("MaintenanceMate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("MaintenanceMate", "Index", "Home", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "navbar-brand" }))
                         <!--<div class="vl"></div>
-                            <p>maintenance made easy</p>-->
+            <p>maintenance made easy</p>-->
                     </div>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-                    </ul>
-                </div>
+                @if (ViewBag.Email == null)
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        </ul>
+                    </div>
+                }
+                @if (ViewBag.Email != null)
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Log Out", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        </ul>
+                    </div>
+                }
             </div>
         </div>
         <div class="side">

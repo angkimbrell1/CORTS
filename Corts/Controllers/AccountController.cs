@@ -59,13 +59,16 @@ namespace Corts.Controllers
                 return View();
             }
         }
+
         //Register
         [HttpPost]
         public ActionResult Register(RegisterViewModel userInfo)
         {
+
             Users user = new Users();
             user.email = userInfo.Email;
             user.password = userInfo.Password;
+
             DateTime DateToday = DateTime.Today;
             string FirstLoggedIn = DateToday.ToString();
             user.FirstLoggedIn = FirstLoggedIn;
@@ -79,6 +82,7 @@ namespace Corts.Controllers
             }
             else
             {
+                ViewBag.EmailTaken = "Email is Already Taken";
                 return View();
             }
         }

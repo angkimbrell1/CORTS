@@ -473,7 +473,9 @@ namespace Corts.Controllers
             }
             catch
             {
-                return View("~/Maintenance/Maintenance.cshtml");
+                Session["email"] = usersEmail;
+                var email = (string)Session["email"];
+                return RedirectToAction("Maintenance", "Maintenance", new { email });
             }
             
         }
