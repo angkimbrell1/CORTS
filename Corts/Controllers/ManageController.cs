@@ -111,9 +111,9 @@ namespace Corts.Controllers
             UsersCars newCar = new UsersCars();
             newCar.CarID = Guid.NewGuid().ToString();
             newCar.Type = CarSelected;
-            newCar.mileage = Int32.Parse(addForm.Mileage);
+            newCar.mileage = addForm.Mileage;
             newCar.monthsOwned = Int32.Parse(addForm.MonthsOwned);
-            newCar.totalSpent = Int32.Parse(addForm.TotalSpent);
+            newCar.totalSpent = addForm.TotalSpent;
             newCar.InspectionDue = addForm.InspectionDate;
             newCar.CarNickname = addForm.CarNickname;
             //Create a statement that initializes a personal maintenance object

@@ -55,11 +55,13 @@ namespace Corts.Models
 
         [Required]
         [Display(Name = "Mileage")]
-        public string Mileage { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Mileage must be a positive number")]
+        public int Mileage { get; set; }
 
         [Required]
         [Display(Name = "Estimated Total Spent")]
-        public string TotalSpent { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Total must be a positive number")]
+        public int TotalSpent { get; set; }
 
         [Required]
         [Display(Name = "Inspection")]
