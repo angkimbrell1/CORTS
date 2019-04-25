@@ -112,7 +112,7 @@ namespace Corts.Controllers
             newCar.CarID = Guid.NewGuid().ToString();
             newCar.Type = CarSelected;
             newCar.mileage = addForm.Mileage;
-            newCar.monthsOwned = Int32.Parse(addForm.MonthsOwned);
+            newCar.monthsOwned = addForm.MonthsOwned;
             newCar.totalSpent = addForm.TotalSpent;
             newCar.InspectionDue = addForm.InspectionDate;
             newCar.CarNickname = addForm.CarNickname;

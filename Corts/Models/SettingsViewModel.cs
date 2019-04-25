@@ -51,7 +51,8 @@ namespace Corts.Models
 
         [Required]
         [Display(Name = "Months Owned")]
-        public string MonthsOwned { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Months Owned must be a positive number")]
+        public int MonthsOwned { get; set; }
 
         [Required]
         [Display(Name = "Mileage")]
