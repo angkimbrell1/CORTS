@@ -42,6 +42,8 @@ namespace Corts.Controllers
                 //Get their personal maintenance information
                 ViewBag.UsersMaintenance = GetUsersCarsMaintenanceInformation(email, car);
 
+                //Get total spent
+                ViewBag.TotalSpent = GetTotalSpent(car, email);
                 
 
 
@@ -91,6 +93,10 @@ namespace Corts.Controllers
         public string GetCarsInspectionDate(string car, string email)
         {
             return dal.GetCarsInspectionDate(car, email);
+        }
+        public int GetTotalSpent(string car, string email)
+        {
+            return dal.GetTotalSpent(car, email);
         }
 
         #region GetPersonalMaintenance
