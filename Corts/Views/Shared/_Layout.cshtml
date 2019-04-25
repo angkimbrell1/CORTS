@@ -39,6 +39,7 @@
                 #titleInfo a:hover {
                     transition-duration: .3s;
                     color: #EFF6E0;
+                    text-decoration: none;
                 }
             /*REGISTER AND LOG IN BUTTONS*/
             .navbar-collapse li {
@@ -849,7 +850,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div id="titleInfo">
-                        @Html.ActionLink("MaintenanceMate", "Index", "Home", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "navbar-brand" }))
+                        @Html.ActionLink("MaintenanceMate", "Index", "Home", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "navbar-brand" })
                         <!--<div class="vl"></div>
             <p>maintenance made easy</p>-->
                     </div>
