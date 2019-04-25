@@ -167,7 +167,7 @@
             <div class="mainVert" id="mid3"></div>
             <div class="infoCol">
                 <h4>Total Paid</h4>
-                <h5>@*@ViewBag.TotalPaid*@</h5>
+                <h5>$@ViewBag.TotalSpent</h5>
             </div>
         </div>
     </div>
@@ -180,189 +180,334 @@
                 <th scope="col">Vehicle Services</th>
                 <th scope="col">Last Checked Mileage</th>
                 <th scope="col">Next Needed Mileage</th>
+                <th scope="col">Overdue By Mileage</th>
             </tr>
         </thead>
         <tbody>
             <tr id="AirFilter">
                 @if (ViewBag.AirFilter != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var airFilter in ViewBag.AirFilter)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.AirFilter[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.OilChange[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@airFilter</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr id="OilChange">
                 @if (ViewBag.OilChange != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var oilChange in ViewBag.OilChange)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.OilChange[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.OilChange[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@oilChange</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr id="PowerSteering">
                 @if (ViewBag.PowerSteering != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var pSteer in ViewBag.PowerSteering)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.PowerSteering[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.PowerSteering[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@pSteer</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.Coolant != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.Coolant)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.Coolant[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.Coolant[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.TransFluid != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.TransFluid)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.TransFluid[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.TransFluid[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.FuelFilter != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.FuelFilter)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.FuelFilter[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.FuelFilter[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.HVAC != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.HVAC)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.HVAC[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.HVAC[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.Brakes != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.RadiatorHoses)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.RadiatorHoses[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.RadiatorHoses[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.Suspension != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.Suspension)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.Suspension[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.Suspension[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.SparkPlugs != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.SparkPlugs)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.SparkPlugs[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.SparkPlugs[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.IgnitionSystem != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.IgnitionSystem)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.IgnitionSystem[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.IgnitionSystem[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.EngineDriveBelts != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.EngineDriveBelts)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.EngineDriveBelts[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.EngineDriveBelts[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
                     }
                 }
             </tr>
             <tr>
                 @if (ViewBag.Tires != null)
                 {
+                    var overdueNumber = 0;
                     foreach (var item in ViewBag.Tires)
                     {
                         var className = "NotDue";
                         if (Int32.Parse(ViewBag.Tires[2]) < ViewBag.CarsMileage)
                         {
+                            overdueNumber = Int32.Parse(ViewBag.Tires[2]);
                             className = "OverDue";
                         }
                         <td class="@className">@item</td>
                     }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+
                 }
             </tr>
         </tbody>

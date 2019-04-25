@@ -24,7 +24,7 @@ namespace Corts.DAL
 
 
 
-        private string dbName = "CortsDB";
+        private string dbName = "";
         private string collectionName = "Users";
 
 
@@ -120,6 +120,23 @@ namespace Corts.DAL
             }
             throw new Exception("Car not found");
 
+        }
+        public int GetTotalSpent(string carId, string usersEmail)
+        {
+            List<UsersCars> usersCars = getCurrentUsersCars(usersEmail);
+            int totalSpent = 0;
+            if (usersCars != null)
+            {
+                for (int i = 0; i < usersCars.Count; i++)
+                {
+                    if (usersCars[i].CarID == carId)
+                    {
+                        totalSpent = usersCars[i].totalSpent;
+                        return totalSpent;
+                    }
+                }
+            }
+            throw new Exception("Car not found");
         }
         //Get List of all Maintenance Items Names in DB for the Update Maintenance Form
         public List<MaintenanceObject> GetMaintenanceItems()
