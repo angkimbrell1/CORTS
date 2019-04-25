@@ -13,7 +13,7 @@
         <style>
             /*TOP BAR HEIGHT*/
             .navbar-header {
-                height: 85px;
+                height: 80px;
             }
             /*WHITE CAR LOGO TOP LEFT*/
             #logo {
@@ -460,11 +460,19 @@
             /*MAINTENANCE POP-UP MENU*/
             /*POP-UP MENU CONTAINER BOX*/
             #popMain_in {
-                height: 500px;
+                height: 525px;
                 margin-top: 0;
                 padding-top: 0;
             }
             /*POP-UP MENU SECTIONS*/
+            #hidMain{
+                margin: 0;
+                padding: 0;
+            }
+            #popMain_in hr{
+                margin-bottom: 8px;
+                padding-bottom: 0;
+            }
             /*POP-UP SELECT WHICH VEHICLE*/
             #mainCar {
                 width: 340px;
@@ -483,6 +491,7 @@
             .mainCarDrop {
                 width: 200px;
                 height: 30px;
+                margin-bottom: 9px;
             }
             /*POP-UP MILEAGE*/
             #mainMiles {
@@ -500,15 +509,24 @@
                 margin-right: 26px;
             }
 
+            #mainMiles .text-danger, #mainSpent .text-danger{
+                font-size: 12px;
+                padding: 0;
+                margin: 0;
+            }
+
             #mainMiles .form-control {
                 width: 200px;
                 height: 30px;
+                margin-bottom: 0;
+                margin-top: 0;
+                padding-left: 5px;
             }
             /*POP-UP SPENT*/
             #mainSpent{
                 width: 340px;
                 margin-left: 0;
-                margin-top: 0;
+                margin-top: 9.2px;
                 margin-bottom: 0;
                 padding-bottom: 0;
                 padding-top: 0;
@@ -524,15 +542,16 @@
                 display: inline-block;
                 width: 200px;
                 height: 30px;
-                margin-top: 0;
                 margin-bottom: 0;
-                padding: 0;
+                margin-top: 8px;
+                padding-left: 5px;
             }
             /*POP-UP ITEMS*/
             #mainItems {
                 width: 340px;
                 margin: 0;
                 padding: 0;
+                margin-top: 17px;
             }
             #mainCList {
                 width: 340px;
@@ -544,6 +563,7 @@
                 width: 145px;
                 margin: 0;
                 padding: 0;
+                font-size: 14px;
                 display: inline-block;
             }
             .check {
@@ -557,8 +577,6 @@
                 width: 340px;
                 margin: 0;
                 padding: 0;
-                margin-bottom: 5px;
-                margin-top: 5px;
                 height: 25px;
             }
             #mainInspect .control-label {
@@ -566,8 +584,9 @@
                 height: 40px;
                 margin: 0;
                 padding: 0;
-                margin-left: 0;
-                padding-top: 5px;
+                margin-left: 15px;
+                padding-top: 7px;
+                font-size: 16px;
             }
             #mainInspect .col-md-10 {
                 margin: 0;
