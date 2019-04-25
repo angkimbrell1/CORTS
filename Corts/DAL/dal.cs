@@ -18,13 +18,11 @@ namespace Corts.DAL
         //THIS FILE HANDLES ALL DB CALLS
         private bool disposed = false;
 
-        string userName = "";
-        string host = "";
-        string password = "";
+        
 
 
 
-        private string dbName = "CortsDB";
+        private string dbName = "CORTS";
         private string collectionName = "Users";
 
 
