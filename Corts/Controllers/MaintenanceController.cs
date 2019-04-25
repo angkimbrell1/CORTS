@@ -449,7 +449,7 @@ namespace Corts.Controllers
             string usersEmail = update.Email;
             try
             {
-                dal.UpdateMileage(Int32.Parse(update.Mileage), update.CarType, update.Email);
+                dal.UpdateMileage(update.Mileage, update.CarType, update.Email);
 
                 //Check to see if inspection is checked
                 if(update.Inspection == true)
@@ -459,7 +459,8 @@ namespace Corts.Controllers
 
                 if(update.Spent != null)
                 {
-                    dal.UpdateTotalCost(update.CarType, update.Email, (Int32.Parse(update.Spent)));
+                    string updatedValue = update.Spent.ToString();
+                    dal.UpdateTotalCost(update.CarType, update.Email, Int32.Parse(updatedValue));
                 }
                 string CarSelected = update.CarType;
                 //string usersEmail = update.Email;
@@ -499,7 +500,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Air Filter",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -521,7 +522,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Battery",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -543,7 +544,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Brakes",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -565,7 +566,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Coolant",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -587,7 +588,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Engine Drive Belts",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -609,7 +610,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Fuel Filter",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -631,7 +632,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "HVAC",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -653,7 +654,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Power Steering",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -675,7 +676,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Radiator Hoses",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -697,7 +698,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Spark Plugs",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -719,7 +720,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Suspension",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -741,7 +742,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Tires",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -763,7 +764,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Transmission Fluid",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -786,7 +787,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Oil Change",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };
@@ -809,7 +810,7 @@ namespace Corts.Controllers
                         new PersonalMaintenanceObject()
                         {
                             Name = "Ignition System",
-                            LastChecked = Int32.Parse(update.Mileage),
+                            LastChecked = update.Mileage,
                             NxtNeeded = nextNeeded
                         }
                     };

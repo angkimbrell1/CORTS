@@ -22,11 +22,13 @@ namespace Corts.Models
         //Mileage
         [Required]
         [Display(Name = "Mileage")]
-        [DataType(DataType.Text)]
-        public string Mileage { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Mileage must be a positive number")]
+        public int Mileage { get; set; }
 
+        
         [Display(Name = "Spent")]
-        public string Spent { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Spent must be a positive number")]
+        public Nullable<int> Spent { get; set; }
 
         [Display(Name = "Did you get your inspection done?")]
         public bool Inspection { get; set; }
