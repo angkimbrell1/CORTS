@@ -24,7 +24,7 @@ namespace Corts.DAL
 
 
 
-        private string dbName = "";
+        private string dbName = "CortsDB";
         private string collectionName = "Users";
 
 
@@ -36,6 +36,7 @@ namespace Corts.DAL
         {
         }
 
+        #region Generic Functions used in many pages
         //Gets the cars selected nickname for display at the top of the table in the maintenance page
         public string GetCarNickname(string car, string email)
         {
@@ -191,6 +192,7 @@ namespace Corts.DAL
                 return usersCars;
             }
         }
+        #endregion
 
         #region UsersPersonalMaintenaceRetrival (NOT UPDATE)
         //This is the car personal maintenance information -> Same function for each, just pulls a different maintenance item and its corresponding maintenance
@@ -1203,6 +1205,42 @@ namespace Corts.DAL
                 Emails.Add(item.email);
             }
             return Emails;
+        }
+        public string EmailBody(string userEmail)
+        {
+            Dal dal = new Dal();
+            List<UsersCars> usersCars = new List<UsersCars>();
+            string message = null;
+            string carNickname = null;
+            int carMileage = 0;
+            string inspectionDate = null;
+            int monthsOwned = 0;
+            int totalSpent = 0;
+
+            //Get all emails that we need to send an email to
+            //(i.e) GetUsersCollection()
+            //Save all emails to a list and then pass as an array
+            //Pass as an array into the "EmailGoesHere" 
+            usersCars = dal.getCurrentUsersCars(userEmail);
+            foreach (var car in usersCars)
+            {
+                carNickname = GetCarNickname(car.CarID, userEmail);
+                string carNicknameString = "Car Nickname: " + carNickname;
+                message += carNicknameString;
+                carMileage = GetCarMileage(car.CarID, userEmail);
+                string carMileageString = "<br /> Car Mileage: " + carMileage;
+                message += carMileageString;
+                inspectionDate = GetCarsInspectionDate(car.CarID, userEmail);
+                string inspectionDateString = "<br /> Inspection Due: " + inspectionDate;
+                message += inspectionDateString;
+                monthsOwned = GetMonthsOwned(car.CarID, userEmail);
+                string monthsOwnedString = "<br /> Months Owned: " + monthsOwned;
+                message += monthsOwnedString;
+                totalSpent = GetTotalSpent(car.CarID, userEmail);
+                string totalSpentString = "<br /> Total Spent: " + totalSpent;
+                message += totalSpentString;
+            }
+            return message;
         }
         #endregion
 
