@@ -37,7 +37,7 @@ textarea {
     width: 70px;
     border-radius: 5px;
     background-color: #AEC3B0;
-    background: url(/Images/whiteCar.png) no-repeat;
+    background: url(/Content/Images/whiteCar.png) no-repeat;
 }
 /*MAINTENANCE MATE TITLE WORDS*/
 #titleInfo a {
@@ -147,15 +147,15 @@ textarea {
 }
 
 #homeLink {
-    background: url(/Images/home.svg) no-repeat;
+    background: url(/Content/Images/home.svg) no-repeat;
 }
 
 #maintLink {
-    background: url(/Images/maint.svg) no-repeat;
+    background: url(/Content/Images/maint.svg) no-repeat;
 }
 
 #settingLink {
-    background: url(/Images/setting.svg) no-repeat;
+    background: url(/Content/Images/setting.svg) no-repeat;
 }
 
 .side #a {
@@ -175,7 +175,7 @@ textarea {
     padding-left: 25px;
     margin-left: 150px;
     position: fixed;
-    margin-top: 35px;
+    margin-top: 30px;
     background-color: #EFF6E0;
     width: 100%;
     overflow: auto;
@@ -219,17 +219,23 @@ hr {
     margin-top: 5px;
 }
 /*CSS RESIZE AT WINDOW SIZE*/
-@@media only screen and (max-width: 970px) {
+@media only screen and (max-width: 970px) {
     #titleInfo a {
-        font-size: 35px;
+        padding: 0;
+        margin: 0;
     }
 }
 
-@@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 785px) {
     .body-content {
         margin-left: 70px;
     }
-
+    #titleInfo a {
+        font-size: 35px;
+        padding: 0;
+        margin: 0;
+        padding-left: 9%;
+    }
     .side {
         width: 75px;
     }
@@ -265,15 +271,15 @@ hr {
     }
 }
 
-@@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 500px) {
     .navbar-header a {
         font-size: 33px;
         margin-left: 37px;
     }
 
     #titleInfo a {
-        font-size: 25px;
-        margin-left: 35px;
+        font-size: 31px;
+        margin-left: 30px;
     }
 }
 /*SETTINGS PAGE*/
@@ -663,15 +669,15 @@ hr {
     }
 /*HOME IMAGES BACKGROUNDS*/
 #chevy {
-    background: url(/Images/chevySmall.png) no-repeat;
+    background: url(/Content/Images/chevySmall.png) no-repeat;
 }
 
 #ford {
-    background: url(/Images/fordSmall.png) no-repeat;
+    background: url(/Content/Images/fordSmall.png) no-repeat;
 }
 
 #subar {
-    background: url(/Images/subarSmall.png) no-repeat;
+    background: url(/Content/Images/subarSmall.png) no-repeat;
 }
 /*HOME TABLE*/
 #info {
