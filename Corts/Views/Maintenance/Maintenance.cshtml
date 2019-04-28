@@ -62,7 +62,7 @@
                     @if (ViewBag.UsersCars != null)
                     {
                         @Html.DropDownListFor(m => m.CarType, (IEnumerable
-               <SelectListItem>)ViewBag.UsersCars, new { @class = "mainCarDrop" })
+                                        <SelectListItem>)ViewBag.UsersCars, new { @class = "mainCarDrop" })
                     }
                     else
                     {
@@ -143,11 +143,164 @@
 </div>
 @if (ViewBag.Car != null)
 {
+    int carHealthPercentage = 100;
+    int startingPercentage = 100;
+    int subtractAmount = 5;
+    if (ViewBag.AirFilter != null)
+    {
+        foreach (var airFilter in ViewBag.AirFilter)
+        {
+            if (Int32.Parse(ViewBag.AirFilter[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.OilChange != null)
+    {
+        foreach (var airFilter in ViewBag.OilChange)
+        {
+            if (Int32.Parse(ViewBag.OilChange[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.PowerSteering != null)
+    {
+        foreach (var airFilter in ViewBag.PowerSteering)
+        {
+            if (Int32.Parse(ViewBag.PowerSteering[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Coolant != null)
+    {
+        foreach (var airFilter in ViewBag.Coolant)
+        {
+            if (Int32.Parse(ViewBag.Coolant[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.TransFluid != null)
+    {
+        foreach (var airFilter in ViewBag.TransFluid)
+        {
+            if (Int32.Parse(ViewBag.TransFluid[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.FuelFilter != null)
+    {
+        foreach (var airFilter in ViewBag.FuelFilter)
+        {
+            if (Int32.Parse(ViewBag.FuelFilter[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Battery != null)
+    {
+        foreach (var airFilter in ViewBag.Battery)
+        {
+            if (Int32.Parse(ViewBag.Battery[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.HVAC != null)
+    {
+        foreach (var airFilter in ViewBag.HVAC)
+        {
+            if (Int32.Parse(ViewBag.HVAC[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Brakes != null)
+    {
+        foreach (var airFilter in ViewBag.Brakes)
+        {
+            if (Int32.Parse(ViewBag.Brakes[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.RadiatorHoses != null)
+    {
+        foreach (var airFilter in ViewBag.RadiatorHoses)
+        {
+            if (Int32.Parse(ViewBag.RadiatorHoses[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Suspension != null)
+    {
+        foreach (var airFilter in ViewBag.Suspension)
+        {
+            if (Int32.Parse(ViewBag.Suspension[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.SparkPlugs != null)
+    {
+        foreach (var airFilter in ViewBag.SparkPlugs)
+        {
+            if (Int32.Parse(ViewBag.SparkPlugs[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.IgnitionSystem != null)
+    {
+        foreach (var airFilter in ViewBag.IgnitionSystem)
+        {
+            if (Int32.Parse(ViewBag.IgnitionSystem[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.EngineDriveBelts != null)
+    {
+        foreach (var airFilter in ViewBag.EngineDriveBelts)
+        {
+            if (Int32.Parse(ViewBag.EngineDriveBelts[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Tires != null)
+    {
+        foreach (var airFilter in ViewBag.Tires)
+        {
+            if (Int32.Parse(ViewBag.Tires[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
     <div id="infoBoxes">
         <div id="mainStats">
             <div class="infoCol">
                 <h4>Car Health</h4>
-                <h5>75%</h5>
+                <h5>@carHealthPercentage%</h5>
             </div>
             <div class="mainVert"></div>
             <div class="infoCol">
@@ -184,6 +337,7 @@
             </tr>
         </thead>
         <tbody>
+
             <tr id="AirFilter">
                 @if (ViewBag.AirFilter != null)
                 {
