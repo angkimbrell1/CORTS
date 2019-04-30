@@ -1,7 +1,673 @@
-﻿@model IEnumerable<Corts.Models.MaintenanceViewModel>
-@{
-    ViewBag.Title = "Maintenance";
-}
+﻿@using Corts.Models
+@model MaintenanceViewModel
+
 
 <h2>Maintenance</h2>
 <h4>Your vehicle's condition and cost estimates</h4>
+<hr>
+<div id="mainVehSel">
+    @using (Html.BeginForm("GetCar", "Maintenance", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div id="hidMain" class="form-group" style="visibility: hidden">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" id="getCarMain">
+            <h5 id="selVeh">Select a vehicle</h5>
+            <div class="col-md-10" id="vehDrop">
+                @if (ViewBag.UsersCars != null)
+                {
+                    @Html.DropDownListFor(m => m.CarType, (IEnumerable<SelectListItem>)ViewBag.UsersCars, new { @class = "getCarDrop" })
+                }
+                else
+                {
+                    <select></select>
+                }
+            </div>
+        </div>
+        <div class="form-group" id="viewMain">
+            <div>
+                <input type="submit" value="View Maintenance Details" div class="btn btn-default btn-block" id="viewBut" />
+            </div>
+        </div>
+        <div class="form-group" id="updateMain">
+            <div>
+                <input type="button" value="Update Maintenance Information" data-toggle="modal" data-target="#popMain" class="btn btn-default btn-block" id="updateBut" />
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade" id="popMain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="popMain_in">
+            @using (Html.BeginForm("Update", "Maintenance", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h3>Update Vehicle Info</h3>
+                <hr>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div id="hidMain" class="form-group" style="visibility: hidden">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group" id="mainCar">
+                    @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
+                    @if (ViewBag.UsersCars != null)
+                    {
+                        @Html.DropDownListFor(m => m.CarType, (IEnumerable
+                                        <SelectListItem>)ViewBag.UsersCars, new { @class = "mainCarDrop" })
+                    }
+                    else
+                    {
+                        <select></select>
+                    }
+                </div>
+                <div class="form-group" id="mainMiles">
+                    @Html.LabelFor(m => m.Mileage, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Mileage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Mileage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group" id="mainSpent">
+                    @Html.LabelFor(m => m.Spent, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Spent, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Spent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="mainItems">
+                    <div class="form-group" id="mainCList">
+                        @Html.LabelFor(m => m.AirFilterBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.AirFilterBox, false)</div>
+                        @Html.LabelFor(m => m.OilChangeBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.OilChangeBox, false)</div>
+                        @Html.LabelFor(m => m.BrakesBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.BrakesBox, false)</div>
+                        @Html.LabelFor(m => m.BatteryBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.BatteryBox, false)</div>
+                        @Html.LabelFor(m => m.CoolantBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.CoolantBox, false)</div>
+                        @Html.LabelFor(m => m.HVACBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.HVACBox, false)</div>
+                        @Html.LabelFor(m => m.PowerSteeringBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.PowerSteeringBox, false)</div>
+                        @Html.LabelFor(m => m.TransFluidBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.TransFluidBox, false)</div>
+                        @Html.LabelFor(m => m.FuelFilterBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.FuelFilterBox, false)</div>
+                        @Html.LabelFor(m => m.RadiatorHosesBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.RadiatorHosesBox, false)</div>
+                        @Html.LabelFor(m => m.SuspensionBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.SuspensionBox, false)</div>
+                        @Html.LabelFor(m => m.SparkPlugsBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.SparkPlugsBox, false)</div>
+                        @Html.LabelFor(m => m.EngineDriveBeltsBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.EngineDriveBeltsBox, false)</div>
+                        @Html.LabelFor(m => m.TiresBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.TiresBox, false)</div>
+                        @Html.LabelFor(m => m.IgnitionSystemBox, new { @class = "form-check-label" })
+                        <div class="check">@Html.CheckBoxFor(m => m.IgnitionSystemBox, false)</div>
+                    </div>
+                </div>
+                <div class="form-group" id="mainInspect">
+                    @Html.LabelFor(m => m.Inspection, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.Inspection, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Inspection, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="hidMain" class="form-group" style="visibility: hidden">
+                    @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.CarType, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CarType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group" id="popMain_but">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@if (ViewBag.Car != null)
+{
+    int carHealthPercentage = 100;
+    int startingPercentage = 100;
+    int subtractAmount = 5;
+    if (ViewBag.AirFilter != null)
+    {
+        foreach (var airFilter in ViewBag.AirFilter)
+        {
+            if (Int32.Parse(ViewBag.AirFilter[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.OilChange != null)
+    {
+        foreach (var airFilter in ViewBag.OilChange)
+        {
+            if (Int32.Parse(ViewBag.OilChange[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.PowerSteering != null)
+    {
+        foreach (var airFilter in ViewBag.PowerSteering)
+        {
+            if (Int32.Parse(ViewBag.PowerSteering[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Coolant != null)
+    {
+        foreach (var airFilter in ViewBag.Coolant)
+        {
+            if (Int32.Parse(ViewBag.Coolant[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.TransFluid != null)
+    {
+        foreach (var airFilter in ViewBag.TransFluid)
+        {
+            if (Int32.Parse(ViewBag.TransFluid[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.FuelFilter != null)
+    {
+        foreach (var airFilter in ViewBag.FuelFilter)
+        {
+            if (Int32.Parse(ViewBag.FuelFilter[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Battery != null)
+    {
+        foreach (var airFilter in ViewBag.Battery)
+        {
+            if (Int32.Parse(ViewBag.Battery[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.HVAC != null)
+    {
+        foreach (var airFilter in ViewBag.HVAC)
+        {
+            if (Int32.Parse(ViewBag.HVAC[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Brakes != null)
+    {
+        foreach (var airFilter in ViewBag.Brakes)
+        {
+            if (Int32.Parse(ViewBag.Brakes[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.RadiatorHoses != null)
+    {
+        foreach (var airFilter in ViewBag.RadiatorHoses)
+        {
+            if (Int32.Parse(ViewBag.RadiatorHoses[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Suspension != null)
+    {
+        foreach (var airFilter in ViewBag.Suspension)
+        {
+            if (Int32.Parse(ViewBag.Suspension[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.SparkPlugs != null)
+    {
+        foreach (var airFilter in ViewBag.SparkPlugs)
+        {
+            if (Int32.Parse(ViewBag.SparkPlugs[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.IgnitionSystem != null)
+    {
+        foreach (var airFilter in ViewBag.IgnitionSystem)
+        {
+            if (Int32.Parse(ViewBag.IgnitionSystem[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.EngineDriveBelts != null)
+    {
+        foreach (var airFilter in ViewBag.EngineDriveBelts)
+        {
+            if (Int32.Parse(ViewBag.EngineDriveBelts[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    if (ViewBag.Tires != null)
+    {
+        foreach (var airFilter in ViewBag.Tires)
+        {
+            if (Int32.Parse(ViewBag.Tires[2]) < ViewBag.CarsMileage)
+            {
+                carHealthPercentage = carHealthPercentage - 1;
+            }
+        }
+    }
+    <div id="infoBoxes">
+        <div id="mainStats">
+            <div class="infoCol">
+                <h4>Car Health</h4>
+                <h5>@carHealthPercentage%</h5>
+            </div>
+            <div class="mainVert"></div>
+            <div class="infoCol">
+                <h4>Current Mileage</h4>
+                <h5>@ViewBag.CarsMileage</h5>
+            </div>
+            <div class="mainVert" id="mid1"></div>
+            <div class="infoCol">
+                <h4>Next Inspection</h4>
+                <h5>@ViewBag.InspectionDate</h5>
+            </div>
+            <div class="mainVert" id="mid2"></div>
+            <div class="infoCol">
+                <h4>Months Owned</h4>
+                <h5>@ViewBag.MonthsOwned</h5>
+            </div>
+            <div class="mainVert" id="mid3"></div>
+            <div class="infoCol">
+                <h4>Total Paid</h4>
+                <h5>$@ViewBag.TotalSpent</h5>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped table-hover" id="vehTab">
+        <thead>
+            <tr>
+                <th colspan="4" id="titleRow"><h3>@ViewBag.CarNickName Breakdown</h3></th>
+            </tr>
+            <tr>
+                <th scope="col">Vehicle Services</th>
+                <th scope="col">Last Checked Mileage</th>
+                <th scope="col">Next Needed Mileage</th>
+                <th scope="col">Overdue By Mileage</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr id="AirFilter">
+                @if (ViewBag.AirFilter != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var airFilter in ViewBag.AirFilter)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.AirFilter[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.OilChange[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@airFilter</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr id="OilChange">
+                @if (ViewBag.OilChange != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var oilChange in ViewBag.OilChange)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.OilChange[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.OilChange[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@oilChange</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr id="PowerSteering">
+                @if (ViewBag.PowerSteering != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var pSteer in ViewBag.PowerSteering)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.PowerSteering[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.PowerSteering[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@pSteer</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Coolant != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.Coolant)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.Coolant[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.Coolant[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.TransFluid != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.TransFluid)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.TransFluid[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.TransFluid[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.FuelFilter != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.FuelFilter)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.FuelFilter[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.FuelFilter[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.HVAC != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.HVAC)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.HVAC[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.HVAC[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Brakes != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.RadiatorHoses)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.RadiatorHoses[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.RadiatorHoses[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Suspension != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.Suspension)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.Suspension[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.Suspension[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.SparkPlugs != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.SparkPlugs)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.SparkPlugs[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.SparkPlugs[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.IgnitionSystem != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.IgnitionSystem)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.IgnitionSystem[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.IgnitionSystem[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.EngineDriveBelts != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.EngineDriveBelts)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.EngineDriveBelts[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.EngineDriveBelts[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.Tires != null)
+                {
+                    var overdueNumber = 0;
+                    foreach (var item in ViewBag.Tires)
+                    {
+                        var className = "NotDue";
+                        if (Int32.Parse(ViewBag.Tires[2]) < ViewBag.CarsMileage)
+                        {
+                            overdueNumber = Int32.Parse(ViewBag.Tires[2]);
+                            className = "OverDue";
+                        }
+                        <td class="@className">@item</td>
+                    }
+                    if (overdueNumber < ViewBag.CarsMileage && overdueNumber != 0)
+                    {
+                        var overDueBy = ViewBag.CarsMileage - overdueNumber;
+                        <td class="OverDue">Overdue by @overDueBy</td>
+                    }
+                    else
+                    {
+                        <td>Not overdue</td>
+                    }
+
+                }
+            </tr>
+        </tbody>
+    </table>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<div id="spacer"></div>

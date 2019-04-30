@@ -1,673 +1,74 @@
 ﻿@model IEnumerable<Corts.Models.HomeViewModel>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My Car Ownership Tracker</title>
-    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Hammersmith+One|Paytone+One|Russo+One" rel="stylesheet">
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    <style>
-        /*HTML/Body*/
-        html, body {
-            height: 100%;
-        }
-
-        body {
-            padding-bottom: 0;
-        }
-        /*Nav Bar Header Div*/
-        .navbar-header {
-            height: 85px;
-        }
-        /*Top-Left Car Image*/
-        #logo {
-            display: inline;
-            margin-bottom: 0;
-            position: fixed;
-            top: 1.2%;
-            left: 2.83%;
-            z-index: 0;
-            height: 70px;
-            width: 70px;
-            border-radius: 5px;
-            background-color: #AEC3B0;
-            padding: 2px;
-            background: url(../../Images/whiteCar.png) no-repeat;
-        }
-        /*title heading*/
-        #titleInfo {
-            height: 100%;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-        }
-
-        #titleInfo a {
-            font-size: 55px;
-            padding: 0;
-            padding-top: 31px;
-            padding-bottom: 0;
-            color: #AEC3B0;
-            /*font-family: 'Merriweather Sans', sans-serif;*/
-            font-family: 'Paytone One', sans-serif;
-            /*font-family: 'Hammersmith One', sans-serif;*/
-            font-weight: 900;
-            transition-duration: .3s;
-            height: 100%;
-            margin-left: 0;
-        }
-
-        #titleInfo a:hover {
-            transition-duration: .3s;
-            color: #EFF6E0;
-        }
-        /*Vertical line*/
-        .vl {
-            border-left: 2px solid #124559;
-            height: 60px;
-            padding: 0;
-            margin-left: 15px;
-            margin-right: 10px;
-            margin-top: 10px;
-            margin-bottom: 0px;
-            display: inline-block;
-        }
-        /*description next to title*/
-        #titleInfo p {
-            width: 275px;
-            font-size: 22px;
-            color: #598392;
-            font-size: 25px;
-            font-family: 'Source Sans Pro', sans-serif;
-            display: inline;
-        }
-        /*Nav Bar Collapse Div*/
-        .navbar-collapse {
-            width: 100%;
-        }
-
-            .navbar-collapse .navbar-nav {
-                margin-right: 4%;
-            }
-            /*buttons on title*/
-            .navbar-collapse li {
-                width: 130px;
-                height: 55px;
-                border-radius: 7px;
-                margin-right: 10px;
-                margin-top: 5.1%;
-                text-align: center;
-            }
-
-        #registerLink, #loginLink {
-            color: black;
-            border-radius: 5px;
-            font-size: 20px;
-            margin-bottom: 50px;
-            height: 100%;
-            background-color: #EFF6E0;
-            font-family: 'Merriweather Sans', sans-serif;
-            transition-duration: .3s;
-        }
-
-            #registerLink:hover, #loginLink:hover {
-                background-color: #124559;
-                color: white;
-                transition-duration: .3s;
-            }
-        /*Navbar container*/
-        .container {
-            height: 100%;
-            width: 89%;
-            margin-left: 11%;
-        }
-
-        .navbar {
-            background-color: #01161E;
-        }
-        /*Side Bar*/
-        .side {
-            float: left;
-            clear: both;
-            width: 150px;
-            height: 100%;
-            display: block;
-            position: fixed;
-            z-index: 1;
-            margin-top: 20px;
-            background-color: #124559;
-        }
-            /*buttons*/
-        .side li {
-            border-radius: 12px;
-            width: 67%;
-            height: 105px;
-            margin-top: 20px;
-            margin-left: 16%;
-            margin-right: 9%;
-            font-size: inherit;
-            background-color: #598392;
-            font-family: 'Merriweather Sans', sans-serif;
-            transition-duration: .3s;
-        }
-
-        .side li:hover {
-            transition-duration: .3s;
-            background-color: #EFF6E0;
-        }
-
-        #top {
-            margin-top: 40px;
-        }
-        /*side bar links*/
-        .side a {
-            text-align: center;
-            border-radius: 12px;
-            height: 100%;
-            background-color: transparent;
-            transition-duration: .3s;
-            color: black;
-        }
-
-        .side a:hover {
-            transition-duration: .3s;
-            background-color: transparent;
-            color: black;
-        }
-
-        #homeLink, #maintLink, #settingLink {
-            margin-top: 7px;
-            margin-left: 16px;
-            padding-left: 4px;
-            padding-right: 4px;
-            margin-right: 16px;
-            padding-top: 75px;
-            text-align: center;
-            color: black;
-            font-weight: bold;
-        }
-
-        #homeLink {
-            background: url(../../Images/home.svg) no-repeat;
-        }
-
-        #maintLink {
-            background: url(../../Images/maint.svg) no-repeat;
-        }
-
-        #settingLink {
-            background: url(../../Images/setting.svg) no-repeat;
-        }
-        /*images for buttons*/
-        .side img {
-            height: 75px;
-            width: 80px;
-            margin: 0;
-            padding: 0;
-            position: fixed;
-            z-index: 0;
-            left: 34px;
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-
-        .side #a {
-            top: 123px;
-        }
-
-        .side #b {
-            top: 250px;
-        }
-
-        .side #c {
-            top: 374px;
-        }
-        /*Body/Content*/
-        .body-content {
-            margin-bottom: 0;
-            padding-bottom: 200px;
-            padding-left: 25px;
-            margin-left: 150px;
-            width: 100%;
-            position: fixed;
-            margin-top: 35px;
-            background-color: #EFF6E0;
-            overflow: auto;
-        }
-
-            .body-content h2 {
-                /*font-family: 'Merriweather Sans', sans-serif;*/
-                /*font-family: 'Paytone One', sans-serif;*/
-                font-family: 'Hammersmith One', sans-serif;
-                font-size: 40px;
-                margin-bottom: 0;
-                padding-bottom: 0;
-            }
-
-            .body-content h4 {
-                font-family: 'Merriweather Sans', sans-serif;
-                font-size: 20px;
-                margin-bottom: 0;
-                padding-bottom: 0;
-            }
-
-            .body-content footer {
-                font-family: 'Source Sans Pro', sans-serif;
-                font-size: 15px;
-            }
-
-            .body-content .form-group {
-                font-family: 'Source Sans Pro', sans-serif;
-                font-weight: 700;
-                font-size: 18px;
-            }
-
-        input[type=submit] {
-            font-size: 20px;
-            border-radius: 6px;
-            width: 120px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-        /*Misc Styles*/
-        hr {
-            border-top: 2px solid #124559;
-            border-radius: 10px;
-        }
-        /*Resizing at different window width*/
-        @@media only screen and (max-width: 1200px) {
-            .navbar-collapse p {
-                display: none;
-            }
-
-            .vl {
-                display: none;
-            }
-        }
-
-        @@media only screen and (max-width: 970px){
-            #titleInfo a {
-                font-size: 35px;
-            }
-        }
-
-        @@media only screen and (max-width: 768px) {
-            .body-content {
-                margin-left: 70px;
-            }
-
-            .side {
-                width: 75px;
-            }
-
-            .side li {
-                height: 60px;
-                width: 60px;
-                margin-right: 27px;
-                margin-left: 22px;
-                padding-top: 0.1px;
-                font-size: 10px;
-            }
-            #homeLink, #maintLink, #settingLink{
-                padding: 0;
-                padding-top: 31px;
-                margin-left: 14.5px;
-            }
-
-            #top {
-                margin-top: 20px;
-            }
-
-            .navbar-header a {
-                margin-left: 20px;
-            }
-
-            .navbar-collapse li {
-                margin: 0;
-                display: inline-block;
-                height: 43px;
-                width: 105px;
-            }
-        }
-
-        @@media only screen and (max-width: 500px) {
-            .navbar-header a {
-                font-size: 33px;
-                margin-left: 37px;
-            }
-            #titleInfo a {
-                font-size: 25px;
-                margin-left: 35px;
-            }
-        }
-        /*Settings*/
-        #setTitle {
-            display: inline-block;
-        }
-
-        #welc {
-            font-size: 25px;
-        }
-        /*add and remove*/
-        #left {
-            float: left;
-        }
-
-        #right {
-            float: left;
-            margin-left: 20px;
-        }
-
-        .menu h3, #prof h3, #notifications h3 {
-            margin: 0;
-            padding: 0;
-            font-family: 'Source Sans Pro', sans-serif;
-            margin-left: 10px;
-            font-weight: 600;
-            font-size: 30px;
-            color: #124559;
-        }
-
-        .menu select {
-            width: 90%;
-            height: 30px;
-            font-size: 18px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            margin-left: 10px;
-            margin-top: 2px;
-            color: #01161E;
-        }
-        /*profile*/
-        #prof {
-            /*background-color: #598392;*/
-            border-radius: 7px;
-            color: #01161E;
-            font-size: 18px;
-            margin-top: 150px;
-            padding: 0;
-            width: 800px;
-        }
-
-            #prof h3, #notifications h3 {
-                margin: 0;
-                padding: 0;
-            }
-
-            #prof hr, #notifications hr {
-                margin: 0;
-                padding: 0;
-                margin-bottom: 15px;
-                margin-top: 5px;
-                width: 700px;
-            }
-
-        #left, #right {
-            width: 250px;
-        }
-
-        #addVehicle, #removeVehicle {
-            text-align: center;
-        }
-
-        #newCar, #removeCar {
-            width: 100%;
-        }
-
-        #addBtn, #remBtn {
-            margin-right: 40px;
-            margin-bottom: 20px;
-            width: 120px;
-            height: 45px;
-            font-size: 22.5px;
-            font-weight: 700;
-            border-radius: 5px;
-            padding: 0;
-        }
-
-        #notifications #Car {
-            border-radius: 7px;
-            width: 180px;
-            height: 32px;
-        }
-
-        #NotificationSection hr {
-            margin-bottom: 10px;
-        }
-
-        #gen h4, #mil h4 {
-            width: 210px;
-            height: 32px;
-            margin: 0;
-            padding: 0;
-            float: left;
-            padding-top: 4px;
-        }
-
-        #gen .form-group, #mil .form-group {
-            width: 210px;
-            margin: 0;
-            padding: 0;
-            float: left;
-            margin-bottom: 15px;
-        }
-
-        #gen, #mil {
-            width: 600px;
-            padding: 0;
-        }
-
-        #setSub {
-            margin-left: 200px;
-        }
-
-        #loginForm .form-group, #reg {
-            width: 1000px;
-        }
-
-        .modal-backdrop {
-            z-index: -999999999 !important;
-        }
-        #hid{
-            display: none;
-        }
-        #pop {
-            margin-top: 80px;
-            padding-left: 0;
-        }
-
-        #pop_in h3 {
-            font-family: 'Merriweather Sans', sans-serif;
-            font-size: 30px;
-            font-weight: 600;
-            margin: 0;
-            padding: 0;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            text-align: center;
-            padding-right: 20px;
-        }
-
-        #pop hr {
-            margin: 0;
-            padding: 0;
-            margin-bottom: 10px;
-            margin-right: 23px;
-            width: 340px;
-        }
-
-        #pop_in {
-            padding-left: 20px;
-            padding-right: 0;
-            margin-left: 0;
-            width: 385px;
-            height: 365px;
-        }
-
-            #pop_in .control-label {
-                width: 170px;
-                padding: 0;
-                margin: 0;
-                font-size: 18px;
-            }
-
-            #pop_in .col-md-10 {
-                width: 205px;
-                padding-left: 5px;
-                height: 15px;
-                margin-bottom: 15px;
-            }
-
-        #pop_but {
-            margin-bottom: 15px;
-            margin-left: 5px;
-        }
-
-        #pop input[type="submit"] {
-            width: 200px;
-            margin: 0;
-            padding: 5px;
-            font-size: 25px;
-            font-weight: 800;
-        }
-        /*HOME PAGE*/
-        hr {
-            width: 1000px;
-            margin-left: 0;
-            margin-top: 5px;
-        }
-
-        .homeImg {
-            display: inline-block;
-            width: 300px;
-            height: 200px;
-            border: 1px solid #598392;
-            margin: 0;
-            padding: 0;
-            margin-right: 45px;
-            margin-bottom: 10px;
-            border-radius: 15px;
-        }
-
-        #chevy {
-            background: url(../../Images/chevySmall.png) no-repeat;
-        }
-
-            #chevy p, #ford p, #subar p {
-                color: white;
-                background-color: #124559;
-                font-size: 20px;
-                position: absolute;
-                margin: 0;
-                padding: 0;
-                padding-top: 55px;
-                text-align: center;
-                font-size: 30px;
-                font-family: 'Source Sans Pro', sans-serif;
-                opacity: 0;
-                border-radius: 18px;
-                width: inherit;
-                height: inherit;
-                transition-duration: .3s;
-            }
-
-                #chevy p:hover, #ford p:hover, #subar p:hover {
-                    opacity: 0.65;
-                    transition-duration: .3s;
-                }
-
-        #ford {
-            background: url(../../Images/fordSmall.png) no-repeat;
-        }
-
-        #subar {
-            background: url(../../Images/subarSmall.png) no-repeat;
-        }
-
-        #info {
-            width: 1000px;
-            border-right: 1px solid #AEC3B0;
-            border-bottom: 1px solid #AEC3B0;
-        }
-
-            #info th {
-                font-family: 'Merriweather Sans', sans-serif;
-                background-color: #01161E;
-                color: #AEC3B0;
-                font-size: 20px;
-                font-weight: 600;
-                letter-spacing: 1px;
-                text-align: center;
-            }
-
-        #infoBod th {
-            background-color: #124559;
-            color: #EFF6E0;
-            font-size: 18px;
-            font-weight: 400;
-            text-align: center;
-        }
-
-        #infoBod td {
-            color: #01161E;
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: 16px;
-            text-align: center;
-            font-weight: 700;
-            border-right: 1px solid #AEC3B0;
-        }
-    </style>
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div id="logo"></div>
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div id="titleInfo">
-                    @Html.ActionLink("MaintenanceMate", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                    <!--<div class="vl"></div>
-                        <p>maintenance made easy</p>-->
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My Car Ownership Tracker</title>
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Hammersmith+One|Paytone+One|Russo+One" rel="stylesheet">
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div id="logo"></div>
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div id="titleInfo">
+                        @Html.ActionLink("MaintenanceMate", "Index", "Home", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "navbar-brand" })
+                        <!--<div class="vl"></div>
+            <p>maintenance made easy</p>-->
+                    </div>
                 </div>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-                </ul>
+                @if (ViewBag.Email == null)
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        </ul>
+                    </div>
+                }
+                @if (ViewBag.Email != null)
+                {
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Log Out", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        </ul>
+                    </div>
+                }
             </div>
         </div>
-    </div>
-    <div class="side">
-        <ul class="nav navbar-nav">
-            <li id="top">
-                @Html.ActionLink("Home", "Index", "Home", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "homeLink" })
-            </li>
-            <li id="small">
-                @Html.ActionLink("Services", "Maintenance", "Maintenance", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "maintLink" })
-            </li>
-            <li>
-                @Html.ActionLink("Settings", "Settings", "Manage", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "settingLink" })
-            </li>
-        </ul>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My Car Ownership Tracker</p>
-        </footer>
-    </div>
+        <div class="side">
+            <ul class="nav navbar-nav">
+                <li id="top">
+                    @Html.ActionLink("Home", "Index", "Home", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "homeLink" })
+                </li>
+                <li id="small">
+                    @Html.ActionLink("Services", "Maintenance", "Maintenance", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "maintLink" })
+                </li>
+                <li>
+                    @Html.ActionLink("Settings", "Settings", "Manage", routeValues: new { email = ViewBag.Email }, htmlAttributes: new { id = "settingLink" })
+                </li>
+            </ul>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My Car Ownership Tracker</p>
+            </footer>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>

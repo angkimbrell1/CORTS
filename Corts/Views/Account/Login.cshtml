@@ -4,7 +4,7 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 id="logTitle">@ViewBag.Title</h2>
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     @if (ViewBag.InvalidCredentials != null)
                     {
-                        <h5>@ViewBag.InvalidCredentials</h5>
+                        <h5 id="inVal">@ViewBag.InvalidCredentials</h5>
                     }
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
@@ -37,7 +37,7 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
-                <p>
+                <p id="newUser">
                     @Html.ActionLink("Register as a new user", "Register")
                 </p>
                 @* Enable this once you have account confirmation enabled for password reset functionality

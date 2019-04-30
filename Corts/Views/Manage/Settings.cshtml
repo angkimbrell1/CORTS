@@ -8,7 +8,15 @@
 <h2 id="setTitle">Settings</h2>
 @if (ViewBag.user != null)
 {
-    <h2 id="welc">Welcome @ViewBag.user</h2>
+    if (ViewBag.Username != null)
+    {
+        <h2 id="welc">Welcome @ViewBag.Username!</h2>
+    }
+    else
+    {
+        <h2 id="welc">Welcome @ViewBag.user!</h2>
+    }
+
 }
 <h4>Add or remove vehicles and change your account preferences</h4>
 <hr>
@@ -41,7 +49,7 @@
                 @* MAKE A POPUP FORM *@
                 @using (Html.BeginForm("Add", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    <div id="hid"class="form-group" style="visibility: hidden">
+                    <div id="hid" class="form-group" style="visibility: hidden">
                         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
@@ -51,12 +59,19 @@
                     @Html.AntiForgeryToken()
                     <h3>Add Vehicle Info</h3>
                     <hr>
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
+                    <div class="form-group" id="popTop">
                         @Html.LabelFor(m => m.CarType, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(m=> m.CarType,(IEnumerable
                        <SelectListItem>)ViewBag.CurrentCarList)
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CarNickname, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.CarNickname, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CarNickname, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -80,15 +95,15 @@
                             @Html.ValidationMessageFor(m => m.TotalSpent, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="popBottom">
                         @Html.LabelFor(m => m.InspectionDate, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.InspectionDate, new { @class = "form-control", @placeholder = "mm/yyyy"})
+                            @Html.TextBoxFor(m => m.InspectionDate, new { @class = "form-control", @placeholder = "mm/yyyy" })
                             @Html.ValidationMessageFor(m => m.InspectionDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group" id="pop_but">
+                    <div class="form-group" id="popBottom">
                         <div class="col-md-offset-2 col-md-10">
                             <input type="submit" value="Submit" class="btn btn-default" />
                         </div>
@@ -101,45 +116,56 @@
         @using (Html.BeginForm("Remove", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             <div class="form-group" style="visibility: hidden;display: none;">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             </div>
-                <section id="removeVehicle">
-                    @Html.AntiForgeryToken()
-                    <h3>Remove Vehicle</h3>
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group" style="margin-bottom: 0; padding-bottom: 0">
-                        <div class="col-md-10" id="removeCar" style="margin-bottom: 0; padding-bottom: 0">
-                            @if (ViewBag.UsersCars != null)
-                            {
-                                @Html.DropDownListFor(m=> m.CarType,(IEnumerable
-                          <SelectListItem>)ViewBag.UsersCars)
-                            }
-                            else
-                            {
-                                <select></select>
-                            }
-                        </div>
+            <section id="removeVehicle">
+                @Html.AntiForgeryToken()
+                <h3>Remove Vehicle</h3>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group" style="margin-bottom: 0; padding-bottom: 0">
+                    <div class="col-md-10" id="removeCar" style="margin-bottom: 0; padding-bottom: 0">
+                        @if (ViewBag.UsersCars != null)
+                        {
+                            @Html.DropDownListFor(m=> m.CarType,(IEnumerable
+                      <SelectListItem>)ViewBag.UsersCars)
+                        }
+                        else
+                        {
+                            <select></select>
+                        }
                     </div>
-                    <div class="form-group" id="remove" style="margin-top: 0; padding-top: 0">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Remove" id="remBtn" class="btn btn-default" />
-                        </div>
+                </div>
+                <div class="form-group" id="remove" style="margin-top: 0; padding-top: 0">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Remove" id="remBtn" class="btn btn-default" />
                     </div>
-                </section>
-                }
+                </div>
+            </section>
+        }
 
-            </div>
-        </div>
+    </div>
+</div>
 <div id="prof">
     <div class="row">
         <div class="col-md-8">
             <section id="profileSection">
-                @using (Html.BeginForm("Settings", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("UpdateInfo", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <h3>Profile</h3>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @if (TempData["Invalid"] != null)
+                        {
+                            <h5>@TempData["Invalid"]</h5>
+                        }
+                        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.CurrEmail, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
@@ -170,45 +196,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Submit" class="btn btn-default" />
-                        </div>
-                    </div>
-                }
-            </section>
-        </div>
-    </div>
-</div>
-<div id="notifications">
-    <div class="row">
-        <div class="col-md-8">
-            <section id="NotificationSection">
-                @using (Html.BeginForm("Settings", "Notifications", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <h3>Notifications</h3>
-                    <hr />
-                    <div id="gen">
-                        <h4>General Notifications</h4>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Notifications))), "Select Frequency")
-                            </div>
-                        </div>
-                    </div>
-                    <div id="mil">
-                        <h4>Mileage Notifications</h4>
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.DropDownListFor(m => m.Car, new SelectList(Enum.GetValues(typeof(Notifications))), "Select Frequency")
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Submit" id="setSub" class="btn btn-default" />
-                            </div>
+                            <input type="submit" value="Submit" id ="profSub" class="btn btn-default" />
                         </div>
                     </div>
                 }
@@ -219,5 +207,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/settings.js")
-    
+
 }

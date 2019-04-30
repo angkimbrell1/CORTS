@@ -20,8 +20,18 @@ namespace Corts.Models
             public int monthsOwned { get; set; }
             public int totalSpent { get; set; }
             public string CarID { get; set; }
+            public string CarNickname { get; set; }
+
+            [BsonElement("PersonalMaintenance")]
             public List<PersonalMaintenance> PersonalMaintenance { get; set; }
         }
+        public class MaintenanceObject
+        {
+            public ObjectId Id { get; set; }
+            public string Name { get; set; }
+            public int Mileage { get; set; }
+        }
+        
         public class PersonalMaintenance
         {
             public List<PersonalMaintenanceObject> OilChange { get; set; }
@@ -43,10 +53,20 @@ namespace Corts.Models
             public List<PersonalMaintenanceObject> Tires { get; set; }
 
         }
+        public class MaintenanceTable
+        {
+            public string MaintenanceName { get; set; }
+            public string Condition { get; set; }
+            public int NextNeeded { get; set; }
+            public double TotalSpent { get; set; }
+        }
         public class Users
         {
             [BsonId(IdGenerator = typeof(CombGuidGenerator))]
             public Guid Id { get; set; }
+
+            [BsonElement("Username")]
+            public string Username { get; set; }
 
             [BsonElement("email")]
             public string email { get; set; }
@@ -65,7 +85,7 @@ namespace Corts.Models
 
     public class PersonalMaintenanceObject
     {
-        public int Cost { get; set; }
+        public string Name { get; set; }
         public int LastChecked { get; set; }
         public int NxtNeeded { get; set; }
     }
