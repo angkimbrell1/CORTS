@@ -18,8 +18,8 @@ namespace Corts.DAL
         //THIS FILE HANDLES ALL DB CALLS
         private bool disposed = false;
 
-       
 
+        
 
 
         private string dbName = "CortsDB";
@@ -35,50 +35,6 @@ namespace Corts.DAL
         }
 
         #region Generic Functions used in many pages
-        //Calculates the car health based on the number of services needed
-        //public string GetCarHealth(string car, string email, List<PersonalMaintenance> CarPM)
-        //{
-        //    List<UsersCars> usersCars = getCurrentUsersCars(email);
-
-        //    string health = "0%";
-        //    int healthPercent = 0;
-
-        //    //Airbag 
-
-        //    //for (int i = 0; i < CarPM.Count; i++)
-        //    //{
-        //    //    if (CarPM[i] != null)
-        //    //    {
-        //    //        healthPercent++;
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        if (healthPercent != 0)
-        //    //        {
-        //    //            healthPercent--;
-        //    //        }
-        //    //    }
-        //    //}
-
-        //    //if (healthPercent <= 7)
-        //    //{
-        //    //    health = "25%";
-        //    //}
-        //    //else if (healthPercent > 7 && healthPercent < 12)
-        //    //{
-        //    //    health = "50%";
-        //    //}
-        //    //else if (healthPercent > 11 && healthPercent < 15)
-        //    //{
-        //    //    health = "75%";
-        //    //}
-        //    //else
-        //    //{
-        //    //    health = "100%";
-        //    //}
-
-        //    //return health;
-        //}
         //Gets the cars selected nickname for display at the top of the table in the maintenance page
         public string GetCarNickname(string car, string email)
         {
