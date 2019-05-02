@@ -222,6 +222,22 @@ namespace Corts.Controllers
                     throw new Exception("Something Broke!");
                 }
             }
+            else if ((UpdateInfo.Username != null) && (UpdateInfo.NewEmail != null))
+            {
+                if (dal.UpdateUsername(usersEmail, UpdateInfo.Username) && dal.UpdateEmail(usersEmail, UpdateInfo.NewEmail))
+                {
+                    string newEmail = UpdateInfo.NewEmail;
+                    Session["email"] = newEmail;
+                    var email = (string)Session["email"];
+
+                    // Return to users setting page
+                    return RedirectToAction("Settings", "Manage", new { email });
+                }
+                else
+                {
+                    throw new Exception("Something Broke!");
+                }
+            }
             else if(UpdateInfo.Username != null)
             {
                 if(dal.UpdateUsername(usersEmail, UpdateInfo.Username))
@@ -244,6 +260,21 @@ namespace Corts.Controllers
                     //Get new email variable to send as a session to the new view
                     string newEmail = UpdateInfo.NewEmail;
                     Session["email"] = newEmail;
+                    var email = (string)Session["email"];
+
+                    // Return to users setting page
+                    return RedirectToAction("Settings", "Manage", new { email });
+                }
+                else
+                {
+                    throw new Exception("Something Broke!");
+                }
+            }
+            else if(UpdateInfo.NewPassword != null)
+            {
+                if (dal.UpdatePassword(usersEmail, UpdateInfo.CurrPassword, UpdateInfo.NewPassword))
+                {
+                    Session["email"] = usersEmail;
                     var email = (string)Session["email"];
 
                     // Return to users setting page
